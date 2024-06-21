@@ -15,7 +15,7 @@ export default function TabLayout() {
 				headerShown: false
 			}}>
 			<Tabs.Screen
-				name='_my_selecta'
+				name='index'
 				options={{
 					title: "My Selecta",
 					tabBarIcon: ({ color, focused }) => (

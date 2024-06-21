@@ -25,6 +25,13 @@ const DailyTrackCard = ({
 	goToPreviousTrack,
 	goToNextTrack
 }: DailyTrackCardProps): JSX.Element => {
+	console.log(
+		trackName,
+		artistName,
+		genreName,
+		artwork,
+		"This is the passed in data for each component card "
+	);
 	return (
 		<View style={styles.cardContainer}>
 			<Image source={artwork} style={styles.artwork} />

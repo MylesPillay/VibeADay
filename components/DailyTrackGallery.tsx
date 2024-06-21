@@ -1,58 +1,61 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, FlatList, Dimensions } from "react-native";
-import DailyTrackCard from "./DailyTrackCard"; // Import the TrackCard component
+import {
+	View,
+	FlatList,
+	Dimensions,
+	ScrollView,
+	Button,
+	ActivityIndicator
+} from "react-native";
+import DailyTrackCard from "./DailyTrackCard";
+import { createClient } from "@supabase/supabase-js";
+interface Track {
+	created_at: string;
+	song_title: string;
+	song_artist: string;
+	genre: string;
+	spotify_url: string;
+	soundcloud_url: string;
 
-const tracks = [
-	{
-		id: "1",
-		trackName: "Track One",
-		artistName: "Artist One",
-		genreName: "Genre One",
-		artwork: require("@/assets/images/Awake.jpg")
-	},
-	{
-		id: "2",
-		trackName: "Track Two",
-		artistName: "Artist Two",
-		genreName: "Genre Two",
-		artwork: require("@/assets/images/Cactus.jpg")
-	},
-	{
-		id: "3",
-		trackName: "Track Three",
-		artistName: "Artist Three",
-		genreName: "Genre Three",
-		artwork: require("@/assets/images/Dutch_Flowerz.jpg")
-	},
-	{
-		id: "4",
-		trackName: "Track Four",
-		artistName: "Artist Four",
-		genreName: "Genre Four",
-		artwork: require("@/assets/images/Mezzanine.jpg")
-	},
-	{
-		id: "5",
-		trackName: "Track Five",
-		artistName: "Artist Five",
-		genreName: "Genre Five",
-		artwork: require("@/assets/images/Racing_With_The_Sun.jpg")
-	}
-];
-const TrackGallery = () => {
-	const [currentIndex, setCurrentIndex] = useState(2); // Start with the third item (index 2)
-	const flatListRef = useRef<FlatList | null>(null);
+	artwork: string;
+}
+interface TrackGalleryProps {
+	tracks?: {
+		data: Track[];
+	};
+}
+const TrackGallery = (): JSX.Element => {
+	const [tracks, setTracks] = useState<Track[]>([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+	const [currentIndex, setCurrentIndex] = useState(2);
+	const flatListRef = useRef<FlatList<Track> | null>(null);
 	const windowWidth = Dimensions.get("window").width;
 
-	const onViewableItemsChanged = useRef(({ viewableItems }: any) => {
-		if (viewableItems.length > 0) {
-			setCurrentIndex(viewableItems[0].index);
-		}
-	}).current;
+	useEffect(() => {
+		const fetchTracks = async () => {
+			const supabase = createClient(
+				"https://ibxvkrljdklwqhiovpma.supabase.co",
+				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlieHZrcmxqZGtsd3FoaW92cG1hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTg2NjQ5NzEsImV4cCI6MjAzNDI0MDk3MX0.C8Ns1R3PnRTKnG0oP4xWD2z595r3LBiZusRnrggwNLI"
+			);
+			try {
+				let { data, error } = await supabase
+					.from("dailyTracks")
+					.select("*");
+				if (error) throw error;
+				if (data) {
+					setTracks(data);
+				}
+			} catch (error) {
+				setError("Failed to fetch tracks");
+				console.error(error);
+			} finally {
+				setLoading(false);
+			}
+		};
 
-	const viewabilityConfig = useRef({
-		itemVisiblePercentThreshold: 50
-	}).current;
+		fetchTracks();
+	}, []);
 
 	const goToPreviousTrack = () => {
 		if (currentIndex > 0) {
@@ -60,6 +63,7 @@ const TrackGallery = () => {
 				index: currentIndex - 1,
 				animated: true
 			});
+			setCurrentIndex(currentIndex - 1);
 		}
 	};
 
@@ -69,11 +73,27 @@ const TrackGallery = () => {
 				index: currentIndex + 1,
 				animated: true
 			});
+			setCurrentIndex(currentIndex + 1);
 		}
 	};
 
+	if (loading) {
+		return <ActivityIndicator size='large' />;
+	}
+
+	if (error) {
+		console.log(error, "this is the error message");
+	}
+
 	return (
-		<View style={{ flex: 1 }}>
+		<View
+			style={{
+				flex: 1,
+				height: "100%",
+				justifyContent: "center",
+				alignContent: "center",
+				alignItems: "center"
+			}}>
 			<FlatList
 				ref={flatListRef}
 				data={tracks}
@@ -87,20 +107,27 @@ const TrackGallery = () => {
 				})}
 				showsHorizontalScrollIndicator={false}
 				renderItem={({ item }) => (
-					<View style={{ width: windowWidth }}>
+					<View
+						style={{
+							width: windowWidth,
+							height: "100%",
+							justifyContent: "center",
+							alignContent: "center",
+							alignItems: "center"
+						}}>
 						<DailyTrackCard
-							trackName={item.trackName}
-							artistName={item.artistName}
-							genreName={item.genreName}
-							artwork={item.artwork}
+							trackName={item.song_title}
+							artistName={item.song_artist}
+							genreName={item.genre}
+							artwork={{ uri: item.artwork }}
 							goToPreviousTrack={goToPreviousTrack}
 							goToNextTrack={goToNextTrack}
 						/>
 					</View>
 				)}
-				keyExtractor={(item) => item.id}
-				onViewableItemsChanged={onViewableItemsChanged}
-				viewabilityConfig={viewabilityConfig}
+				keyExtractor={(item, index) =>
+					item.created_at + index.toString()
+				}
 				onScrollToIndexFailed={(info) => {
 					const wait = new Promise((resolve) =>
 						setTimeout(resolve, 500)

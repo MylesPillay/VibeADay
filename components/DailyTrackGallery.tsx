@@ -7,8 +7,8 @@ import {
 	Button,
 	ActivityIndicator
 } from "react-native";
-import DailyTrackCard from "./DailyTrackCard";
 import { createClient } from "@supabase/supabase-js";
+import DailyTrackCard from "./DailyTrackCard";
 interface Track {
 	created_at: string;
 	song_title: string;
@@ -90,6 +90,7 @@ const TrackGallery = (): JSX.Element => {
 			style={{
 				flex: 1,
 				height: "100%",
+
 				justifyContent: "center",
 				alignContent: "center",
 				alignItems: "center"

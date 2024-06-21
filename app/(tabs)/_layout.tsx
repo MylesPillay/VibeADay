@@ -1,5 +1,6 @@
 import { Tabs } from "expo-router";
 import React from "react";
+import { Text } from "react-native";
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
@@ -12,17 +13,29 @@ export default function TabLayout() {
 		<Tabs
 			screenOptions={{
 				tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+				tabBarInactiveTintColor: "#FFFFFF75",
+				tabBarActiveBackgroundColor: "#000000",
+				tabBarInactiveBackgroundColor: "#000000",
 				headerShown: false
 			}}>
 			<Tabs.Screen
 				name='index'
 				options={{
 					title: "My Selecta",
-					tabBarIcon: ({ color, focused }) => (
+					tabBarIcon: ({ focused }) => (
 						<TabBarIcon
-							name={focused ? "home" : "home-outline"}
-							color={color}
+							name={focused ? "disc" : "disc-outline"}
+							color={focused ? "#FFFFFF" : "#FFFFFF75"}
 						/>
+					),
+					tabBarLabel: ({ focused }) => (
+						<Text
+							style={{
+								color: focused ? "#FFFFFF" : "#FFFFFF75",
+								fontSize: 12
+							}}>
+							My Selecta
+						</Text>
 					)
 				}}
 			/>
@@ -30,11 +43,20 @@ export default function TabLayout() {
 				name='_the_crates'
 				options={{
 					title: "The Crates",
-					tabBarIcon: ({ color, focused }) => (
+					tabBarIcon: ({ focused }) => (
 						<TabBarIcon
-							name={focused ? "code-slash" : "code-slash-outline"}
-							color={color}
+							name={focused ? "albums" : "albums-outline"}
+							color={focused ? "#FFFFFF" : "#FFFFFF75"}
 						/>
+					),
+					tabBarLabel: ({ focused }) => (
+						<Text
+							style={{
+								color: focused ? "#FFFFFF" : "#FFFFFF75",
+								fontSize: 12
+							}}>
+							The Crates
+						</Text>
 					)
 				}}
 			/>

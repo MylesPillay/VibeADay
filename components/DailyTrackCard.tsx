@@ -49,6 +49,22 @@ const DailyTrackCard = ({
 				return "#FFFFFF"; // Default color if no match is found
 		}
 	}
+	function generateTextColorHexCode(genreName: string) {
+		switch (genreName) {
+			case "Easy Listening":
+				return "#6495ED"; // Dark Slate Gray for a soft blue background
+			case "Garage":
+				return "#C73E1D"; // Very dark gray (almost black) for bright orange
+			case "UK Hip-Hop":
+				return "#3A2449"; // Lavender for dark gray background
+			case "Techno":
+				return "#40E0D0"; // Thistle (light purple) for dark purple background
+			case "Drum & Bass":
+				return "#FFD700"; // Gold for dark red background
+			default:
+				return "#778899"; // Light Slate Gray, neutral and visible on many backgrounds
+		}
+	}
 	return (
 		<View
 			style={[
@@ -56,16 +72,20 @@ const DailyTrackCard = ({
 				{ backgroundColor: generateBackgroundColorHexCode(genreName) }
 			]}>
 			<Image source={artwork} style={styles.artwork} />
+			<View style={styles.trackInfoContainer}>
+
+	
 			<Text style={styles.trackName}>{trackName}</Text>
 			<Text style={styles.artistName}>{artistName}</Text>
 			<View style={styles.genreContainer}>
 				<TouchableOpacity onPress={goToPreviousTrack}>
 					<Text style={styles.navArrow}>{"<"}</Text>
 				</TouchableOpacity>
-				<Text style={styles.genreName}>{genreName}</Text>
+				<Text style={[styles.genreName,{color: generateTextColorHexCode(genreName)}]}>{genreName}</Text>
 				<TouchableOpacity onPress={goToNextTrack}>
 					<Text style={styles.navArrow}>{">"}</Text>
 				</TouchableOpacity>
+				</View>
 			</View>
 		</View>
 	);
@@ -89,6 +109,8 @@ const styles = StyleSheet.create({
 		borderColor: "#FFFFFF55",
 		borderWidth: 3
 	},
+	trackInfoContainer: { display: 'flex', flexDirection: 'column',  justifyContent: 'space-evenly', alignContent: 'center', alignItems: 'center', height: '25%', paddingVertical: '10%', width: '85%', borderRadius: 10, backgroundColor: '#00000055'},
+
 	trackName: {
 		fontSize: RFValue(22, 580),
 		fontWeight: "bold",
@@ -98,7 +120,7 @@ const styles = StyleSheet.create({
 	artistName: {
 		fontSize: RFValue(16, 580),
 		fontWeight: "semibold",
-		color: "#FFFFFF99",
+		color: "#FFFFFF",
 		marginBottom: "5%"
 	},
 	genreContainer: {
@@ -110,7 +132,7 @@ const styles = StyleSheet.create({
 		fontSize: 24,
 		fontWeight: "bold",
 		marginHorizontal: 20,
-		color: "#FFFFFF"
+		// color: "#FFFFFF"
 	},
 	navArrow: {
 		fontSize: 24,

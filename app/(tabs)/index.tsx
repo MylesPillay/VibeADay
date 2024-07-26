@@ -37,15 +37,6 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		gap: 2
 	},
-	stepContainer: {
-		gap: 2,
-		marginBottom: 2
-	},
-	reactLogo: {
-		height: 178,
-		width: 290,
-		bottom: 0,
-		left: 0,
-		position: "absolute"
-	}
+
+
 });

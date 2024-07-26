@@ -16,7 +16,8 @@ export default function TabLayout() {
 				tabBarInactiveTintColor: "#FFFFFF75",
 				tabBarActiveBackgroundColor: "#000000",
 				tabBarInactiveBackgroundColor: "#000000",
-				headerShown: false
+				headerShown: false, 
+				tabBarStyle: {paddingVertical: '2%', height: '13%', backgroundColor: Colors[colorScheme ?? "light"].tint}
 			}}>
 			<Tabs.Screen
 				name='index'
@@ -32,7 +33,8 @@ export default function TabLayout() {
 						<Text
 							style={{
 								color: focused ? "#FFFFFF" : "#FFFFFF75",
-								fontSize: 12
+								fontSize: 12,
+								
 							}}>
 							My Selecta
 						</Text>
@@ -53,7 +55,8 @@ export default function TabLayout() {
 						<Text
 							style={{
 								color: focused ? "#FFFFFF" : "#FFFFFF75",
-								fontSize: 12
+								fontSize: 12,
+							
 							}}>
 							The Crates
 						</Text>

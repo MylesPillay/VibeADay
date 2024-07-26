@@ -90,7 +90,6 @@ const TrackGallery = (): JSX.Element => {
 			style={{
 				flex: 1,
 				height: "100%",
-
 				justifyContent: "center",
 				alignContent: "center",
 				alignItems: "center"
@@ -99,6 +98,7 @@ const TrackGallery = (): JSX.Element => {
 				ref={flatListRef}
 				data={tracks}
 				horizontal
+				style={{height: '100%', minHeight: '100%'}}
 				pagingEnabled
 				initialScrollIndex={2}
 				getItemLayout={(data, index) => ({

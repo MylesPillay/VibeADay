@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { ThemedView } from "@/components/ThemedView";
-import DailyTrackGallery from "@/components/DailyTrackGallery";
+import { ThemedView } from "../components/ThemedView":
+import DailyTrackGallery from "../components/DailyTrackGallery";
 
 interface Track {
 	created_at: string;

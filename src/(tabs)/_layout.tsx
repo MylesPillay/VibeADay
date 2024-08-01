@@ -2,9 +2,10 @@ import { Tabs } from "expo-router";
 import React from "react";
 import { Text } from "react-native";
 
-import { TabBarIcon } from "@/components/navigation/TabBarIcon";
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import { TabBarIcon } from "@/src/components/navigation/TabBarIcon";
+
+import { useColorScheme } from "@/src/hooks/useColorScheme";
+import { Colors } from "../constants/Colors";
 
 export default function TabLayout() {
 	const colorScheme = useColorScheme();
@@ -16,8 +17,12 @@ export default function TabLayout() {
 				tabBarInactiveTintColor: "#FFFFFF75",
 				tabBarActiveBackgroundColor: "#000000",
 				tabBarInactiveBackgroundColor: "#000000",
-				headerShown: false, 
-				tabBarStyle: {paddingVertical: '2%', height: '13%', backgroundColor: Colors[colorScheme ?? "light"].tint}
+				headerShown: false,
+				tabBarStyle: {
+					paddingVertical: "2%",
+					height: "13%",
+					backgroundColor: Colors[colorScheme ?? "light"].tint
+				}
 			}}>
 			<Tabs.Screen
 				name='index'
@@ -33,8 +38,7 @@ export default function TabLayout() {
 						<Text
 							style={{
 								color: focused ? "#FFFFFF" : "#FFFFFF75",
-								fontSize: 12,
-								
+								fontSize: 12
 							}}>
 							My Selecta
 						</Text>
@@ -55,8 +59,7 @@ export default function TabLayout() {
 						<Text
 							style={{
 								color: focused ? "#FFFFFF" : "#FFFFFF75",
-								fontSize: 12,
-							
+								fontSize: 12
 							}}>
 							The Crates
 						</Text>

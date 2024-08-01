@@ -1,36 +1,38 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-	View,
-	FlatList,
-	Dimensions,
-	ScrollView,
-	Button,
-	ActivityIndicator
-} from "react-native";
+import { View, FlatList, Dimensions, ActivityIndicator } from "react-native";
 import { createClient } from "@supabase/supabase-js";
-import DailyTrackCard from "./DailyTrackCard";
+import StickyTopNavigator from "./StickyTopNavigator";
+import { genreColors } from "../constants/Colors";
+
 interface Track {
+	genreName: string;
 	created_at: string;
 	song_title: string;
 	song_artist: string;
-	genre: string;
-	spotify_url: string;
-	soundcloud_url: string;
+	spotify_url?: string;
+	soundcloud_url?: string;
 
 	artwork: string;
 }
-interface TrackGalleryProps {
-	tracks?: {
-		data: Track[];
-	};
+
+export interface NavigatorTrack {
+	genreName: string;
+	bgColour: string;
+	trackIndex: number;
 }
 const TrackGallery = (): JSX.Element => {
 	const [tracks, setTracks] = useState<Track[]>([]);
+	const [navigatorTracks, setNavigatorTracks] = useState<NavigatorTrack[]>(
+		[]
+	);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
-	const [currentIndex, setCurrentIndex] = useState(2);
+	const [displayedTrack, setDisplayedTrack] = React.useState<number>(0);
 	const flatListRef = useRef<FlatList<Track> | null>(null);
 	const windowWidth = Dimensions.get("window").width;
+	function getGenreColor(colorId: number): string {
+		return genreColors[colorId] || "#000000";
+	}
 
 	useEffect(() => {
 		const fetchTracks = async () => {
@@ -45,6 +47,13 @@ const TrackGallery = (): JSX.Element => {
 				if (error) throw error;
 				if (data) {
 					setTracks(data);
+					setNavigatorTracks(
+						data.map((track, index) => ({
+							genreName: track.genre,
+							bgColour: getGenreColor(track.genre_id),
+							trackIndex: index
+						}))
+					);
 				}
 			} catch (error) {
 				setError("Failed to fetch tracks");
@@ -58,22 +67,22 @@ const TrackGallery = (): JSX.Element => {
 	}, []);
 
 	const goToPreviousTrack = () => {
-		if (currentIndex > 0) {
+		if (displayedTrack > 0) {
 			flatListRef.current?.scrollToIndex({
-				index: currentIndex - 1,
+				index: displayedTrack - 1,
 				animated: true
 			});
-			setCurrentIndex(currentIndex - 1);
+			setDisplayedTrack(displayedTrack - 1);
 		}
 	};
 
 	const goToNextTrack = () => {
-		if (currentIndex < tracks.length - 1) {
+		if (displayedTrack < tracks.length - 1) {
 			flatListRef.current?.scrollToIndex({
-				index: currentIndex + 1,
+				index: displayedTrack + 1,
 				animated: true
 			});
-			setCurrentIndex(currentIndex + 1);
+			setDisplayedTrack(displayedTrack + 1);
 		}
 	};
 
@@ -94,11 +103,16 @@ const TrackGallery = (): JSX.Element => {
 				alignContent: "center",
 				alignItems: "center"
 			}}>
-			<FlatList
+			<StickyTopNavigator
+				tracks={navigatorTracks}
+				displayedTrack={displayedTrack}
+				setDisplayedTrack={setDisplayedTrack}
+			/>
+			{/* <FlatList
 				ref={flatListRef}
 				data={tracks}
 				horizontal
-				style={{height: '100%', minHeight: '100%'}}
+				style={{ height: "100%", minHeight: "100%" }}
 				pagingEnabled
 				initialScrollIndex={2}
 				getItemLayout={(data, index) => ({
@@ -107,7 +121,7 @@ const TrackGallery = (): JSX.Element => {
 					index
 				})}
 				showsHorizontalScrollIndicator={false}
-				renderItem={({ item }) => (
+				renderItem={(item) => (
 					<View
 						style={{
 							width: windowWidth,
@@ -117,12 +131,13 @@ const TrackGallery = (): JSX.Element => {
 							alignItems: "center"
 						}}>
 						<DailyTrackCard
-							trackName={item.song_title}
-							artistName={item.song_artist}
-							genreName={item.genre}
-							artwork={{ uri: item.artwork }}
+							trackName={item.item.song_title}
+							artistName={item.item.song_artist as string}
+							genreName={item.item.genreName}
+							artwork={{ uri: item.item.artwork }}
 							goToPreviousTrack={goToPreviousTrack}
 							goToNextTrack={goToNextTrack}
+							bgColour={""}
 						/>
 					</View>
 				)}
@@ -140,7 +155,7 @@ const TrackGallery = (): JSX.Element => {
 						});
 					});
 				}}
-			/>
+			/> */}
 		</View>
 	);
 };

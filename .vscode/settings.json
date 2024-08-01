@@ -5,14 +5,5 @@
 	"[typescript]": {
 		"editor.defaultFormatter": "denoland.vscode-deno"
 	},
-	"cSpell.words": [
-		"Gtsd",
-		"Iiwicm",
-		"Imlie",
-		"Rnrggw",
-		"soundcloud",
-		"XVCJ",
-		"Zrcmxq",
-		"ZSIs"
-	]
+	"cSpell.words": ["Colour"]
 }

@@ -3,6 +3,7 @@ import { View, FlatList, Dimensions, ActivityIndicator } from "react-native";
 import { createClient } from "@supabase/supabase-js";
 import StickyTopNavigator from "./StickyTopNavigator";
 import { genreColors } from "../constants/Colors";
+import DailyTrackCard from "./DailyTrackCard";
 
 interface Track {
 	genreName: string;
@@ -99,6 +100,7 @@ const TrackGallery = (): JSX.Element => {
 			style={{
 				flex: 1,
 				height: "100%",
+				width: "100%",
 				justifyContent: "center",
 				alignContent: "center",
 				alignItems: "center"
@@ -107,6 +109,15 @@ const TrackGallery = (): JSX.Element => {
 				tracks={navigatorTracks}
 				displayedTrack={displayedTrack}
 				setDisplayedTrack={setDisplayedTrack}
+			/>
+			<DailyTrackCard
+				trackName={tracks[displayedTrack].song_title}
+				artistName={tracks[displayedTrack].song_artist}
+				genreName={tracks[displayedTrack].genreName}
+				artwork={{ uri: tracks[displayedTrack].artwork }}
+				goToPreviousTrack={goToPreviousTrack}
+				goToNextTrack={goToNextTrack}
+				bgColour={navigatorTracks[displayedTrack]?.bgColour}
 			/>
 			{/* <FlatList
 				ref={flatListRef}

@@ -125,7 +125,7 @@
 // 							goToPreviousTrack={goToPreviousTrack}
 // 							goToNextTrack={goToNextTrack}
 // 							bgColour={getGenreColor(
-// 								tracks[currentIndex]?.genre
+// 								navigat[currentIndex]?.genre
 // 							)}
 // 						/>
 // 					</View>

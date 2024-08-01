@@ -15,71 +15,95 @@ const StickyTopNavigator = ({
 }: StickyTopNavigatorProps): JSX.Element => {
 	const [isExpanded, setIsExpanded] = React.useState<boolean>(false);
 
-	function handlePress(index: number): void {
-		throw new Error("Function not implemented.");
+	function handleGenreSelection(selectedTrack: number): void {
+		return setDisplayedTrack(selectedTrack);
+	}
+	function handleExpandGenreList(isExpanded: boolean): void {
+		return setIsExpanded(!isExpanded);
 	}
 
 	return (
 		<View
 			style={[
 				styles.stickyHeader,
-				{ backgroundColor: tracks[displayedTrack]?.bgColour }
+				// { backgroundColor: tracks[displayedTrack]?.bgColour }
+				{ backgroundColor: "pink" }
 			]}>
-			{tracks.map((track, index) => (
-				<TouchableOpacity
-					key={index}
-					onPress={() => {
-						handlePress(index);
-					}}>
-					{!isExpanded ? (
-						<View
-							style={[
-								styles.trackContainer,
-								{ backgroundColor: track.bgColour }
-							]}
-						/>
+			<View style={styles.trackContainer}>
+				{tracks.map((track, index) =>
+					!isExpanded ? (
+						<TouchableOpacity
+							key={index}
+							disabled={index === displayedTrack ? true : false}
+							onPress={() => {
+								handleGenreSelection(index);
+							}}>
+							<View
+								style={[
+									styles.genreNavSquare,
+									{ backgroundColor: track.bgColour }
+								]}
+							/>
+						</TouchableOpacity>
 					) : (
-						<View
-							style={[
-								styles.expandedTrackContainer,
-								{
-									backgroundColor: tracks[index].bgColour
-								}
-							]}>
-							<Text style={styles.genreText}>
-								{track.genreName}
-							</Text>
-						</View>
-					)}
-				</TouchableOpacity>
-			))}
+						<TouchableOpacity
+							key={index}
+							disabled={index === displayedTrack ? true : false}
+							onPress={() => {
+								handleGenreSelection(index);
+							}}>
+							<View
+								style={[
+									styles.expandedTrackContainer,
+									{
+										backgroundColor:
+											tracks[displayedTrack].bgColour
+									}
+								]}>
+								<Text style={styles.genreText}>
+									{track.genreName}
+								</Text>
+							</View>
+						</TouchableOpacity>
+					)
+				)}
+			</View>
 		</View>
 	);
 };
 const styles = StyleSheet.create({
 	stickyHeader: {
-		position: "absolute",
-		top: 0,
-		left: 0,
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "space-between",
 		width: "100%",
-		zIndex: 1000,
 		padding: 10,
-		backgroundColor: "#fff"
+		backgroundColor: "red"
 	},
 	trackContainer: {
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "flex-start",
+		alignItems: "center",
+		alignContent: "center"
+	},
+	genreNavSquare: {
 		width: 50,
-		height: 50,
-		marginVertical: 5
+		height: 50
 	},
 	expandedTrackContainer: {
 		width: "100%",
 		padding: 10,
+		height: 40,
 		marginVertical: 5,
-		justifyContent: "center"
+		justifyContent: "center",
+		alignItems: "center",
+		alignContent: "center"
 	},
 	genreText: {
 		fontWeight: "500",
-		textAlign: "left"
+		textAlign: "left",
+		color: "green"
 	}
 });
 

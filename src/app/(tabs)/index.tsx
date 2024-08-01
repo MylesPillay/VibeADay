@@ -1,21 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { ThemedView } from "../components/ThemedView":
-import DailyTrackGallery from "../components/DailyTrackGallery";
-
-interface Track {
-	created_at: string;
-	song_title: string;
-	song_artist: string;
-	genre: string;
-	spotify_url: string;
-	soundcloud_url: string;
-	artwork: string;
-}
+import DailyTrackGallery from "../../components/DailyTrackGallery";
 
 export default function HomeScreen() {
-	// const tracks = getDailyTracks();
-
 	return (
 		<View style={styles.spacerWrapper}>
 			<DailyTrackGallery />
@@ -30,7 +17,7 @@ const styles = StyleSheet.create({
 		alignContent: "center",
 		alignItems: "center",
 		height: "100%",
-		width: "auto"
+		width: "100%"
 	},
 	titleContainer: {
 		flexDirection: "row",

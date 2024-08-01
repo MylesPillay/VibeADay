@@ -38,9 +38,11 @@ const StickyTopNavigator = ({
 									style={[
 										styles.genreDot,
 										{
+											height: 14 - (index + 2),
+											width: 14 - (index + 2),
 											backgroundColor:
 												displayedTrack === index
-													? "#00000025"
+													? "#00000045"
 													: "#000000"
 										}
 									]}
@@ -101,12 +103,10 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		alignContent: "center",
-		width: 50,
-		height: 50
+		width: 40,
+		height: 40
 	},
 	genreDot: {
-		height: 15,
-		width: 15,
 		borderRadius: 100
 	},
 	expandedTrackContainer: {
@@ -126,9 +126,7 @@ const styles = StyleSheet.create({
 		height: "auto",
 		width: "auto",
 		flex: 1,
-		alignItems: "center",
-
-		flex: 1
+		alignItems: "center"
 	},
 	titleText: { fontWeight: "800", color: "white", fontSize: 20 },
 

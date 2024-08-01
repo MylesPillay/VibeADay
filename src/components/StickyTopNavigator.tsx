@@ -23,12 +23,7 @@ const StickyTopNavigator = ({
 	}
 
 	return (
-		<View
-			style={[
-				styles.stickyHeader,
-				{ backgroundColor: tracks[displayedTrack]?.bgColour }
-				// { backgroundColor: "pink" }
-			]}>
+		<View style={[styles.stickyHeader]}>
 			<View style={styles.trackContainer}>
 				{tracks.map((track, index) =>
 					!isExpanded ? (
@@ -38,12 +33,19 @@ const StickyTopNavigator = ({
 							onPress={() => {
 								handleGenreSelection(index);
 							}}>
-							<View
-								style={[
-									styles.genreNavSquare,
-									{ backgroundColor: track.bgColour }
-								]}
-							/>
+							<View style={[styles.genreNavButton]}>
+								<View
+									style={[
+										styles.genreDot,
+										{
+											backgroundColor:
+												displayedTrack === index
+													? "#00000025"
+													: "#000000"
+										}
+									]}
+								/>
+							</View>
 						</TouchableOpacity>
 					) : (
 						<TouchableOpacity
@@ -74,14 +76,14 @@ const StickyTopNavigator = ({
 const styles = StyleSheet.create({
 	stickyHeader: {
 		display: "flex",
-		top: 0,
+		top: 30,
 		left: 0,
 		zIndex: 100,
 		position: "absolute",
 		flexDirection: "row",
 		justifyContent: "space-between",
 		width: "100%",
-		padding: 10
+		height: "auto"
 	},
 	trackContainer: {
 		display: "flex",
@@ -90,9 +92,18 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		alignContent: "center"
 	},
-	genreNavSquare: {
+	genreNavButton: {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		alignContent: "center",
 		width: 50,
 		height: 50
+	},
+	genreDot: {
+		height: 15,
+		width: 15,
+		borderRadius: 100
 	},
 	expandedTrackContainer: {
 		width: "100%",

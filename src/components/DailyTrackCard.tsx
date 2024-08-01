@@ -201,8 +201,8 @@ const styles = StyleSheet.create({
 		height: "100%"
 	},
 	artwork: {
-		width: "85%",
-		height: "50%",
+		height: "40%",
+		width: "65%",
 		marginBottom: "10%",
 		borderRadius: 10,
 		borderColor: "#FFFFFF55",

@@ -107,11 +107,12 @@ const TrackGallery = (): JSX.Element => {
 				height: "100%",
 				width: "100%",
 				justifyContent: "center",
+				backgroundColor: "#000000",
 				alignContent: "center",
 				alignItems: "center"
 			}}>
 			<StickyTopNavigator
-				tracks={navigatorTracks}
+				tracks={navigatorTracks.slice(0, 5)}
 				displayedTrack={displayedTrack}
 				setDisplayedTrack={setDisplayedTrack}
 			/>

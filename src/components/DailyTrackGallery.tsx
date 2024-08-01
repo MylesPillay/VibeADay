@@ -50,8 +50,10 @@ const TrackGallery = (): JSX.Element => {
 					setTracks(data);
 					setNavigatorTracks(
 						data.map((track, index) => ({
-							genreName: track.genre,
-							bgColour: getGenreColor(track.genre_id),
+							genreName: track.genre_title,
+							bgColour: getGenreColor(
+								track.genre_colour as number
+							),
 							trackIndex: index
 						}))
 					);
@@ -94,6 +96,9 @@ const TrackGallery = (): JSX.Element => {
 	if (error) {
 		console.log(error, "this is the error message");
 	}
+	console.log(navigatorTracks, "this is the navigator tracks");
+	console.log(displayedTrack, "this is the displayed track");
+	console.log(tracks, "this is the tracks");
 
 	return (
 		<View
@@ -119,54 +124,6 @@ const TrackGallery = (): JSX.Element => {
 				goToNextTrack={goToNextTrack}
 				bgColour={navigatorTracks[displayedTrack]?.bgColour}
 			/>
-			{/* <FlatList
-				ref={flatListRef}
-				data={tracks}
-				horizontal
-				style={{ height: "100%", minHeight: "100%" }}
-				pagingEnabled
-				initialScrollIndex={2}
-				getItemLayout={(data, index) => ({
-					length: windowWidth,
-					offset: windowWidth * index,
-					index
-				})}
-				showsHorizontalScrollIndicator={false}
-				renderItem={(item) => (
-					<View
-						style={{
-							width: windowWidth,
-							height: "100%",
-							justifyContent: "center",
-							alignContent: "center",
-							alignItems: "center"
-						}}>
-						<DailyTrackCard
-							trackName={item.item.song_title}
-							artistName={item.item.song_artist as string}
-							genreName={item.item.genreName}
-							artwork={{ uri: item.item.artwork }}
-							goToPreviousTrack={goToPreviousTrack}
-							goToNextTrack={goToNextTrack}
-							bgColour={""}
-						/>
-					</View>
-				)}
-				keyExtractor={(item, index) =>
-					item.created_at + index.toString()
-				}
-				onScrollToIndexFailed={(info) => {
-					const wait = new Promise((resolve) =>
-						setTimeout(resolve, 500)
-					);
-					wait.then(() => {
-						flatListRef.current?.scrollToIndex({
-							index: info.index,
-							animated: true
-						});
-					});
-				}}
-			/> */}
 		</View>
 	);
 };

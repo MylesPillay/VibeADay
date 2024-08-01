@@ -26,8 +26,8 @@ const StickyTopNavigator = ({
 		<View
 			style={[
 				styles.stickyHeader,
-				// { backgroundColor: tracks[displayedTrack]?.bgColour }
-				{ backgroundColor: "pink" }
+				{ backgroundColor: tracks[displayedTrack]?.bgColour }
+				// { backgroundColor: "pink" }
 			]}>
 			<View style={styles.trackContainer}>
 				{tracks.map((track, index) =>
@@ -74,11 +74,14 @@ const StickyTopNavigator = ({
 const styles = StyleSheet.create({
 	stickyHeader: {
 		display: "flex",
+		top: 0,
+		left: 0,
+		zIndex: 100,
+		position: "absolute",
 		flexDirection: "row",
 		justifyContent: "space-between",
 		width: "100%",
-		padding: 10,
-		backgroundColor: "red"
+		padding: 10
 	},
 	trackContainer: {
 		display: "flex",

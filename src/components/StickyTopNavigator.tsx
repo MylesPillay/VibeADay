@@ -70,6 +70,12 @@ const StickyTopNavigator = ({
 					)
 				)}
 			</View>
+			<View style={styles.titleContainer}>
+				<Text style={styles.titleText}>
+					{tracks[displayedTrack].genreName}
+				</Text>
+			</View>
+			<View style={{ flex: 1 }} />
 		</View>
 	);
 };
@@ -88,9 +94,7 @@ const styles = StyleSheet.create({
 	trackContainer: {
 		display: "flex",
 		flexDirection: "column",
-		justifyContent: "flex-start",
-		alignItems: "center",
-		alignContent: "center"
+		justifyContent: "flex-start"
 	},
 	genreNavButton: {
 		display: "flex",
@@ -114,6 +118,20 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		alignContent: "center"
 	},
+	titleContainer: {
+		display: "flex",
+		justifyContent: "flex-start",
+		marginTop: 15,
+		marginLeft: "10%",
+		height: "auto",
+		width: "auto",
+		flex: 1,
+		alignItems: "center",
+
+		flex: 1
+	},
+	titleText: { fontWeight: "800", color: "white", fontSize: 20 },
+
 	genreText: {
 		fontWeight: "500",
 		textAlign: "left",

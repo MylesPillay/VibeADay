@@ -95,14 +95,14 @@ const StickyTopNavigator = ({
 					onPress={() => handleExpandGenreList(isExpanded)}>
 					{isExpanded ? (
 						<>
-							<View style={{ top: "21%" }}>
+							<View style={{ top: "24%" }}>
 								<MaterialCommunityIcons
 									name={"chevron-down"}
 									color={"#FFFFFF"}
 									size={45}
 								/>
 							</View>
-							<View style={{ bottom: "22%" }}>
+							<View style={{ bottom: "24%" }}>
 								<MaterialCommunityIcons
 									name={"chevron-up"}
 									color={"#FFFFFF"}
@@ -115,14 +115,22 @@ const StickyTopNavigator = ({
 							<View style={{ top: "12%" }}>
 								<MaterialCommunityIcons
 									name={"chevron-up"}
-									color={"#FFFFFF"}
+									color={
+										displayedTrack === 0
+											? "#FFFFFF60"
+											: "#FFFFFF"
+									}
 									size={45}
 								/>
 							</View>
 							<View style={{ bottom: "12%" }}>
 								<MaterialCommunityIcons
 									name={"chevron-down"}
-									color={"#FFFFFF"}
+									color={
+										displayedTrack === 4
+											? "#FFFFFF60"
+											: "#FFFFFF"
+									}
 									size={45}
 								/>
 							</View>

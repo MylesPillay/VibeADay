@@ -1,11 +1,14 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import DailyTrackGallery from "../../components/DailyTrackGallery";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function HomeScreen() {
 	return (
 		<View style={styles.spacerWrapper}>
-			<DailyTrackGallery />
+			<GestureHandlerRootView style={{ flex: 1 }}>
+				<DailyTrackGallery />
+			</GestureHandlerRootView>
 		</View>
 	);
 }

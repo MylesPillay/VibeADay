@@ -6,7 +6,8 @@ import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
 	withSpring,
-	withTiming
+	withTiming,
+	withDelay
 } from "react-native-reanimated";
 
 interface StickyTopNavigatorProps {
@@ -24,6 +25,8 @@ const StickyTopNavigator = ({
 
 	const topChevronPosition = useSharedValue(3);
 	const bottomChevronPosition = useSharedValue(3);
+	const translationXValue = useSharedValue(500);
+
 	const handleGenreListSelection = (selectedTrack: number) => {
 		setDisplayedTrack(selectedTrack);
 		handleExpandGenreList();
@@ -36,6 +39,12 @@ const StickyTopNavigator = ({
 		setIsExpanded(!isExpanded);
 		topChevronPosition.value = withTiming(isExpanded ? 5 : 17);
 		bottomChevronPosition.value = withTiming(isExpanded ? 5 : 17);
+
+		// Animate the genre list items with delay
+		translationXValue.value = withDelay(
+			100,
+			withTiming(isExpanded ? -500 : 30)
+		);
 	};
 
 	const topChevronStyle = useAnimatedStyle(() => {
@@ -86,21 +95,26 @@ const StickyTopNavigator = ({
 							</View>
 						</TouchableOpacity>
 					) : (
-						<TouchableOpacity
-							key={index}
-							activeOpacity={0.6}
-							disabled={index === displayedTrack ? true : false}
-							onPress={() => {
-								handleGenreListSelection(index);
-							}}>
-							<View
-								style={[
-									styles.expandedGenreNavContainer,
-									{
-										backgroundColor:
-											tracks[displayedTrack].bgColour
-									}
-								]}>
+						<Animated.View
+							style={[
+								styles.expandedGenreNavContainer,
+								{
+									transform: [
+										{
+											translateX: translationXValue
+										}
+									]
+								}
+							]}>
+							<TouchableOpacity
+								key={index}
+								activeOpacity={0.6}
+								disabled={
+									index === displayedTrack ? true : false
+								}
+								onPress={() => {
+									handleGenreListSelection(index);
+								}}>
 								<Text
 									style={[
 										styles.genreText,
@@ -115,8 +129,8 @@ const StickyTopNavigator = ({
 									]}>
 									{track.genreName}
 								</Text>
-							</View>
-						</TouchableOpacity>
+							</TouchableOpacity>
+						</Animated.View>
 					)
 				)}
 			</View>
@@ -169,13 +183,14 @@ const styles = StyleSheet.create({
 		borderRadius: 100
 	},
 	expandedGenreNavContainer: {
-		width: "100%",
+		minWidth: "80%",
 		padding: 10,
-		height: 40,
+		height: 60,
 		marginVertical: 5,
-		justifyContent: "center",
-		alignItems: "center",
-		alignContent: "center"
+		justifyContent: "flex-start",
+		textAlign: "left",
+		alignItems: "flex-start",
+		alignContent: "flex-start"
 	},
 	titleContainer: {
 		marginTop: "2.5%",
@@ -193,10 +208,11 @@ const styles = StyleSheet.create({
 	},
 
 	genreText: {
+		textAlignVertical: "center",
 		fontWeight: "800",
 		fontSize: 20,
-		textAlign: "left",
-		color: "emerald"
+		flex: 1,
+		flexGrow: 1
 	}
 });
 

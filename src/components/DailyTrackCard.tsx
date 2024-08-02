@@ -161,6 +161,7 @@ interface DailyTrackCardProps {
 	goToPreviousTrack: () => void;
 	goToNextTrack: () => void;
 	bgColour: string;
+	isExpanded: boolean;
 }
 
 const DailyTrackCard = ({
@@ -170,7 +171,8 @@ const DailyTrackCard = ({
 	artwork,
 	goToPreviousTrack,
 	goToNextTrack,
-	bgColour
+	bgColour,
+	isExpanded
 }: DailyTrackCardProps): JSX.Element => {
 	const windowHeight = Dimensions.get("window").height;
 	return (

@@ -27,6 +27,7 @@ const TrackGallery = (): JSX.Element => {
 	const [navigatorTracks, setNavigatorTracks] = useState<NavigatorTrack[]>(
 		[]
 	);
+	const [isExpanded, setIsExpanded] = React.useState<boolean>(false);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [displayedTrack, setDisplayedTrack] = React.useState<number>(0);
@@ -127,6 +128,8 @@ const TrackGallery = (): JSX.Element => {
 					tracks={navigatorTracks.slice(0, 5)}
 					displayedTrack={displayedTrack}
 					setDisplayedTrack={setDisplayedTrack}
+					isExpanded={isExpanded}
+					setIsExpanded={setIsExpanded}
 				/>
 				<DailyTrackCard
 					trackName={tracks[displayedTrack].song_title}
@@ -136,6 +139,7 @@ const TrackGallery = (): JSX.Element => {
 					goToPreviousTrack={goToPreviousTrack}
 					goToNextTrack={goToNextTrack}
 					bgColour={navigatorTracks[displayedTrack]?.bgColour}
+					isExpanded={isExpanded}
 				/>
 			</View>
 		</PanGestureHandler>

@@ -15,23 +15,26 @@ import Animated, {
 	withTiming,
 	withDelay
 } from "react-native-reanimated";
+import { RFValue } from "react-native-responsive-fontsize";
 
 interface StickyTopNavigatorProps {
 	tracks: NavigatorTrack[];
 	displayedTrack: number;
 	setDisplayedTrack: React.Dispatch<React.SetStateAction<number>>;
+	isExpanded: boolean;
+	setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const StickyTopNavigator = ({
 	tracks,
 	displayedTrack,
-	setDisplayedTrack
+	setDisplayedTrack,
+	isExpanded,
+	setIsExpanded
 }: StickyTopNavigatorProps): JSX.Element => {
-	const [isExpanded, setIsExpanded] = React.useState<boolean>(false);
-
-	const topChevronPosition = useSharedValue(3);
+	const topChevronPosition = useSharedValue(RFValue(5, 580));
 	const bottomChevronPosition = useSharedValue(3);
-	const translationXValue = useSharedValue(500);
+	const translationXValue = useSharedValue(-500);
 	const windowWidth = Dimensions.get("window").width;
 	const windowHeight = Dimensions.get("window").height;
 
@@ -45,10 +48,13 @@ const StickyTopNavigator = ({
 
 	const handleExpandGenreList = () => {
 		setIsExpanded(!isExpanded);
-		topChevronPosition.value = withTiming(isExpanded ? 5 : 17);
-		bottomChevronPosition.value = withTiming(isExpanded ? 5 : 17);
+		topChevronPosition.value = withTiming(
+			isExpanded ? RFValue(5, 580) : RFValue(12, 580)
+		);
+		bottomChevronPosition.value = withTiming(
+			isExpanded ? RFValue(5, 580) : RFValue(12, 580)
+		);
 
-		// Animate the genre list items with delay
 		translationXValue.value = withDelay(
 			100,
 			withTiming(isExpanded ? -500 : 30)
@@ -73,12 +79,23 @@ const StickyTopNavigator = ({
 				styles.stickyHeader,
 				{
 					width: windowWidth,
+					paddingHorizontal: windowWidth * 0.02,
+					height: isExpanded
+						? windowHeight * 0.5
+						: windowHeight * 0.15,
 					backgroundColor: isExpanded
-						? tracks[displayedTrack].bgColour
+						? tracks[displayedTrack].bgColour + "99"
 						: "#ffffff00"
 				}
 			]}>
-			<View style={styles.genreNavContainer}>
+			<View
+				style={[
+					styles.genreNavContainer,
+					{
+						height: isExpanded ? windowHeight : "auto",
+						width: isExpanded ? windowWidth * 0.84 : "auto"
+					}
+				]}>
 				{tracks.map((track, index) =>
 					!isExpanded ? (
 						<TouchableOpacity
@@ -120,7 +137,7 @@ const StickyTopNavigator = ({
 					) : (
 						<Animated.View
 							style={[
-								styles.navGenreTitleContainer,
+								styles.navGenreNameContainer,
 								{
 									transform: [
 										{
@@ -181,25 +198,23 @@ const styles = StyleSheet.create({
 	stickyHeader: {
 		display: "flex",
 		position: "absolute",
+		backgroundColor: "blue",
 		zIndex: 100,
 		flexDirection: "row",
-		justifyContent: "space-evenly",
-		paddingTop: "20%"
+		justifyContent: "space-between",
+		paddingTop: "15%"
 	},
 	genreNavContainer: {
 		display: "flex",
-		flex: 1,
-		backgroundColor: "yellow",
-		flexGrow: 1,
 		flexDirection: "column",
 		justifyContent: "flex-start",
+		paddingTop: RFValue(8, 580),
 		alignItems: "flex-start",
 		top: "3%",
 		left: "1%"
 	},
 	genreNavButton: {
 		display: "flex",
-
 		justifyContent: "center",
 		alignItems: "center",
 		alignContent: "center",
@@ -209,13 +224,11 @@ const styles = StyleSheet.create({
 	genreDot: {
 		borderRadius: 100
 	},
-	navGenreTitleContainer: {
-		minWidth: "80%",
-		flex: 8,
-		flexGrow: 1,
-		height: 60,
-		marginVertical: 5,
-		justifyContent: "center",
+	navGenreNameContainer: {
+		height: "auto",
+		paddingBottom: RFValue(10, 580),
+		width: "100%",
+		justifyContent: "flex-start",
 		textAlign: "left",
 		alignItems: "flex-start",
 		alignContent: "flex-start"
@@ -229,18 +242,14 @@ const styles = StyleSheet.create({
 	},
 	genreText: {
 		textAlignVertical: "center",
+		textAlign: "left",
 		fontFamily: "sans-serif",
 		fontWeight: "500",
-		padding: "8%",
-		paddingLeft: 0,
-		color: "white",
-		fontSize: 28,
-		flex: 1,
-		flexGrow: 1
+		fontSize: 28
 	},
 	titleContainer: {
 		marginTop: "2.5%",
-		backgroundColor: "green",
+		justifyContent: "center",
 		textAlign: "center",
 		height: "auto",
 		width: "auto",

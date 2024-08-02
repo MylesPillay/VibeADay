@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import Animated from "react-native-reanimated";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
@@ -16,21 +16,26 @@ const ChevronComponent = ({
 	topChevronStyle,
 	bottomChevronStyle
 }: ChevronComponentProps) => {
+	const windowHeight = Dimensions.get("window").height;
 	return (
-		<View style={styles.chevronIconsContainer}>
+		<View
+			style={[
+				styles.chevronIconsContainer,
+				{ maxHeight: windowHeight * 0.08 }
+			]}>
 			<TouchableOpacity activeOpacity={1} onPress={handleExpandGenreList}>
 				<Animated.View style={topChevronStyle}>
 					<MaterialCommunityIcons
 						name={isExpanded ? "chevron-down" : "chevron-up"}
 						color={"#FFFFFF"}
-						size={45}
+						size={isExpanded ? 46 : 45}
 					/>
 				</Animated.View>
 				<Animated.View style={bottomChevronStyle}>
 					<MaterialCommunityIcons
 						name={isExpanded ? "chevron-up" : "chevron-down"}
 						color={"#FFFFFF"}
-						size={45}
+						size={isExpanded ? 46 : 45}
 					/>
 				</Animated.View>
 			</TouchableOpacity>
@@ -41,10 +46,9 @@ const ChevronComponent = ({
 const styles = StyleSheet.create({
 	chevronIconsContainer: {
 		display: "flex",
-
+		zIndex: 200,
 		flexDirection: "column",
-		bottom: "4%",
-		backgroundColor: "pink"
+		justifyContent: "center"
 	}
 });
 

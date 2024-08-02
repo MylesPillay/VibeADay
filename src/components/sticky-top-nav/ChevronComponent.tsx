@@ -41,14 +41,10 @@ const ChevronComponent = ({
 const styles = StyleSheet.create({
 	chevronIconsContainer: {
 		display: "flex",
+
 		flexDirection: "column",
-		margin: "3%",
-		marginTop: 0,
-		justifyContent: "space-around",
-		width: "12%",
-		height: "5%",
-		alignItems: "center",
-		alignSelf: "flex-start"
+		bottom: "4%",
+		backgroundColor: "pink"
 	}
 });
 

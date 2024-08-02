@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+	View,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	Dimensions
+} from "react-native";
 import { NavigatorTrack } from "../DailyTrackGallery";
 import ChevronComponent from "./ChevronComponent";
 import Animated, {
@@ -26,6 +32,8 @@ const StickyTopNavigator = ({
 	const topChevronPosition = useSharedValue(3);
 	const bottomChevronPosition = useSharedValue(3);
 	const translationXValue = useSharedValue(500);
+	const windowWidth = Dimensions.get("window").width;
+	const windowHeight = Dimensions.get("window").height;
 
 	const handleGenreListSelection = (selectedTrack: number) => {
 		setDisplayedTrack(selectedTrack);
@@ -64,6 +72,7 @@ const StickyTopNavigator = ({
 			style={[
 				styles.stickyHeader,
 				{
+					width: windowWidth,
 					backgroundColor: isExpanded
 						? tracks[displayedTrack].bgColour
 						: "#ffffff00"
@@ -83,8 +92,22 @@ const StickyTopNavigator = ({
 									style={[
 										styles.genreDot,
 										{
-											height: 14 - (index + 2),
-											width: 14 - (index + 2),
+											height:
+												index === 0
+													? 16
+													: 15 - (index + 2),
+											width:
+												index === 0
+													? 16
+													: 15 - (index + 2),
+											borderColor:
+												index === displayedTrack
+													? "goldenrod"
+													: "none",
+											borderWidth:
+												index === displayedTrack
+													? 3
+													: 0,
 											backgroundColor:
 												displayedTrack === index
 													? "#00000045"
@@ -97,7 +120,7 @@ const StickyTopNavigator = ({
 					) : (
 						<Animated.View
 							style={[
-								styles.expandedGenreNavContainer,
+								styles.navGenreTitleContainer,
 								{
 									transform: [
 										{
@@ -108,6 +131,7 @@ const StickyTopNavigator = ({
 							]}>
 							<TouchableOpacity
 								key={index}
+								style={styles.navGenreTitleButton}
 								activeOpacity={0.6}
 								disabled={
 									index === displayedTrack ? true : false
@@ -143,6 +167,7 @@ const StickyTopNavigator = ({
 					</Text>
 				</View>
 			)}
+
 			<ChevronComponent
 				isExpanded={isExpanded}
 				handleExpandGenreList={handleExpandGenreList}
@@ -158,21 +183,23 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		zIndex: 100,
 		flexDirection: "row",
-		justifyContent: "space-between",
-		width: "100%",
-		height: "100%",
+		justifyContent: "space-evenly",
 		paddingTop: "20%"
 	},
 	genreNavContainer: {
 		display: "flex",
+		flex: 1,
+		backgroundColor: "yellow",
+		flexGrow: 1,
 		flexDirection: "column",
 		justifyContent: "flex-start",
 		alignItems: "flex-start",
-		top: "28%",
+		top: "3%",
 		left: "1%"
 	},
 	genreNavButton: {
 		display: "flex",
+
 		justifyContent: "center",
 		alignItems: "center",
 		alignContent: "center",
@@ -182,37 +209,49 @@ const styles = StyleSheet.create({
 	genreDot: {
 		borderRadius: 100
 	},
-	expandedGenreNavContainer: {
+	navGenreTitleContainer: {
 		minWidth: "80%",
-		padding: 10,
+		flex: 8,
+		flexGrow: 1,
 		height: 60,
 		marginVertical: 5,
-		justifyContent: "flex-start",
+		justifyContent: "center",
 		textAlign: "left",
 		alignItems: "flex-start",
 		alignContent: "flex-start"
 	},
+	navGenreTitleButton: {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		alignContent: "center",
+		paddingLeft: 0
+	},
+	genreText: {
+		textAlignVertical: "center",
+		fontFamily: "sans-serif",
+		fontWeight: "500",
+		padding: "8%",
+		paddingLeft: 0,
+		color: "white",
+		fontSize: 28,
+		flex: 1,
+		flexGrow: 1
+	},
 	titleContainer: {
 		marginTop: "2.5%",
+		backgroundColor: "green",
 		textAlign: "center",
-		left: "2%",
 		height: "auto",
 		width: "auto",
 		alignItems: "center"
 	},
 	titleText: {
-		fontWeight: "800",
+		fontWeight: "600",
+		fontFamily: "sans-serif",
 		color: "white",
 		fontSize: 30,
 		textAlign: "center"
-	},
-
-	genreText: {
-		textAlignVertical: "center",
-		fontWeight: "800",
-		fontSize: 20,
-		flex: 1,
-		flexGrow: 1
 	}
 });
 

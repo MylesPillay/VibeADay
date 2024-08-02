@@ -174,7 +174,15 @@ const DailyTrackCard = ({
 }: DailyTrackCardProps): JSX.Element => {
 	const windowHeight = Dimensions.get("window").height;
 	return (
-		<View style={[styles.cardContainer, { backgroundColor: bgColour }]}>
+		<View
+			style={[
+				styles.cardContainer,
+				{
+					backgroundColor: bgColour,
+					height: windowHeight * 0.8,
+					paddingTop: windowHeight * 0.2
+				}
+			]}>
 			<Image
 				source={artwork}
 				style={[
@@ -202,16 +210,12 @@ const DailyTrackCard = ({
 const styles = StyleSheet.create({
 	cardContainer: {
 		flex: 1,
-		justifyContent: "center",
+		justifyContent: "flex-start",
 		alignItems: "center",
 		alignContent: "center",
-		width: "100%",
-		paddingTop: "5%",
-		height: "100%"
+		width: "100%"
 	},
 	artwork: {
-		height: "40%",
-		width: "65%",
 		marginBottom: "10%",
 		borderRadius: 10,
 		borderColor: "#FFFFFF55",

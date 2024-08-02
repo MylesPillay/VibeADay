@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { View, FlatList, Dimensions, ActivityIndicator } from "react-native";
 import { createClient } from "@supabase/supabase-js";
-import StickyTopNavigator from "./StickyTopNavigator";
+import StickyTopNavigator from "./sticky-top-nav/StickyTopNavigator";
 import { genreColors } from "../constants/Colors";
 import DailyTrackCard from "./DailyTrackCard";
 import { PanGestureHandler, State } from "react-native-gesture-handler";

@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { NavigatorTrack } from "./DailyTrackGallery";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { NavigatorTrack } from "../DailyTrackGallery";
+import ChevronComponent from "./ChevronComponent";
+import Animated, {
+	useSharedValue,
+	useAnimatedStyle,
+	withSpring,
+	withTiming
+} from "react-native-reanimated";
 
 interface StickyTopNavigatorProps {
 	tracks: NavigatorTrack[];
@@ -16,12 +22,33 @@ const StickyTopNavigator = ({
 }: StickyTopNavigatorProps): JSX.Element => {
 	const [isExpanded, setIsExpanded] = React.useState<boolean>(false);
 
-	function handleGenreSelection(selectedTrack: number): void {
-		return setDisplayedTrack(selectedTrack), setIsExpanded(false);
-	}
-	function handleExpandGenreList(isExpanded: boolean): void {
-		return setIsExpanded(!isExpanded);
-	}
+	const topChevronPosition = useSharedValue(3);
+	const bottomChevronPosition = useSharedValue(3);
+	const handleGenreListSelection = (selectedTrack: number) => {
+		setDisplayedTrack(selectedTrack);
+		handleExpandGenreList();
+	};
+	const handleGenreDotSelect = (selectedTrack: number) => {
+		setDisplayedTrack(selectedTrack);
+	};
+
+	const handleExpandGenreList = () => {
+		setIsExpanded(!isExpanded);
+		topChevronPosition.value = withTiming(isExpanded ? 5 : 17);
+		bottomChevronPosition.value = withTiming(isExpanded ? 5 : 17);
+	};
+
+	const topChevronStyle = useAnimatedStyle(() => {
+		return {
+			top: topChevronPosition.value
+		};
+	});
+
+	const bottomChevronStyle = useAnimatedStyle(() => {
+		return {
+			bottom: bottomChevronPosition.value
+		};
+	});
 
 	return (
 		<View
@@ -40,7 +67,7 @@ const StickyTopNavigator = ({
 							key={index}
 							disabled={index === displayedTrack ? true : false}
 							onPress={() => {
-								handleGenreSelection(index);
+								handleGenreDotSelect(index);
 							}}>
 							<View style={[styles.genreNavButton]}>
 								<View
@@ -61,9 +88,10 @@ const StickyTopNavigator = ({
 					) : (
 						<TouchableOpacity
 							key={index}
+							activeOpacity={0.6}
 							disabled={index === displayedTrack ? true : false}
 							onPress={() => {
-								handleGenreSelection(index);
+								handleGenreListSelection(index);
 							}}>
 							<View
 								style={[
@@ -73,7 +101,18 @@ const StickyTopNavigator = ({
 											tracks[displayedTrack].bgColour
 									}
 								]}>
-								<Text style={styles.genreText}>
+								<Text
+									style={[
+										styles.genreText,
+										{
+											color:
+												index ===
+												tracks[displayedTrack]
+													.trackIndex
+													? "#FFFFFF"
+													: "#000000"
+										}
+									]}>
 									{track.genreName}
 								</Text>
 							</View>
@@ -90,54 +129,12 @@ const StickyTopNavigator = ({
 					</Text>
 				</View>
 			)}
-			<View style={styles.chevronIconsContainer}>
-				<TouchableOpacity
-					onPress={() => handleExpandGenreList(isExpanded)}>
-					{isExpanded ? (
-						<>
-							<View style={{ top: "24%" }}>
-								<MaterialCommunityIcons
-									name={"chevron-down"}
-									color={"#FFFFFF"}
-									size={45}
-								/>
-							</View>
-							<View style={{ bottom: "24%" }}>
-								<MaterialCommunityIcons
-									name={"chevron-up"}
-									color={"#FFFFFF"}
-									size={45}
-								/>
-							</View>
-						</>
-					) : (
-						<>
-							<View style={{ top: "12%" }}>
-								<MaterialCommunityIcons
-									name={"chevron-up"}
-									color={
-										displayedTrack === 0
-											? "#FFFFFF60"
-											: "#FFFFFF"
-									}
-									size={45}
-								/>
-							</View>
-							<View style={{ bottom: "12%" }}>
-								<MaterialCommunityIcons
-									name={"chevron-down"}
-									color={
-										displayedTrack === 4
-											? "#FFFFFF60"
-											: "#FFFFFF"
-									}
-									size={45}
-								/>
-							</View>
-						</>
-					)}
-				</TouchableOpacity>
-			</View>
+			<ChevronComponent
+				isExpanded={isExpanded}
+				handleExpandGenreList={handleExpandGenreList}
+				topChevronStyle={topChevronStyle}
+				bottomChevronStyle={bottomChevronStyle}
+			/>
 		</View>
 	);
 };
@@ -179,19 +176,6 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		alignContent: "center"
-	},
-
-	chevronIconsContainer: {
-		display: "flex",
-		flexDirection: "column",
-		margin: "3%",
-		marginTop: 0,
-		// marginTop: "20%",
-		justifyContent: "space-around",
-		width: "12%",
-		height: "5%",
-		alignItems: "center",
-		alignSelf: "flex-start"
 	},
 	titleContainer: {
 		marginTop: "2.5%",

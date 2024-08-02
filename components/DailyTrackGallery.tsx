@@ -97,7 +97,7 @@ const TrackGallery = (): JSX.Element => {
 	if (error) {
 		console.log(error, "this is the error message");
 	}
-	// console.log(navigatorTracks, "this is the navigator tracks");
+	console.log(navigatorTracks, "this is the navigator tracks");
 	// console.log(displayedTrack, "this is the displayed track");
 	// console.log(tracks, "this is the tracks");
 

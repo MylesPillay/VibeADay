@@ -17,14 +17,22 @@ const StickyTopNavigator = ({
 	const [isExpanded, setIsExpanded] = React.useState<boolean>(false);
 
 	function handleGenreSelection(selectedTrack: number): void {
-		return setDisplayedTrack(selectedTrack);
+		return setDisplayedTrack(selectedTrack), setIsExpanded(false);
 	}
 	function handleExpandGenreList(isExpanded: boolean): void {
 		return setIsExpanded(!isExpanded);
 	}
 
 	return (
-		<View style={[styles.stickyHeader]}>
+		<View
+			style={[
+				styles.stickyHeader,
+				{
+					backgroundColor: isExpanded
+						? tracks[displayedTrack].bgColour
+						: "#ffffff00"
+				}
+			]}>
 			<View style={styles.genreNavContainer}>
 				{tracks.map((track, index) =>
 					!isExpanded ? (
@@ -73,11 +81,15 @@ const StickyTopNavigator = ({
 					)
 				)}
 			</View>
-			{/* <View style={styles.titleContainer}>
-				<Text style={styles.titleText}>
-					{tracks[displayedTrack].genreName}
-				</Text>
-			</View> */}
+			{isExpanded ? (
+				<></>
+			) : (
+				<View style={styles.titleContainer}>
+					<Text style={styles.titleText}>
+						{tracks[displayedTrack].genreName}
+					</Text>
+				</View>
+			)}
 			<View style={styles.chevronIconsContainer}>
 				<TouchableOpacity
 					onPress={() => handleExpandGenreList(isExpanded)}>
@@ -129,14 +141,15 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-between",
 		width: "100%",
-		height: "100%"
+		height: "100%",
+		paddingTop: "20%"
 	},
 	genreNavContainer: {
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "flex-start",
 		alignItems: "flex-start",
-		top: "44%",
+		top: "28%",
 		left: "1%"
 	},
 	genreNavButton: {
@@ -159,34 +172,39 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		alignContent: "center"
 	},
-	titleContainer: {
-		display: "flex",
-		justifyContent: "flex-start",
-		marginTop: 15,
-		marginLeft: "10%",
-		height: "auto",
-		width: "auto",
-		flex: 1,
-		alignItems: "center"
-	},
+
 	chevronIconsContainer: {
 		display: "flex",
 		flexDirection: "column",
 		margin: "3%",
-		marginTop: "20%",
+		marginTop: 0,
+		// marginTop: "20%",
 		justifyContent: "space-around",
 		width: "12%",
 		height: "5%",
 		alignItems: "center",
 		alignSelf: "flex-start"
-		// backgroundColor: "#000000"
 	},
-	titleText: { fontWeight: "800", color: "white", fontSize: 20 },
+	titleContainer: {
+		marginTop: "2.5%",
+		textAlign: "center",
+		left: "2%",
+		height: "auto",
+		width: "auto",
+		alignItems: "center"
+	},
+	titleText: {
+		fontWeight: "800",
+		color: "white",
+		fontSize: 30,
+		textAlign: "center"
+	},
 
 	genreText: {
-		fontWeight: "500",
+		fontWeight: "800",
+		fontSize: 20,
 		textAlign: "left",
-		color: "green"
+		color: "emerald"
 	}
 });
 

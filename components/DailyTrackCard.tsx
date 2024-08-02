@@ -204,7 +204,9 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
+		alignContent: "center",
 		width: "100%",
+		paddingTop: "5%",
 		height: "100%"
 	},
 	artwork: {

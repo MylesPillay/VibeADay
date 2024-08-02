@@ -31,6 +31,7 @@ const TrackGallery = (): JSX.Element => {
 	const [displayedTrack, setDisplayedTrack] = React.useState<number>(0);
 	const flatListRef = useRef<FlatList<Track> | null>(null);
 	const windowWidth = Dimensions.get("window").width;
+	const windowHeight = Dimensions.get("window").height;
 	function getGenreColor(colorId: number): string {
 		return genreColors[colorId] || "#000000";
 	}
@@ -38,8 +39,8 @@ const TrackGallery = (): JSX.Element => {
 	useEffect(() => {
 		const fetchTracks = async () => {
 			const supabase = createClient(
-				"https://ibxvkrljdklwqhiovpma.supabase.co",
-				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlieHZrcmxqZGtsd3FoaW92cG1hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTg2NjQ5NzEsImV4cCI6MjAzNDI0MDk3MX0.C8Ns1R3PnRTKnG0oP4xWD2z595r3LBiZusRnrggwNLI"
+				process.env.SUPABASE_API_URL as string,
+				process.env.SUPABASE_API_SECRET_ACCESS_TOKEN as string
 			);
 			try {
 				let { data, error } = await supabase
@@ -96,20 +97,20 @@ const TrackGallery = (): JSX.Element => {
 	if (error) {
 		console.log(error, "this is the error message");
 	}
-	console.log(navigatorTracks, "this is the navigator tracks");
-	console.log(displayedTrack, "this is the displayed track");
-	console.log(tracks, "this is the tracks");
+	// console.log(navigatorTracks, "this is the navigator tracks");
+	// console.log(displayedTrack, "this is the displayed track");
+	// console.log(tracks, "this is the tracks");
 
 	return (
 		<View
 			style={{
-				flex: 1,
-				height: "100%",
-				width: "100%",
+				height: windowHeight,
+				width: windowWidth,
 				justifyContent: "center",
 				backgroundColor: "#000000",
 				alignContent: "center",
-				alignItems: "center"
+				alignItems: "center",
+				paddingVertical: 40
 			}}>
 			<StickyTopNavigator
 				tracks={navigatorTracks.slice(0, 5)}

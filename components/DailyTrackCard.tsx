@@ -148,7 +148,8 @@ import {
 	Image,
 	StyleSheet,
 	TouchableOpacity,
-	ImageSourcePropType
+	ImageSourcePropType,
+	Dimensions
 } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
@@ -171,9 +172,16 @@ const DailyTrackCard = ({
 	goToNextTrack,
 	bgColour
 }: DailyTrackCardProps): JSX.Element => {
+	const windowHeight = Dimensions.get("window").height;
 	return (
 		<View style={[styles.cardContainer, { backgroundColor: bgColour }]}>
-			<Image source={artwork} style={styles.artwork} />
+			<Image
+				source={artwork}
+				style={[
+					styles.artwork,
+					{ height: windowHeight * 0.3, width: windowHeight * 0.3 }
+				]}
+			/>
 			<View style={styles.trackInfoContainer}>
 				<Text style={styles.trackName}>{trackName}</Text>
 				<Text style={styles.artistName}>{artistName}</Text>
@@ -194,7 +202,6 @@ const DailyTrackCard = ({
 const styles = StyleSheet.create({
 	cardContainer: {
 		flex: 1,
-		padding: 16,
 		justifyContent: "center",
 		alignItems: "center",
 		width: "100%",

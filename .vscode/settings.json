@@ -5,5 +5,5 @@
 	"[typescript]": {
 		"editor.defaultFormatter": "denoland.vscode-deno"
 	},
-	"cSpell.words": ["Colour"]
+	"cSpell.words": ["Colour", "Ionicons"]
 }

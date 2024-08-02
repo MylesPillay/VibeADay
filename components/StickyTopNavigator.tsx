@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { NavigatorTrack } from "./DailyTrackGallery";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 interface StickyTopNavigatorProps {
 	tracks: NavigatorTrack[];
@@ -24,7 +25,7 @@ const StickyTopNavigator = ({
 
 	return (
 		<View style={[styles.stickyHeader]}>
-			<View style={styles.trackContainer}>
+			<View style={styles.genreNavContainer}>
 				{tracks.map((track, index) =>
 					!isExpanded ? (
 						<TouchableOpacity
@@ -58,7 +59,7 @@ const StickyTopNavigator = ({
 							}}>
 							<View
 								style={[
-									styles.expandedTrackContainer,
+									styles.expandedGenreNavContainer,
 									{
 										backgroundColor:
 											tracks[displayedTrack].bgColour
@@ -72,31 +73,71 @@ const StickyTopNavigator = ({
 					)
 				)}
 			</View>
-			<View style={styles.titleContainer}>
+			{/* <View style={styles.titleContainer}>
 				<Text style={styles.titleText}>
 					{tracks[displayedTrack].genreName}
 				</Text>
+			</View> */}
+			<View style={styles.chevronIconsContainer}>
+				<TouchableOpacity
+					onPress={() => handleExpandGenreList(isExpanded)}>
+					{isExpanded ? (
+						<>
+							<View style={{ top: "21%" }}>
+								<MaterialCommunityIcons
+									name={"chevron-down"}
+									color={"#FFFFFF"}
+									size={45}
+								/>
+							</View>
+							<View style={{ bottom: "22%" }}>
+								<MaterialCommunityIcons
+									name={"chevron-up"}
+									color={"#FFFFFF"}
+									size={45}
+								/>
+							</View>
+						</>
+					) : (
+						<>
+							<View style={{ top: "12%" }}>
+								<MaterialCommunityIcons
+									name={"chevron-up"}
+									color={"#FFFFFF"}
+									size={45}
+								/>
+							</View>
+							<View style={{ bottom: "12%" }}>
+								<MaterialCommunityIcons
+									name={"chevron-down"}
+									color={"#FFFFFF"}
+									size={45}
+								/>
+							</View>
+						</>
+					)}
+				</TouchableOpacity>
 			</View>
-			<View style={{ flex: 1 }} />
 		</View>
 	);
 };
 const styles = StyleSheet.create({
 	stickyHeader: {
 		display: "flex",
-		top: 30,
-		left: 0,
-		zIndex: 100,
 		position: "absolute",
+		zIndex: 100,
 		flexDirection: "row",
 		justifyContent: "space-between",
 		width: "100%",
-		height: "auto"
+		height: "100%"
 	},
-	trackContainer: {
+	genreNavContainer: {
 		display: "flex",
 		flexDirection: "column",
-		justifyContent: "flex-start"
+		justifyContent: "flex-start",
+		alignItems: "flex-start",
+		top: "44%",
+		left: "1%"
 	},
 	genreNavButton: {
 		display: "flex",
@@ -109,7 +150,7 @@ const styles = StyleSheet.create({
 	genreDot: {
 		borderRadius: 100
 	},
-	expandedTrackContainer: {
+	expandedGenreNavContainer: {
 		width: "100%",
 		padding: 10,
 		height: 40,
@@ -127,6 +168,18 @@ const styles = StyleSheet.create({
 		width: "auto",
 		flex: 1,
 		alignItems: "center"
+	},
+	chevronIconsContainer: {
+		display: "flex",
+		flexDirection: "column",
+		margin: "3%",
+		marginTop: "20%",
+		justifyContent: "space-around",
+		width: "12%",
+		height: "5%",
+		alignItems: "center",
+		alignSelf: "flex-start"
+		// backgroundColor: "#000000"
 	},
 	titleText: { fontWeight: "800", color: "white", fontSize: 20 },
 

@@ -37,6 +37,15 @@ export const genreColors: GenreColors = {
 	6: "#A5A299", // UK Hip-Hop 29524A FF5733
 	7: "#778899", // Deep House
 };
+export const genreAccentColors: GenreColors = {
+	1: "#DDF093", // Afro House
+	2: "#d6bdff", // Drum & Bass
+	3: "#fff147", // Easy Listening`
+	4: "#3be487", // Garage
+	5: "#25164f", // Techno
+	6: "#A5A299", // UK Hip-Hop 29524A FF5733
+	7: "#778899", // Deep House
+};
 
 
 // // You can add more theme-related constants and objects here

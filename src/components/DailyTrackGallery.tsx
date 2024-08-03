@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, FlatList, Dimensions, ActivityIndicator } from "react-native";
 import { createClient } from "@supabase/supabase-js";
 import StickyTopNavigator from "./sticky-top-nav/StickyTopNavigator";
-import { genreColors } from "../constants/Colors";
+import { genreAccentColors, genreColors } from "../constants/Colors";
 import DailyTrackCard from "./DailyTrackCard";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 
@@ -23,6 +23,7 @@ interface Track {
 export interface NavigatorTrack {
 	genreName: string;
 	bgColour: string;
+	accentColor: string;
 	trackIndex: number;
 }
 const TrackGallery = (): JSX.Element => {
@@ -39,6 +40,9 @@ const TrackGallery = (): JSX.Element => {
 	const windowHeight = Dimensions.get("window").height;
 	function getGenreColor(colorId: number): string {
 		return genreColors[colorId] || "#000000";
+	}
+	function getGenreAccentColor(colorId: number): string {
+		return genreAccentColors[colorId] || "#000000";
 	}
 
 	useEffect(() => {
@@ -58,6 +62,9 @@ const TrackGallery = (): JSX.Element => {
 						data.map((track, index) => ({
 							genreName: track.genre_title,
 							bgColour: getGenreColor(
+								track.genre_colour as number
+							),
+							accentColor: getGenreAccentColor(
 								track.genre_colour as number
 							),
 							trackIndex: index
@@ -152,6 +159,7 @@ const TrackGallery = (): JSX.Element => {
 					goToPreviousTrack={goToPreviousTrack}
 					goToNextTrack={goToNextTrack}
 					bgColour={navigatorTracks[displayedTrack]?.bgColour}
+					accentColor={navigatorTracks[displayedTrack]?.accentColor}
 					isExpanded={isExpanded}
 				/>
 			</View>

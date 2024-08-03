@@ -18,6 +18,7 @@ interface DailyTrackCardProps {
 	goToPreviousTrack: () => void;
 	goToNextTrack: () => void;
 	bgColour: string;
+	accentColor: string;
 	isExpanded: boolean;
 	trackLinks: TrackLinksProps;
 }
@@ -34,6 +35,7 @@ const DailyTrackCard = ({
 	artistName,
 	artwork,
 	bgColour,
+	accentColor,
 	isExpanded,
 	trackLinks
 }: DailyTrackCardProps): JSX.Element => {
@@ -64,7 +66,9 @@ const DailyTrackCard = ({
 			<View style={styles.trackInfoContainer}>
 				<Text style={styles.trackName}>{trackName}</Text>
 				<View style={styles.artistNameContainer}>
-					<Text style={styles.artistName}>{artistName}</Text>
+					<Text style={[styles.artistName, { color: accentColor }]}>
+						{artistName}
+					</Text>
 				</View>
 			</View>
 			<LinksComponent
@@ -121,8 +125,7 @@ const styles = StyleSheet.create({
 	artistName: {
 		fontSize: RFValue(10, 580),
 		letterSpacing: -0.1,
-		fontWeight: "500",
-		color: "#DDF093"
+		fontWeight: "600"
 	},
 	genreContainer: {
 		flexDirection: "row",

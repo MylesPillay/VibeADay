@@ -32,7 +32,9 @@ const StickyTopNavigator = ({
 	isExpanded,
 	setIsExpanded
 }: StickyTopNavigatorProps): JSX.Element => {
-	const [flipChevrons, setFlipChevrons] = useState(false);
+	const [flipChevrons, setFlipChevrons] = useState<boolean | undefined>(
+		undefined
+	);
 	const topChevronPosition = useSharedValue(RFValue(5, 580));
 	const bottomChevronPosition = useSharedValue(3);
 	const translationXValue = useSharedValue(-200);
@@ -58,7 +60,7 @@ const StickyTopNavigator = ({
 			// backgroundOpacityValue.value = withTiming(0.1, { duration: 100 });
 			dotOpacityValue.value = withTiming(1, { duration: 150 });
 			nameOpacityValue.value = withTiming(0, { duration: 280 });
-			setFlipChevrons(true);
+			setFlipChevrons(undefined);
 
 			// Set isExpanded to false after a delay to allow animations to complete
 			setIsExpanded(false);
@@ -67,7 +69,7 @@ const StickyTopNavigator = ({
 		} else {
 			// When expanding, set isExpanded to true first
 			setIsExpanded(true);
-			setFlipChevrons(false);
+			setFlipChevrons(true);
 			topChevronPosition.value = withTiming(RFValue(12, 580));
 			bottomChevronPosition.value = withTiming(RFValue(12, 580));
 			backgroundOpacityValue.value = withTiming(1, {
@@ -221,7 +223,7 @@ const StickyTopNavigator = ({
 					handleExpandGenreList={handleExpandGenreList}
 					topChevronStyle={topChevronStyle}
 					bottomChevronStyle={bottomChevronStyle}
-					flipChevrons={flipChevrons}
+					flipChevrons={!!flipChevrons}
 				/>
 			</Animated.View>
 			<Animated.View

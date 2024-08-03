@@ -9,6 +9,7 @@ import {
 	Dimensions
 } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
+import LinksComponent from "./LinksComponent";
 
 interface DailyTrackCardProps {
 	trackName: string;
@@ -24,10 +25,7 @@ interface DailyTrackCardProps {
 const DailyTrackCard = ({
 	trackName,
 	artistName,
-	genreName,
 	artwork,
-	goToPreviousTrack,
-	goToNextTrack,
 	bgColour,
 	isExpanded
 }: DailyTrackCardProps): JSX.Element => {
@@ -57,8 +55,11 @@ const DailyTrackCard = ({
 			</View>
 			<View style={styles.trackInfoContainer}>
 				<Text style={styles.trackName}>{trackName}</Text>
-				<Text style={styles.artistName}>{artistName}</Text>
+				<View style={styles.artistNameContainer}>
+					<Text style={styles.artistName}>{artistName}</Text>
+				</View>
 			</View>
+			<LinksComponent isExpanded={isExpanded} bgColour={bgColour} />
 		</View>
 	);
 };
@@ -76,36 +77,40 @@ const styles = StyleSheet.create({
 	},
 	artwork: {
 		marginBottom: "10%",
-		borderRadius: 10,
+		borderRadius: 7,
 		borderColor: "#FFFFFF55",
 		borderWidth: 3
 	},
-	overlay: {
-		position: "absolute",
-		top: 0,
-		left: 0,
-		backgroundColor: "#00000050",
-		borderRadius: 10
-	},
+
 	trackInfoContainer: {
 		justifyContent: "space-around",
 		alignItems: "center",
 		height: "auto",
 		padding: "4%",
 		width: "65%",
-		borderRadius: 10,
+		borderRadius: 7,
 		backgroundColor: "#00000035"
 	},
 	trackName: {
-		fontSize: RFValue(12, 580),
-		fontWeight: "bold",
+		fontSize: RFValue(14, 580),
+		letterSpacing: -0.1,
+		fontWeight: "600",
 		marginBottom: "3%",
+		textAlign: "center",
 		color: "#FFFFFF"
 	},
+	artistNameContainer: {
+		display: "flex",
+		flexDirection: "row",
+		flexWrap: "wrap",
+		alignItems: "center",
+		justifyContent: "center"
+	},
 	artistName: {
-		fontSize: RFValue(12, 580),
-		fontWeight: "semibold",
-		color: "#FFFFFF"
+		fontSize: RFValue(10, 580),
+		letterSpacing: -0.1,
+		fontWeight: "500",
+		color: "#DDF093"
 	},
 	genreContainer: {
 		flexDirection: "row",

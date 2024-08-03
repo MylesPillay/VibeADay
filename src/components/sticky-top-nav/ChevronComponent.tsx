@@ -26,14 +26,14 @@ const ChevronComponent = ({
 			<TouchableOpacity activeOpacity={1} onPress={handleExpandGenreList}>
 				<Animated.View style={topChevronStyle}>
 					<MaterialCommunityIcons
-						name={!flipChevrons ? "chevron-down" : "chevron-up"}
+						name={!flipChevrons ? "chevron-up" : "chevron-down"}
 						color={"#FFFFFF"}
 						size={flipChevrons ? 46 : 45}
 					/>
 				</Animated.View>
 				<Animated.View style={bottomChevronStyle}>
 					<MaterialCommunityIcons
-						name={!flipChevrons ? "chevron-up" : "chevron-down"}
+						name={!flipChevrons ? "chevron-down" : "chevron-up"}
 						color={"#FFFFFF"}
 						size={flipChevrons ? 46 : 45}
 					/>

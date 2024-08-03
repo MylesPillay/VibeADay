@@ -4,7 +4,6 @@ import {
 	Text,
 	Image,
 	StyleSheet,
-	TouchableOpacity,
 	ImageSourcePropType,
 	Dimensions
 } from "react-native";
@@ -20,14 +19,23 @@ interface DailyTrackCardProps {
 	goToNextTrack: () => void;
 	bgColour: string;
 	isExpanded: boolean;
+	trackLinks: TrackLinksProps;
 }
-
+export interface TrackLinksProps {
+	spotifyURL?: string;
+	soundcloudURL?: string;
+	bandcampURL?: string;
+	appleMusicURL?: string;
+	facebookURL?: string;
+	instagramURL?: string;
+}
 const DailyTrackCard = ({
 	trackName,
 	artistName,
 	artwork,
 	bgColour,
-	isExpanded
+	isExpanded,
+	trackLinks
 }: DailyTrackCardProps): JSX.Element => {
 	const windowHeight = Dimensions.get("window").height;
 
@@ -59,7 +67,11 @@ const DailyTrackCard = ({
 					<Text style={styles.artistName}>{artistName}</Text>
 				</View>
 			</View>
-			<LinksComponent isExpanded={isExpanded} bgColour={bgColour} />
+			<LinksComponent
+				isExpanded={isExpanded}
+				trackLinks={trackLinks}
+				bgColour={bgColour}
+			/>
 		</View>
 	);
 };

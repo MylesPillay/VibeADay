@@ -1,32 +1,61 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet, Linking } from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { TrackLinksProps } from "./DailyTrackCard";
 
 const LinksComponent = ({
 	isExpanded,
+	trackLinks,
 	bgColour
 }: {
 	isExpanded: boolean;
+	trackLinks: TrackLinksProps;
 	bgColour: string;
 }): JSX.Element => {
+	const handleLinkPress = (url: string) => {
+		Linking.openURL(url)
+			.then(() => {
+				console.log(`Opened URL: ${url}`);
+			})
+			.catch((err) => {
+				console.error("An error occurred", err);
+			});
+	};
+
 	return (
 		<View style={styles.container}>
-			<TouchableOpacity onPress={() => handleLinkPress("spotify")}>
+			<TouchableOpacity
+				disabled={!trackLinks?.spotifyURL}
+				onPress={() => handleLinkPress(trackLinks?.spotifyURL ?? "")}>
 				<MaterialCommunityIcons
 					name='spotify'
 					size={32}
-					color='goldenrod'
+					color={!trackLinks?.spotifyURL ? "#00000055" : "goldenrod"}
 				/>
 			</TouchableOpacity>
-			<TouchableOpacity onPress={() => handleLinkPress("soundcloud")}>
+			<TouchableOpacity
+				disabled={!trackLinks?.soundcloudURL}
+				onPress={() => handleLinkPress(trackLinks.soundcloudURL ?? "")}>
 				<MaterialCommunityIcons
 					name='soundcloud'
 					size={32}
-					color='goldenrod'
+					color={
+						!trackLinks?.soundcloudURL ? "#00000055" : "goldenrod"
+					}
 				/>
 			</TouchableOpacity>
-			<TouchableOpacity onPress={() => handleLinkPress("bandcamp")}>
-				<View style={styles.bandcampIconContainer}>
+			<TouchableOpacity
+				disabled={!trackLinks?.bandcampURL}
+				onPress={() => handleLinkPress(trackLinks.bandcampURL ?? "")}>
+				<View
+					style={[
+						styles.bandcampIconContainer,
+						{
+							backgroundColor: !trackLinks?.spotifyURL
+								? "#00000055"
+								: "goldenrod"
+						}
+					]}>
 					<View
 						style={[
 							styles.bandcampIcon,
@@ -34,49 +63,38 @@ const LinksComponent = ({
 						]}></View>
 				</View>
 			</TouchableOpacity>
-			<TouchableOpacity onPress={() => handleLinkPress("apple-music")}>
+			<TouchableOpacity
+				disabled={!trackLinks?.appleMusicURL}
+				onPress={() => handleLinkPress(trackLinks.appleMusicURL ?? "")}>
 				<MaterialCommunityIcons
 					name='apple'
 					size={32}
-					color='goldenrod'
+					color={
+						!trackLinks?.appleMusicURL ? "#00000055" : "goldenrod"
+					}
 				/>
 			</TouchableOpacity>
-			<TouchableOpacity onPress={() => handleLinkPress("apple-music")}>
+			<TouchableOpacity
+				disabled={!trackLinks?.instagramURL}
+				onPress={() => handleLinkPress(trackLinks.instagramURL ?? "")}>
 				<MaterialCommunityIcons
 					name='instagram'
 					size={32}
-					color='goldenrod'
+					color={
+						!trackLinks?.instagramURL ? "#00000055" : "goldenrod"
+					}
 				/>
 			</TouchableOpacity>
-			<TouchableOpacity onPress={() => handleLinkPress("apple-music")}>
+			<TouchableOpacity
+				disabled={!trackLinks?.facebookURL}
+				onPress={() => handleLinkPress(trackLinks.facebookURL ?? "")}>
 				<MaterialCommunityIcons
 					name='facebook'
 					size={32}
-					color='goldenrod'
+					color={!trackLinks?.facebookURL ? "#00000055" : "goldenrod"}
 				/>
 			</TouchableOpacity>
 		</View>
-	);
-};
-
-const handleLinkPress = (platform: string) => {
-	let url = "";
-	switch (platform) {
-		case "spotify":
-			url = "https://www.spotify.com";
-			break;
-		case "soundcloud":
-			url = "https://www.soundcloud.com";
-			break;
-		case "bandcamp":
-			url = "https://www.bandcamp.com";
-			break;
-		case "apple-music":
-			url = "https://www.apple.com/music";
-			break;
-	}
-	Linking.openURL(url).catch((err) =>
-		console.error("An error occurred", err)
 	);
 };
 
@@ -99,7 +117,7 @@ const styles = StyleSheet.create({
 		width: 25,
 		height: 25,
 		// backgroundColor: "#00A0D8",
-		backgroundColor: "goldenrod",
+		// backgroundColor: "goldenrod",
 		borderRadius: 16,
 		justifyContent: "center",
 		alignItems: "center"

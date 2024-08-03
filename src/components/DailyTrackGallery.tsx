@@ -11,10 +11,13 @@ interface Track {
 	created_at: string;
 	song_title: string;
 	song_artist: string;
+	artwork: string;
 	spotify_url?: string;
 	soundcloud_url?: string;
-
-	artwork: string;
+	bandcamp_url?: string;
+	apple_music_url?: string;
+	facebook_url?: string;
+	instagram_url?: string;
 }
 
 export interface NavigatorTrack {
@@ -103,7 +106,16 @@ const TrackGallery = (): JSX.Element => {
 			}
 		}
 	};
+	const trackLinks = {
+		spotifyURL: tracks[displayedTrack]?.spotify_url,
+		soundcloudURL: tracks[displayedTrack]?.soundcloud_url,
+		bandcampURL: tracks[displayedTrack]?.bandcamp_url,
+		appleMusicURL: tracks[displayedTrack]?.apple_music_url,
+		facebookURL: tracks[displayedTrack]?.facebook_url,
+		instagramURL: tracks[displayedTrack]?.instagram_url
+	};
 
+	console.log(trackLinks, "this is the track links");
 	if (loading) {
 		return <ActivityIndicator size='large' />;
 	}
@@ -132,6 +144,7 @@ const TrackGallery = (): JSX.Element => {
 					setIsExpanded={setIsExpanded}
 				/>
 				<DailyTrackCard
+					trackLinks={trackLinks}
 					trackName={tracks[displayedTrack].song_title}
 					artistName={tracks[displayedTrack].song_artist}
 					genreName={tracks[displayedTrack].genreName}

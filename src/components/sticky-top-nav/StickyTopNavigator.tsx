@@ -160,7 +160,7 @@ const StickyTopNavigator = ({
 															: 15 - (index + 2),
 													borderColor:
 														index === displayedTrack
-															? "goldenrod"
+															? "#EBCB16"
 															: "none",
 													borderWidth:
 														index === displayedTrack

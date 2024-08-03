@@ -30,7 +30,7 @@ const LinksComponent = ({
 				<MaterialCommunityIcons
 					name='spotify'
 					size={32}
-					color={!trackLinks?.spotifyURL ? "#00000055" : "goldenrod"}
+					color={!trackLinks?.spotifyURL ? "#00000055" : "#EBCB16"}
 				/>
 			</TouchableOpacity>
 			<TouchableOpacity
@@ -39,9 +39,7 @@ const LinksComponent = ({
 				<MaterialCommunityIcons
 					name='soundcloud'
 					size={32}
-					color={
-						!trackLinks?.soundcloudURL ? "#00000055" : "goldenrod"
-					}
+					color={!trackLinks?.soundcloudURL ? "#00000055" : "#EBCB16"}
 				/>
 			</TouchableOpacity>
 			<TouchableOpacity
@@ -53,7 +51,7 @@ const LinksComponent = ({
 						{
 							backgroundColor: !trackLinks?.spotifyURL
 								? "#00000055"
-								: "goldenrod"
+								: "#EBCB16"
 						}
 					]}>
 					<View
@@ -69,9 +67,7 @@ const LinksComponent = ({
 				<MaterialCommunityIcons
 					name='apple'
 					size={32}
-					color={
-						!trackLinks?.appleMusicURL ? "#00000055" : "goldenrod"
-					}
+					color={!trackLinks?.appleMusicURL ? "#00000055" : "#EBCB16"}
 				/>
 			</TouchableOpacity>
 			<TouchableOpacity
@@ -80,9 +76,7 @@ const LinksComponent = ({
 				<MaterialCommunityIcons
 					name='instagram'
 					size={32}
-					color={
-						!trackLinks?.instagramURL ? "#00000055" : "goldenrod"
-					}
+					color={!trackLinks?.instagramURL ? "#00000055" : "#EBCB16"}
 				/>
 			</TouchableOpacity>
 			<TouchableOpacity
@@ -91,7 +85,7 @@ const LinksComponent = ({
 				<MaterialCommunityIcons
 					name='facebook'
 					size={32}
-					color={!trackLinks?.facebookURL ? "#00000055" : "goldenrod"}
+					color={!trackLinks?.facebookURL ? "#00000055" : "#EBCB16"}
 				/>
 			</TouchableOpacity>
 		</View>
@@ -117,7 +111,7 @@ const styles = StyleSheet.create({
 		width: 25,
 		height: 25,
 		// backgroundColor: "#00A0D8",
-		// backgroundColor: "goldenrod",
+		// backgroundColor: "#EBCB16",
 		borderRadius: 16,
 		justifyContent: "center",
 		alignItems: "center"

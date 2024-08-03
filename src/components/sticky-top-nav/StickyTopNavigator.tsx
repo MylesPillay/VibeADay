@@ -32,12 +32,13 @@ const StickyTopNavigator = ({
 	isExpanded,
 	setIsExpanded
 }: StickyTopNavigatorProps): JSX.Element => {
+	const [flipChevrons, setFlipChevrons] = useState(false);
 	const topChevronPosition = useSharedValue(RFValue(5, 580));
 	const bottomChevronPosition = useSharedValue(3);
 	const translationXValue = useSharedValue(-200);
-	const nameOpacityValue = useSharedValue(0);
-	const backgroundOpacityValue = useSharedValue(0);
-	const dotOpacityValue = useSharedValue(0);
+	const nameOpacityValue = useSharedValue(1);
+	const backgroundOpacityValue = useSharedValue(1);
+	const dotOpacityValue = useSharedValue(1);
 	const windowWidth = Dimensions.get("window").width;
 	const windowHeight = Dimensions.get("window").height;
 
@@ -51,29 +52,30 @@ const StickyTopNavigator = ({
 
 	const handleExpandGenreList = () => {
 		if (isExpanded) {
-			// When collapsing, perform animations first
 			topChevronPosition.value = withTiming(RFValue(5, 580));
 			bottomChevronPosition.value = withTiming(RFValue(5, 580));
-			translationXValue.value = withTiming(-200, { duration: 300 });
-			backgroundOpacityValue.value = withTiming(1, { duration: 100 });
+			translationXValue.value = withTiming(-200, { duration: 400 });
+			backgroundOpacityValue.value = withTiming(0.1, { duration: 100 });
 			dotOpacityValue.value = withTiming(1, { duration: 150 });
-			nameOpacityValue.value = withTiming(0, { duration: 150 });
+			nameOpacityValue.value = withTiming(0, { duration: 280 });
+			setFlipChevrons(true);
 
 			// Set isExpanded to false after a delay to allow animations to complete
 			setTimeout(() => {
 				setIsExpanded(false);
-			}, 300);
+			}, 250);
 		} else {
 			// When expanding, set isExpanded to true first
 			setIsExpanded(true);
+			setFlipChevrons(false);
 			topChevronPosition.value = withTiming(RFValue(12, 580));
 			bottomChevronPosition.value = withTiming(RFValue(12, 580));
 			backgroundOpacityValue.value = withTiming(1, {
-				duration: 100
+				duration: 200
 			});
 			translationXValue.value = withTiming(15, { duration: 400 });
 			dotOpacityValue.value = withTiming(0, { duration: 100 });
-			nameOpacityValue.value = withTiming(1, { duration: 100 });
+			nameOpacityValue.value = withTiming(1, { duration: 250 });
 		}
 	};
 
@@ -108,119 +110,127 @@ const StickyTopNavigator = ({
 	});
 
 	return (
-		<Animated.View
-			style={[
-				styles.stickyHeader,
-				{
-					backgroundColor: tracks[displayedTrack]?.bgColour,
-					opacity: backgroundOpacityValue.value,
-					width: windowWidth,
-					paddingHorizontal: windowWidth * 0.02,
-					height: isExpanded
-						? windowHeight * 0.9
-						: windowHeight * 0.15
-				}
-			]}>
-			<View
+		<>
+			<Animated.View
 				style={[
-					styles.genreNavContainer,
+					styles.stickyHeader,
 					{
-						height: isExpanded ? windowHeight : "auto",
-						width: isExpanded ? windowWidth * 0.84 : "auto"
+						backgroundColor: tracks[displayedTrack]?.bgColour,
+
+						width: windowWidth,
+						paddingHorizontal: windowWidth * 0.02,
+						height: isExpanded
+							? windowHeight * 0.9
+							: windowHeight * 0.15
 					}
 				]}>
-				{tracks.map((track, index) =>
-					!isExpanded ? (
-						<Animated.View
-							key={index}
-							style={[styles.genreNavButton, dotOpacityStyle]}>
-							<TouchableOpacity
+				<View
+					style={[
+						styles.genreNavContainer,
+						{
+							height: isExpanded ? windowHeight : "auto",
+							width: isExpanded ? windowWidth * 0.84 : "auto"
+						}
+					]}>
+					{tracks.map((track, index) =>
+						!isExpanded ? (
+							<Animated.View
 								key={index}
-								disabled={index === displayedTrack}
-								onPress={() => {
-									handleGenreDotSelect(index);
-								}}>
-								<View style={[styles.genreNavButton]}>
-									<View
+								style={[styles.genreNavButton]}>
+								<TouchableOpacity
+									key={index}
+									disabled={index === displayedTrack}
+									onPress={() => {
+										handleGenreDotSelect(index);
+									}}>
+									<View style={[styles.genreNavButton]}>
+										<View
+											style={[
+												styles.genreDot,
+												{
+													height:
+														index === 0
+															? 16
+															: 15 - (index + 2),
+													width:
+														index === 0
+															? 16
+															: 15 - (index + 2),
+													borderColor:
+														index === displayedTrack
+															? "goldenrod"
+															: "none",
+													borderWidth:
+														index === displayedTrack
+															? 3
+															: 0,
+													backgroundColor:
+														displayedTrack === index
+															? "#00000045"
+															: "#000000"
+												}
+											]}
+										/>
+									</View>
+								</TouchableOpacity>
+							</Animated.View>
+						) : (
+							<Animated.View
+								key={index}
+								style={[
+									styles.navGenreNameContainer,
+									nameOpacityStyle
+								]}>
+								<TouchableOpacity
+									style={styles.navGenreTitleButton}
+									activeOpacity={0.6}
+									disabled={index === displayedTrack}
+									onPress={() => {
+										handleGenreListSelection(index);
+									}}>
+									<Text
 										style={[
-											styles.genreDot,
+											styles.genreText,
 											{
-												height:
-													index === 0
-														? 16
-														: 15 - (index + 2),
-												width:
-													index === 0
-														? 16
-														: 15 - (index + 2),
-												borderColor:
-													index === displayedTrack
-														? "goldenrod"
-														: "none",
-												borderWidth:
-													index === displayedTrack
-														? 3
-														: 0,
-												backgroundColor:
-													displayedTrack === index
-														? "#00000045"
+												color:
+													index ===
+													tracks[displayedTrack]
+														.trackIndex
+														? "#FFFFFF"
 														: "#000000"
 											}
-										]}
-									/>
-								</View>
-							</TouchableOpacity>
-						</Animated.View>
-					) : (
-						<Animated.View
-							key={index}
-							style={[
-								styles.navGenreNameContainer,
-								nameOpacityStyle
-							]}>
-							<TouchableOpacity
-								style={styles.navGenreTitleButton}
-								activeOpacity={0.6}
-								disabled={index === displayedTrack}
-								onPress={() => {
-									handleGenreListSelection(index);
-								}}>
-								<Text
-									style={[
-										styles.genreText,
-										{
-											color:
-												index ===
-												tracks[displayedTrack]
-													.trackIndex
-													? "#FFFFFF"
-													: "#000000"
-										}
-									]}>
-									{track.genreName}
-								</Text>
-							</TouchableOpacity>
-						</Animated.View>
-					)
-				)}
-			</View>
-			{isExpanded ? (
-				<></>
-			) : (
-				<View style={styles.titleContainer}>
-					<Text style={styles.titleText}>
-						{tracks[displayedTrack].genreName}
-					</Text>
+										]}>
+										{track.genreName}
+									</Text>
+								</TouchableOpacity>
+							</Animated.View>
+						)
+					)}
 				</View>
-			)}
+				{isExpanded ? (
+					<></>
+				) : (
+					<View style={styles.titleContainer}>
+						<Text style={styles.titleText}>
+							{tracks[displayedTrack].genreName}
+						</Text>
+					</View>
+				)}
 
-			<ChevronComponent
-				isExpanded={isExpanded}
-				handleExpandGenreList={handleExpandGenreList}
-				topChevronStyle={topChevronStyle}
-				bottomChevronStyle={bottomChevronStyle}
-			/>
-		</Animated.View>
+				<ChevronComponent
+					handleExpandGenreList={handleExpandGenreList}
+					topChevronStyle={topChevronStyle}
+					bottomChevronStyle={bottomChevronStyle}
+					flipChevrons={flipChevrons}
+				/>
+			</Animated.View>
+			<Animated.View
+				style={[
+					styles.absoluteNavMenuBackground,
+					backgroundOpacityStyle,
+					{ display: isExpanded ? "flex" : "none" }
+				]}></Animated.View>
+		</>
 	);
 };
 const styles = StyleSheet.create({
@@ -290,6 +300,14 @@ const styles = StyleSheet.create({
 		color: "white",
 		fontSize: 30,
 		textAlign: "center"
+	},
+	absoluteNavMenuBackground: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		zIndex: 90,
+		width: "100%",
+		height: "100%"
 	}
 });
 

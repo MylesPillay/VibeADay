@@ -11,9 +11,7 @@ import ChevronComponent from "./ChevronComponent";
 import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
-	withSpring,
-	withTiming,
-	withDelay
+	withTiming
 } from "react-native-reanimated";
 import { RFValue } from "react-native-responsive-fontsize";
 
@@ -160,7 +158,7 @@ const StickyTopNavigator = ({
 															: 15 - (index + 2),
 													borderColor:
 														index === displayedTrack
-															? "#EBCB16"
+															? track.accentColor
 															: "none",
 													borderWidth:
 														index === displayedTrack
@@ -198,7 +196,7 @@ const StickyTopNavigator = ({
 													index ===
 													tracks[displayedTrack]
 														.trackIndex
-														? "#FFFFFF"
+														? track.accentColor
 														: "#000000"
 											}
 										]}>
@@ -213,7 +211,11 @@ const StickyTopNavigator = ({
 					<></>
 				) : (
 					<View style={styles.titleContainer}>
-						<Text style={styles.titleText}>
+						<Text
+							style={[
+								styles.titleText,
+								{ color: tracks[displayedTrack]?.accentColor }
+							]}>
 							{tracks[displayedTrack].genreName}
 						</Text>
 					</View>
@@ -224,6 +226,7 @@ const StickyTopNavigator = ({
 					topChevronStyle={topChevronStyle}
 					bottomChevronStyle={bottomChevronStyle}
 					flipChevrons={!!flipChevrons}
+					accentColor={tracks[displayedTrack]?.accentColor}
 				/>
 			</Animated.View>
 			<Animated.View
@@ -299,8 +302,8 @@ const styles = StyleSheet.create({
 	titleText: {
 		fontWeight: "600",
 		fontFamily: "sans-serif",
-		color: "white",
-		fontSize: 30,
+		letterSpacing: -0.5,
+		fontSize: 32,
 		textAlign: "center"
 	},
 	absoluteNavMenuBackground: {

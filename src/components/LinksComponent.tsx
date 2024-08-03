@@ -6,11 +6,13 @@ import { TrackLinksProps } from "./DailyTrackCard";
 const LinksComponent = ({
 	isExpanded,
 	trackLinks,
-	bgColour
+	bgColour,
+	accentColor
 }: {
 	isExpanded: boolean;
 	trackLinks: TrackLinksProps;
 	bgColour: string;
+	accentColor: string;
 }): JSX.Element => {
 	const handleLinkPress = (url: string) => {
 		Linking.openURL(url)
@@ -30,7 +32,7 @@ const LinksComponent = ({
 				<MaterialCommunityIcons
 					name='spotify'
 					size={32}
-					color={!trackLinks?.spotifyURL ? "#00000055" : "#EBCB16"}
+					color={!trackLinks?.spotifyURL ? "#00000055" : accentColor}
 				/>
 			</TouchableOpacity>
 			<TouchableOpacity
@@ -39,7 +41,9 @@ const LinksComponent = ({
 				<MaterialCommunityIcons
 					name='soundcloud'
 					size={32}
-					color={!trackLinks?.soundcloudURL ? "#00000055" : "#EBCB16"}
+					color={
+						!trackLinks?.soundcloudURL ? "#00000055" : accentColor
+					}
 				/>
 			</TouchableOpacity>
 			<TouchableOpacity
@@ -51,7 +55,7 @@ const LinksComponent = ({
 						{
 							backgroundColor: !trackLinks?.spotifyURL
 								? "#00000055"
-								: "#EBCB16"
+								: accentColor
 						}
 					]}>
 					<View
@@ -67,7 +71,9 @@ const LinksComponent = ({
 				<MaterialCommunityIcons
 					name='apple'
 					size={32}
-					color={!trackLinks?.appleMusicURL ? "#00000055" : "#EBCB16"}
+					color={
+						!trackLinks?.appleMusicURL ? "#00000055" : accentColor
+					}
 				/>
 			</TouchableOpacity>
 			<TouchableOpacity
@@ -76,7 +82,9 @@ const LinksComponent = ({
 				<MaterialCommunityIcons
 					name='instagram'
 					size={32}
-					color={!trackLinks?.instagramURL ? "#00000055" : "#EBCB16"}
+					color={
+						!trackLinks?.instagramURL ? "#00000055" : accentColor
+					}
 				/>
 			</TouchableOpacity>
 			<TouchableOpacity
@@ -85,7 +93,7 @@ const LinksComponent = ({
 				<MaterialCommunityIcons
 					name='facebook'
 					size={32}
-					color={!trackLinks?.facebookURL ? "#00000055" : "#EBCB16"}
+					color={!trackLinks?.facebookURL ? "#00000055" : accentColor}
 				/>
 			</TouchableOpacity>
 		</View>
@@ -95,12 +103,13 @@ const LinksComponent = ({
 const styles = StyleSheet.create({
 	container: {
 		flexDirection: "row",
+		alignSelf: "center",
 		flexWrap: "wrap",
 		alignContent: "center",
 		alignItems: "center",
 		justifyContent: "space-evenly",
-		minWidth: "65%",
-		marginVertical: "5%",
+		width: "90%",
+		marginVertical: "8%",
 		height: "auto",
 		padding: "4%",
 		paddingHorizontal: "1%",
@@ -111,7 +120,7 @@ const styles = StyleSheet.create({
 		width: 25,
 		height: 25,
 		// backgroundColor: "#00A0D8",
-		// backgroundColor: "#EBCB16",
+		// backgroundColor: accentColor,
 		borderRadius: 16,
 		justifyContent: "center",
 		alignItems: "center"

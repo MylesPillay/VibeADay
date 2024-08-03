@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import LinksComponent from "./LinksComponent";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 interface DailyTrackCardProps {
 	trackName: string;
@@ -75,7 +76,15 @@ const DailyTrackCard = ({
 				isExpanded={isExpanded}
 				trackLinks={trackLinks}
 				bgColour={bgColour}
+				accentColor={accentColor}
 			/>
+			<View style={styles.genreChevronContainer}>
+				<MaterialCommunityIcons
+					name={"chevron-right"}
+					color={accentColor}
+					size={45}
+				/>
+			</View>
 		</View>
 	);
 };
@@ -84,12 +93,11 @@ const styles = StyleSheet.create({
 	cardContainer: {
 		flex: 1,
 		justifyContent: "flex-start",
-		alignItems: "center",
-		alignContent: "center",
 		width: "100%"
 	},
 	artworkContainer: {
-		position: "relative"
+		position: "relative",
+		alignItems: "center"
 	},
 	artwork: {
 		marginBottom: "10%",
@@ -99,11 +107,10 @@ const styles = StyleSheet.create({
 	},
 
 	trackInfoContainer: {
-		justifyContent: "space-around",
-		alignItems: "center",
 		height: "auto",
+		alignSelf: "center",
 		padding: "4%",
-		width: "65%",
+		width: "90%",
 		borderRadius: 7,
 		backgroundColor: "#00000035"
 	},
@@ -117,6 +124,7 @@ const styles = StyleSheet.create({
 	},
 	artistNameContainer: {
 		display: "flex",
+
 		flexDirection: "row",
 		flexWrap: "wrap",
 		alignItems: "center",
@@ -127,21 +135,12 @@ const styles = StyleSheet.create({
 		letterSpacing: -0.1,
 		fontWeight: "600"
 	},
-	genreContainer: {
-		flexDirection: "row",
-		alignItems: "center",
-		marginTop: 8
-	},
-	genreName: {
-		fontSize: 24,
-		fontWeight: "bold",
-		marginHorizontal: 20,
-		color: "#FFFFFF"
-	},
-	navArrow: {
-		fontSize: 24,
-		fontWeight: "bold",
-		color: "#FFFFFF"
+
+	genreChevronContainer: {
+		alignItems: "flex-end",
+		alignSelf: "flex-end",
+		width: "10%",
+		marginRight: "5%"
 	}
 });
 

@@ -147,6 +147,7 @@ const TrackGallery = (): JSX.Element => {
 					tracks={navigatorTracks.slice(0, 5)}
 					displayedTrack={displayedTrack}
 					setDisplayedTrack={setDisplayedTrack}
+					accentColot={navigatorTracks[displayedTrack]?.accentColor}
 					isExpanded={isExpanded}
 					setIsExpanded={setIsExpanded}
 				/>

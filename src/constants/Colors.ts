@@ -33,7 +33,7 @@ export const genreColors: GenreColors = {
 	2: "#A8577E", // Drum & Bass
 	3: "#6564DB", // Easy Listening`
 	4: "#3B60E4", // Garage
-	5: "#D67D14", // Techno
+	5: "#b2f14c", // Techno
 	6: "#A5A299", // UK Hip-Hop 29524A FF5733
 	7: "#778899", // Deep House
 };
@@ -42,7 +42,7 @@ export const genreAccentColors: GenreColors = {
 	2: "#d6bdff", // Drum & Bass
 	3: "#fff147", // Easy Listening`
 	4: "#3be487", // Garage
-	5: "#25164f", // Techno
+	5: "#5632b7", // Techno
 	6: "#A5A299", // UK Hip-Hop 29524A FF5733
 	7: "#778899", // Deep House
 };

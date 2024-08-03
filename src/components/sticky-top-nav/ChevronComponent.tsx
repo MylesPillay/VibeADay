@@ -8,13 +8,15 @@ interface ChevronComponentProps {
 	topChevronStyle: any;
 	bottomChevronStyle: any;
 	flipChevrons: boolean;
+	accentColor: string;
 }
 
 const ChevronComponent = ({
 	handleExpandGenreList,
 	topChevronStyle,
 	bottomChevronStyle,
-	flipChevrons
+	flipChevrons,
+	accentColor
 }: ChevronComponentProps) => {
 	const windowHeight = Dimensions.get("window").height;
 	return (
@@ -27,14 +29,14 @@ const ChevronComponent = ({
 				<Animated.View style={topChevronStyle}>
 					<MaterialCommunityIcons
 						name={!flipChevrons ? "chevron-up" : "chevron-down"}
-						color={"#FFFFFF"}
+						color={accentColor}
 						size={flipChevrons ? 46 : 45}
 					/>
 				</Animated.View>
 				<Animated.View style={bottomChevronStyle}>
 					<MaterialCommunityIcons
 						name={!flipChevrons ? "chevron-down" : "chevron-up"}
-						color={"#FFFFFF"}
+						color={accentColor}
 						size={flipChevrons ? 46 : 45}
 					/>
 				</Animated.View>

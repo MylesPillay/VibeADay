@@ -55,15 +55,15 @@ const StickyTopNavigator = ({
 			topChevronPosition.value = withTiming(RFValue(5, 580));
 			bottomChevronPosition.value = withTiming(RFValue(5, 580));
 			translationXValue.value = withTiming(-200, { duration: 400 });
-			backgroundOpacityValue.value = withTiming(0.1, { duration: 100 });
+			// backgroundOpacityValue.value = withTiming(0.1, { duration: 100 });
 			dotOpacityValue.value = withTiming(1, { duration: 150 });
 			nameOpacityValue.value = withTiming(0, { duration: 280 });
 			setFlipChevrons(true);
 
 			// Set isExpanded to false after a delay to allow animations to complete
-			setTimeout(() => {
-				setIsExpanded(false);
-			}, 250);
+			setIsExpanded(false);
+			// setTimeout(() => {
+			// }, 100);
 		} else {
 			// When expanding, set isExpanded to true first
 			setIsExpanded(true);

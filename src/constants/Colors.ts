@@ -29,12 +29,12 @@ export interface GenreColors {
 }
 
 export const genreColors: GenreColors = {
-	1: "#FF5733", // Afro House
-	2: "#C73E1D", // Drum & Bass
-	3: "#BFD7EA", // Easy Listening`
-	4: "#40E0D0", // Garage
-	5: "#3A2449", // Techno
-	6: "#A5A299", // UK Hip-Hop
+	1: "#29524A", // Afro House
+	2: "#A8577E", // Drum & Bass
+	3: "#6564DB", // Easy Listening`
+	4: "#3B60E4", // Garage
+	5: "#6BAF11", // Techno
+	6: "#A5A299", // UK Hip-Hop 29524A FF5733
 	7: "#778899", // Deep House
 };
 

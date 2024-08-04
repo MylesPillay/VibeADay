@@ -5,7 +5,8 @@ import {
 	Dimensions,
 	ActivityIndicator,
 	StyleSheet,
-	TouchableOpacity
+	TouchableOpacity,
+	Text
 } from "react-native";
 import { createClient } from "@supabase/supabase-js";
 
@@ -22,6 +23,7 @@ import GenreTitleComponent from "./GenreTitle";
 import DailyTrackCard from "./DailyTrackCard";
 import ChevronComponent from "./sticky-top-nav/ChevronComponent";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import LinksComponent from "./LinksComponent";
 
 interface Track {
 	genreName: string;
@@ -239,12 +241,16 @@ const TrackGallery = (): JSX.Element => {
 					backgroundColor: navigatorTracks[displayedTrack]?.bgColour
 				}}>
 				<View style={styles.mainTrackContainer}>
-					<View style={{ flexDirection: "row" }}>
+					<View
+						style={{
+							flexDirection: "row",
+							width: "100%"
+							// height: "100%"
+						}}>
 						<View style={styles.genreNavContainer}>
 							<GenreDotSelector
 								tracks={navigatorTracks.slice(0, 5)}
 								displayedTrack={displayedTrack}
-								// isExpanded={isExpanded}
 								handleGenreDotSelect={handleGenreDotSelect}
 								handleGenreListSelection={
 									handleGenreListSelection
@@ -260,7 +266,7 @@ const TrackGallery = (): JSX.Element => {
 							<View
 								style={{
 									flexDirection: "column",
-									height: "90%",
+									height: "auto",
 									justifyContent: "space-between",
 									alignContent: "center",
 									alignItems: "center"
@@ -270,13 +276,9 @@ const TrackGallery = (): JSX.Element => {
 										tracks={navigatorTracks}
 										displayedTrack={displayedTrack}
 									/>
-
 									<View
 										style={{
-											// maxHeight: windowHeight * 0.08,
-
 											justifyContent: "flex-end",
-
 											alignContent: "center"
 										}}>
 										<TouchableOpacity
@@ -300,8 +302,7 @@ const TrackGallery = (): JSX.Element => {
 								<View
 									style={{
 										width: "100%",
-										height: "100%",
-										marginTop: "5%"
+										marginTop: "10%"
 									}}>
 									<DailyTrackCard
 										trackLinks={trackLinks}
@@ -333,24 +334,48 @@ const TrackGallery = (): JSX.Element => {
 							</View>
 						</View>
 					</View>
-				</View>
-				<View
-					style={[
-						styles.chevronContainer
-						// {
-						// 	backgroundColor:
-						// 		navigatorTracks[displayedTrack]?.bgColour
-						// }
-					]}>
-					<ChevronComponent
-						handleExpandGenreList={handleExpandGenreList}
-						topChevronStyle={topChevronStyle}
-						bottomChevronStyle={bottomChevronStyle}
-						flipChevrons={!!flipChevrons}
+					<View style={styles.trackInfoContainer}>
+						<Text style={styles.trackName}>
+							{tracks[displayedTrack]?.song_title}
+						</Text>
+						<View style={styles.artistNameContainer}>
+							<Text
+								style={[
+									styles.artistName,
+									{
+										color: navigatorTracks[displayedTrack]
+											?.accentColor
+									}
+								]}>
+								{tracks[displayedTrack]?.song_artist}
+							</Text>
+						</View>
+					</View>
+					<LinksComponent
+						trackLinks={trackLinks}
+						bgColour={navigatorTracks[displayedTrack]?.bgColour}
 						accentColor={
 							navigatorTracks[displayedTrack]?.accentColor
 						}
 					/>
+					<View
+						style={[
+							styles.chevronContainer
+							// {
+							// 	backgroundColor:
+							// 		navigatorTracks[displayedTrack]?.bgColour
+							// }
+						]}>
+						<ChevronComponent
+							handleExpandGenreList={handleExpandGenreList}
+							topChevronStyle={topChevronStyle}
+							bottomChevronStyle={bottomChevronStyle}
+							flipChevrons={!!flipChevrons}
+							accentColor={
+								navigatorTracks[displayedTrack]?.accentColor
+							}
+						/>
+					</View>
 				</View>
 			</View>
 		</PanGestureHandler>
@@ -359,26 +384,59 @@ const TrackGallery = (): JSX.Element => {
 const styles = StyleSheet.create({
 	mainTrackContainer: {
 		display: "flex",
-		flexDirection: "column"
-		// backgroundColor: "red"
+		flexDirection: "column",
+		height: "100%"
 	},
 	genreNavContainer: {
 		display: "flex",
 		flexDirection: "row",
-		justifyContent: "space-between"
+		justifyContent: "space-between",
+		width: "100%"
 	},
 	genreTitleContainer: {
 		display: "flex",
 		flexDirection: "row",
 		justifyContent: "space-between",
-		width: "auto",
+		width: "90%",
 		alignItems: "center"
 	},
+
 	chevronContainer: {
 		alignItems: "flex-end",
 		alignSelf: "flex-end",
-		width: "100%",
-		height: "25%"
+		width: "100%"
+	},
+	trackInfoContainer: {
+		height: "auto",
+		alignSelf: "center",
+		minWidth: "90%",
+		minHeight: "9%",
+		margin: "2%",
+		marginTop: "10%",
+		paddingVertical: "3%",
+		padding: "6%",
+		borderRadius: 7,
+		backgroundColor: "#00000035"
+	},
+	trackName: {
+		fontSize: RFValue(13, 580),
+		letterSpacing: -0.1,
+		fontWeight: "600",
+		// marginBottom: "3%",
+		textAlign: "center",
+		color: "#FFFFFF"
+	},
+	artistNameContainer: {
+		display: "flex",
+		flexDirection: "row",
+		flexWrap: "wrap",
+		alignItems: "center",
+		justifyContent: "center"
+	},
+	artistName: {
+		fontSize: RFValue(11, 580),
+		letterSpacing: -0.1,
+		fontWeight: "600"
 	}
 });
 

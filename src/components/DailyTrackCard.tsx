@@ -37,26 +37,31 @@ const DailyTrackCard = ({
 	artwork,
 	bgColour,
 	accentColor,
-	// isExpanded,
 	trackLinks
 }: DailyTrackCardProps): JSX.Element => {
 	const windowHeight = Dimensions.get("window").height;
+	const windowWidth = Dimensions.get("window").width;
 
 	return (
 		<View style={[styles.cardContainer]}>
-			<View style={styles.artworkContainer}>
+			<View
+				style={[
+					styles.artworkContainer,
+					{ marginRight: windowWidth * 0.12 }
+				]}>
 				<Image
 					source={artwork}
 					style={[
 						styles.artwork,
 						{
+							borderColor: "#FFFFFF65",
 							height: windowHeight * 0.28,
 							width: windowHeight * 0.28
 						}
 					]}
 				/>
 			</View>
-			<View style={styles.trackInfoContainer}>
+			{/* <View style={styles.trackInfoContainer}>
 				<Text style={styles.trackName}>{trackName}</Text>
 				<View style={styles.artistNameContainer}>
 					<Text style={[styles.artistName, { color: accentColor }]}>
@@ -68,59 +73,23 @@ const DailyTrackCard = ({
 				trackLinks={trackLinks}
 				bgColour={bgColour}
 				accentColor={accentColor}
-			/>
+			/> */}
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
 	cardContainer: {
-		display: "flex",
-		zIndex: 10,
-		padding: 0,
-		maxWidth: "100%",
-		backgroundColor: "#00000035",
-
-		width: "100%"
+		// backgroundColor: "#00000035",
+		alignItems: "center",
+		paddingVertical: "4%"
 	},
 	artworkContainer: {
-		position: "relative",
 		alignItems: "flex-start"
 	},
 	artwork: {
-		marginBottom: "10%",
 		borderRadius: 7,
-		borderColor: "#FFFFFF55",
-		borderWidth: 3
-	},
-
-	trackInfoContainer: {
-		height: "auto",
-		alignSelf: "center",
-
-		borderRadius: 7,
-		backgroundColor: "#00000035"
-	},
-	trackName: {
-		fontSize: RFValue(13, 580),
-		letterSpacing: -0.1,
-		fontWeight: "600",
-		marginBottom: "3%",
-		textAlign: "center",
-		color: "#FFFFFF"
-	},
-	artistNameContainer: {
-		display: "flex",
-
-		flexDirection: "row",
-		flexWrap: "wrap",
-		alignItems: "center",
-		justifyContent: "center"
-	},
-	artistName: {
-		fontSize: RFValue(11, 580),
-		letterSpacing: -0.1,
-		fontWeight: "600"
+		borderWidth: 2
 	}
 });
 

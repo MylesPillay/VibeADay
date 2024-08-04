@@ -75,10 +75,11 @@ const GenreDotSelector = ({
 const styles = StyleSheet.create({
 	genreNavContainer: {
 		display: "flex",
-		backgroundColor: "green",
+		// backgroundColor: "green",
 		flexDirection: "column",
 		justifyContent: "flex-start",
 		width: "auto",
+		height: "40%",
 		// paddingTop: RFValue(8, 580),
 		alignItems: "center"
 		// top: "3%",

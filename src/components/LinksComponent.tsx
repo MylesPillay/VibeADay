@@ -110,8 +110,9 @@ const styles = StyleSheet.create({
 		justifyContent: "space-evenly",
 		width: "90%",
 		marginVertical: "8%",
+		marginBottom: "4%",
 		height: "auto",
-		padding: "4%",
+		padding: "5%",
 		paddingHorizontal: "1%",
 		borderRadius: 7,
 		backgroundColor: "#00000035"

@@ -65,7 +65,6 @@ const DailyTrackCard = ({
 				</View>
 			</View>
 			<LinksComponent
-				// isExpanded={isExpanded}
 				trackLinks={trackLinks}
 				bgColour={bgColour}
 				accentColor={accentColor}
@@ -77,15 +76,16 @@ const DailyTrackCard = ({
 const styles = StyleSheet.create({
 	cardContainer: {
 		display: "flex",
-		// backgroundColor: "purple",
 		zIndex: 10,
+		padding: 0,
+		maxWidth: "100%",
+		backgroundColor: "#00000035",
 
-		justifyContent: "flex-start",
 		width: "100%"
 	},
 	artworkContainer: {
 		position: "relative",
-		alignItems: "center"
+		alignItems: "flex-start"
 	},
 	artwork: {
 		marginBottom: "10%",
@@ -97,8 +97,7 @@ const styles = StyleSheet.create({
 	trackInfoContainer: {
 		height: "auto",
 		alignSelf: "center",
-		padding: "4%",
-		width: "90%",
+
 		borderRadius: 7,
 		backgroundColor: "#00000035"
 	},

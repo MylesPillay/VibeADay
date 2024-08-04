@@ -239,61 +239,100 @@ const TrackGallery = (): JSX.Element => {
 					backgroundColor: navigatorTracks[displayedTrack]?.bgColour
 				}}>
 				<View style={styles.mainTrackContainer}>
-					<View style={styles.genreNavContainer}>
-						<GenreDotSelector
-							tracks={navigatorTracks.slice(0, 5)}
-							displayedTrack={displayedTrack}
-							// isExpanded={isExpanded}
-							handleGenreDotSelect={handleGenreDotSelect}
-							handleGenreListSelection={handleGenreListSelection}
-							setDisplayedTrack={setDisplayedTrack}
-							setIsExpanded={setIsExpanded}
-							accentColor={
-								navigatorTracks[displayedTrack]?.accentColor
-							}
-							nameOpacityStyle={nameOpacityStyle}
-							backgroundOpacityStyle={backgroundOpacityStyle}
-						/>
-						<GenreTitleComponent
-							tracks={navigatorTracks}
-							displayedTrack={displayedTrack}
-						/>
-						<View
-							style={{
-								maxHeight: windowHeight * 0.08,
-								justifyContent: "flex-start"
-							}}>
-							<TouchableOpacity
-								activeOpacity={1}
-								onPress={handleExpandGenreList}>
-								<Animated.View style={topChevronStyle}>
-									<MaterialCommunityIcons
-										name={"chevron-right"}
-										color={
+					<View style={{ flexDirection: "row" }}>
+						<View style={styles.genreNavContainer}>
+							<GenreDotSelector
+								tracks={navigatorTracks.slice(0, 5)}
+								displayedTrack={displayedTrack}
+								// isExpanded={isExpanded}
+								handleGenreDotSelect={handleGenreDotSelect}
+								handleGenreListSelection={
+									handleGenreListSelection
+								}
+								setDisplayedTrack={setDisplayedTrack}
+								setIsExpanded={setIsExpanded}
+								accentColor={
+									navigatorTracks[displayedTrack]?.accentColor
+								}
+								nameOpacityStyle={nameOpacityStyle}
+								backgroundOpacityStyle={backgroundOpacityStyle}
+							/>
+							<View
+								style={{
+									flexDirection: "column",
+									height: "90%",
+									justifyContent: "space-between",
+									alignContent: "center",
+									alignItems: "center"
+								}}>
+								<View style={styles.genreTitleContainer}>
+									<GenreTitleComponent
+										tracks={navigatorTracks}
+										displayedTrack={displayedTrack}
+									/>
+
+									<View
+										style={{
+											// maxHeight: windowHeight * 0.08,
+
+											justifyContent: "flex-end",
+
+											alignContent: "center"
+										}}>
+										<TouchableOpacity
+											activeOpacity={1}
+											onPress={handleExpandGenreList}>
+											<Animated.View
+												style={topChevronStyle}>
+												<MaterialCommunityIcons
+													name={"chevron-right"}
+													color={
+														navigatorTracks[
+															displayedTrack
+														]?.accentColor
+													}
+													size={46}
+												/>
+											</Animated.View>
+										</TouchableOpacity>
+									</View>
+								</View>
+								<View
+									style={{
+										width: "100%",
+										height: "100%",
+										marginTop: "5%"
+									}}>
+									<DailyTrackCard
+										trackLinks={trackLinks}
+										trackName={
+											tracks[displayedTrack]?.song_title
+										}
+										artistName={
+											tracks[displayedTrack]?.song_artist
+										}
+										genreName={
+											tracks[displayedTrack]?.genreName
+										}
+										artwork={{
+											uri: tracks[displayedTrack]?.artwork
+										}}
+										goToPreviousTrack={goToPreviousTrack}
+										goToNextTrack={goToNextTrack}
+										bgColour={
+											navigatorTracks[displayedTrack]
+												?.bgColour
+										}
+										accentColor={
 											navigatorTracks[displayedTrack]
 												?.accentColor
 										}
-										size={46}
+										isExpanded={isExpanded}
 									/>
-								</Animated.View>
-							</TouchableOpacity>
+								</View>
+							</View>
 						</View>
 					</View>
-
-					<DailyTrackCard
-						trackLinks={trackLinks}
-						trackName={tracks[displayedTrack]?.song_title}
-						artistName={tracks[displayedTrack]?.song_artist}
-						genreName={tracks[displayedTrack]?.genreName}
-						artwork={{ uri: tracks[displayedTrack]?.artwork }}
-						goToPreviousTrack={goToPreviousTrack}
-						goToNextTrack={goToNextTrack}
-						bgColour={navigatorTracks[displayedTrack]?.bgColour}
-						accentColor={
-							navigatorTracks[displayedTrack]?.accentColor
-						}
-						isExpanded={isExpanded}
-					/>
 				</View>
 				<View
 					style={[
@@ -326,7 +365,14 @@ const styles = StyleSheet.create({
 	genreNavContainer: {
 		display: "flex",
 		flexDirection: "row",
-		marginBottom: "-35%"
+		justifyContent: "space-between"
+	},
+	genreTitleContainer: {
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "space-between",
+		width: "auto",
+		alignItems: "center"
 	},
 	chevronContainer: {
 		alignItems: "flex-end",

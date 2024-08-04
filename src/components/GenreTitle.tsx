@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		alignContent: "center",
 		flex: 1
-	},s
+	},
 	titleText: {
 		fontWeight: "600",
 		fontFamily: "sans-serif",

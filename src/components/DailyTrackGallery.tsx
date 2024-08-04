@@ -1,10 +1,27 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, FlatList, Dimensions, ActivityIndicator } from "react-native";
+import {
+	View,
+	FlatList,
+	Dimensions,
+	ActivityIndicator,
+	StyleSheet,
+	TouchableOpacity
+} from "react-native";
 import { createClient } from "@supabase/supabase-js";
-import StickyTopNavigator from "./sticky-top-nav/StickyTopNavigator";
+
 import { genreAccentColors, genreColors } from "../constants/Colors";
-import DailyTrackCard from "./DailyTrackCard";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
+import Animated, {
+	useAnimatedStyle,
+	useSharedValue,
+	withTiming
+} from "react-native-reanimated";
+import { RFValue } from "react-native-responsive-fontsize";
+import GenreDotSelector from "./GenreDotSelector";
+import GenreTitleComponent from "./GenreTitle";
+import DailyTrackCard from "./DailyTrackCard";
+import ChevronComponent from "./sticky-top-nav/ChevronComponent";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 interface Track {
 	genreName: string;
@@ -32,7 +49,7 @@ const TrackGallery = (): JSX.Element => {
 		[]
 	);
 	const [isExpanded, setIsExpanded] = React.useState<boolean>(false);
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [displayedTrack, setDisplayedTrack] = React.useState<number>(0);
 	const flatListRef = useRef<FlatList<Track> | null>(null);
@@ -44,6 +61,82 @@ const TrackGallery = (): JSX.Element => {
 	function getGenreAccentColor(colorId: number): string {
 		return genreAccentColors[colorId] || "#000000";
 	}
+
+	console.log(tracks, "this is the tracks");
+	console.log(navigatorTracks, "this is the navigator tracks");
+
+	const [flipChevrons, setFlipChevrons] = useState<boolean | undefined>(
+		undefined
+	);
+	const topChevronPosition = useSharedValue(RFValue(5, 580));
+	const bottomChevronPosition = useSharedValue(3);
+	const translationXValue = useSharedValue(-200);
+	const nameOpacityValue = useSharedValue(1);
+	const backgroundOpacityValue = useSharedValue(1);
+	const dotOpacityValue = useSharedValue(1);
+	const handleGenreListSelection = (selectedTrack: number) => {
+		setDisplayedTrack(selectedTrack);
+		handleExpandGenreList();
+	};
+	const handleGenreDotSelect = (selectedTrack: number) => {
+		setDisplayedTrack(selectedTrack);
+	};
+	const topChevronStyle = useAnimatedStyle(() => {
+		return {
+			top: topChevronPosition.value
+		};
+	});
+	const backgroundOpacityStyle = useAnimatedStyle(() => {
+		return {
+			opacity: backgroundOpacityValue.value
+		};
+	});
+
+	const bottomChevronStyle = useAnimatedStyle(() => {
+		return {
+			bottom: bottomChevronPosition.value
+		};
+	});
+
+	const dotOpacityStyle = useAnimatedStyle(() => {
+		return {
+			opacity: dotOpacityValue.value
+		};
+	});
+
+	const nameOpacityStyle = useAnimatedStyle(() => {
+		return {
+			opacity: nameOpacityValue.value,
+			transform: [{ translateX: translationXValue.value }]
+		};
+	});
+	const handleExpandGenreList = () => {
+		if (isExpanded) {
+			topChevronPosition.value = withTiming(RFValue(5, 580));
+			bottomChevronPosition.value = withTiming(RFValue(5, 580));
+			translationXValue.value = withTiming(-200, { duration: 400 });
+			// backgroundOpacityValue.value = withTiming(0.1, { duration: 100 });
+			dotOpacityValue.value = withTiming(1, { duration: 150 });
+			nameOpacityValue.value = withTiming(0, { duration: 280 });
+			setFlipChevrons(undefined);
+			// Set isExpanded to false after a delay to allow animations to complete
+			setIsExpanded(false);
+			// setTimeout(() => {
+			// }, 100);
+		} else {
+			// When expanding, set isExpanded to true first
+			setIsExpanded(true);
+			setFlipChevrons(true);
+			topChevronPosition.value = withTiming(RFValue(5, 580));
+			bottomChevronPosition.value = withTiming(RFValue(5, 580));
+			backgroundOpacityValue.value = withTiming(1, {
+				duration: 200
+			});
+			translationXValue.value = withTiming(15, { duration: 400 });
+			dotOpacityValue.value = withTiming(0, { duration: 100 });
+			nameOpacityValue.value = withTiming(1, { duration: 250 });
+		}
+	};
 
 	useEffect(() => {
 		const fetchTracks = async () => {
@@ -75,7 +168,7 @@ const TrackGallery = (): JSX.Element => {
 				setError("Failed to fetch tracks");
 				console.error(error);
 			} finally {
-				setLoading(false);
+				// setLoading(false);
 			}
 		};
 
@@ -136,36 +229,111 @@ const TrackGallery = (): JSX.Element => {
 		<PanGestureHandler onHandlerStateChange={onGestureEvent}>
 			<View
 				style={{
+					display: "flex",
+					paddingVertical: "5%",
+					paddingHorizontal: "5%",
+					paddingTop: "20%",
 					height: windowHeight,
 					width: windowWidth,
 					justifyContent: "flex-start",
-					backgroundColor: "#000000",
-					alignContent: "center",
-					alignItems: "center"
+					backgroundColor: navigatorTracks[displayedTrack]?.bgColour
 				}}>
-				<StickyTopNavigator
-					tracks={navigatorTracks.slice(0, 5)}
-					displayedTrack={displayedTrack}
-					setDisplayedTrack={setDisplayedTrack}
-					accentColot={navigatorTracks[displayedTrack]?.accentColor}
-					isExpanded={isExpanded}
-					setIsExpanded={setIsExpanded}
-				/>
-				<DailyTrackCard
-					trackLinks={trackLinks}
-					trackName={tracks[displayedTrack].song_title}
-					artistName={tracks[displayedTrack].song_artist}
-					genreName={tracks[displayedTrack].genreName}
-					artwork={{ uri: tracks[displayedTrack].artwork }}
-					goToPreviousTrack={goToPreviousTrack}
-					goToNextTrack={goToNextTrack}
-					bgColour={navigatorTracks[displayedTrack]?.bgColour}
-					accentColor={navigatorTracks[displayedTrack]?.accentColor}
-					isExpanded={isExpanded}
-				/>
+				<View style={styles.mainTrackContainer}>
+					<View style={styles.genreNavContainer}>
+						<GenreDotSelector
+							tracks={navigatorTracks.slice(0, 5)}
+							displayedTrack={displayedTrack}
+							// isExpanded={isExpanded}
+							handleGenreDotSelect={handleGenreDotSelect}
+							handleGenreListSelection={handleGenreListSelection}
+							setDisplayedTrack={setDisplayedTrack}
+							setIsExpanded={setIsExpanded}
+							accentColor={
+								navigatorTracks[displayedTrack]?.accentColor
+							}
+							nameOpacityStyle={nameOpacityStyle}
+							backgroundOpacityStyle={backgroundOpacityStyle}
+						/>
+						<GenreTitleComponent
+							tracks={navigatorTracks}
+							displayedTrack={displayedTrack}
+						/>
+						<View
+							style={{
+								maxHeight: windowHeight * 0.08,
+								justifyContent: "flex-start"
+							}}>
+							<TouchableOpacity
+								activeOpacity={1}
+								onPress={handleExpandGenreList}>
+								<Animated.View style={topChevronStyle}>
+									<MaterialCommunityIcons
+										name={"chevron-right"}
+										color={
+											navigatorTracks[displayedTrack]
+												?.accentColor
+										}
+										size={46}
+									/>
+								</Animated.View>
+							</TouchableOpacity>
+						</View>
+					</View>
+
+					<DailyTrackCard
+						trackLinks={trackLinks}
+						trackName={tracks[displayedTrack]?.song_title}
+						artistName={tracks[displayedTrack]?.song_artist}
+						genreName={tracks[displayedTrack]?.genreName}
+						artwork={{ uri: tracks[displayedTrack]?.artwork }}
+						goToPreviousTrack={goToPreviousTrack}
+						goToNextTrack={goToNextTrack}
+						bgColour={navigatorTracks[displayedTrack]?.bgColour}
+						accentColor={
+							navigatorTracks[displayedTrack]?.accentColor
+						}
+						isExpanded={isExpanded}
+					/>
+				</View>
+				<View
+					style={[
+						styles.chevronContainer
+						// {
+						// 	backgroundColor:
+						// 		navigatorTracks[displayedTrack]?.bgColour
+						// }
+					]}>
+					<ChevronComponent
+						handleExpandGenreList={handleExpandGenreList}
+						topChevronStyle={topChevronStyle}
+						bottomChevronStyle={bottomChevronStyle}
+						flipChevrons={!!flipChevrons}
+						accentColor={
+							navigatorTracks[displayedTrack]?.accentColor
+						}
+					/>
+				</View>
 			</View>
 		</PanGestureHandler>
 	);
 };
+const styles = StyleSheet.create({
+	mainTrackContainer: {
+		display: "flex",
+		flexDirection: "column"
+		// backgroundColor: "red"
+	},
+	genreNavContainer: {
+		display: "flex",
+		flexDirection: "row",
+		marginBottom: "-35%"
+	},
+	chevronContainer: {
+		alignItems: "flex-end",
+		alignSelf: "flex-end",
+		width: "100%",
+		height: "25%"
+	}
+});
 
 export default TrackGallery;

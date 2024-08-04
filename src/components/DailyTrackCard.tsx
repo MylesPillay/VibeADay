@@ -37,29 +37,21 @@ const DailyTrackCard = ({
 	artwork,
 	bgColour,
 	accentColor,
-	isExpanded,
+	// isExpanded,
 	trackLinks
 }: DailyTrackCardProps): JSX.Element => {
 	const windowHeight = Dimensions.get("window").height;
 
 	return (
-		<View
-			style={[
-				styles.cardContainer,
-				{
-					backgroundColor: bgColour,
-					height: windowHeight * 0.8,
-					paddingTop: windowHeight * 0.2
-				}
-			]}>
+		<View style={[styles.cardContainer]}>
 			<View style={styles.artworkContainer}>
 				<Image
 					source={artwork}
 					style={[
 						styles.artwork,
 						{
-							height: windowHeight * 0.3,
-							width: windowHeight * 0.3
+							height: windowHeight * 0.28,
+							width: windowHeight * 0.28
 						}
 					]}
 				/>
@@ -73,25 +65,21 @@ const DailyTrackCard = ({
 				</View>
 			</View>
 			<LinksComponent
-				isExpanded={isExpanded}
+				// isExpanded={isExpanded}
 				trackLinks={trackLinks}
 				bgColour={bgColour}
 				accentColor={accentColor}
 			/>
-			<View style={styles.genreChevronContainer}>
-				<MaterialCommunityIcons
-					name={"chevron-right"}
-					color={accentColor}
-					size={45}
-				/>
-			</View>
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
 	cardContainer: {
-		flex: 1,
+		display: "flex",
+		// backgroundColor: "purple",
+		zIndex: 10,
+
 		justifyContent: "flex-start",
 		width: "100%"
 	},
@@ -115,7 +103,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#00000035"
 	},
 	trackName: {
-		fontSize: RFValue(14, 580),
+		fontSize: RFValue(13, 580),
 		letterSpacing: -0.1,
 		fontWeight: "600",
 		marginBottom: "3%",
@@ -131,16 +119,9 @@ const styles = StyleSheet.create({
 		justifyContent: "center"
 	},
 	artistName: {
-		fontSize: RFValue(10, 580),
+		fontSize: RFValue(11, 580),
 		letterSpacing: -0.1,
 		fontWeight: "600"
-	},
-
-	genreChevronContainer: {
-		alignItems: "flex-end",
-		alignSelf: "flex-end",
-		width: "10%",
-		marginRight: "5%"
 	}
 });
 

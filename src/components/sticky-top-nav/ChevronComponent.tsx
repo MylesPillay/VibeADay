@@ -48,9 +48,7 @@ const ChevronComponent = ({
 const styles = StyleSheet.create({
 	chevronIconsContainer: {
 		display: "flex",
-		zIndex: 200,
-		flexDirection: "column",
-		justifyContent: "center"
+		flexDirection: "column"
 	}
 });
 

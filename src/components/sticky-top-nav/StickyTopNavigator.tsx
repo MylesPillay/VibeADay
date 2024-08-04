@@ -14,6 +14,7 @@ import Animated, {
 	withTiming
 } from "react-native-reanimated";
 import { RFValue } from "react-native-responsive-fontsize";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 interface StickyTopNavigatorProps {
 	tracks: NavigatorTrack[];
@@ -21,6 +22,11 @@ interface StickyTopNavigatorProps {
 	setDisplayedTrack: React.Dispatch<React.SetStateAction<number>>;
 	isExpanded: boolean;
 	setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+	accentColor: string;
+	handleGenreListSelection: (index: number) => void;
+	handleGenreDotSelect: (index: number) => void;
+	nameOpacityStyle: any;
+	backgroundOpacityStyle: any;
 }
 
 const StickyTopNavigator = ({
@@ -28,86 +34,86 @@ const StickyTopNavigator = ({
 	displayedTrack,
 	setDisplayedTrack,
 	isExpanded,
-	setIsExpanded
+	setIsExpanded,
+	accentColor,
+	handleGenreListSelection,
+	handleGenreDotSelect,
+	nameOpacityStyle,
+	backgroundOpacityStyle
 }: StickyTopNavigatorProps): JSX.Element => {
 	const [flipChevrons, setFlipChevrons] = useState<boolean | undefined>(
 		undefined
 	);
-	const topChevronPosition = useSharedValue(RFValue(5, 580));
-	const bottomChevronPosition = useSharedValue(3);
-	const translationXValue = useSharedValue(-200);
-	const nameOpacityValue = useSharedValue(1);
-	const backgroundOpacityValue = useSharedValue(1);
-	const dotOpacityValue = useSharedValue(1);
+
 	const windowWidth = Dimensions.get("window").width;
 	const windowHeight = Dimensions.get("window").height;
 
-	const handleGenreListSelection = (selectedTrack: number) => {
-		setDisplayedTrack(selectedTrack);
-		handleExpandGenreList();
-	};
-	const handleGenreDotSelect = (selectedTrack: number) => {
-		setDisplayedTrack(selectedTrack);
-	};
+	// const handleGenreListSelection = (selectedTrack: number) => {
+	// 	setDisplayedTrack(selectedTrack);
+	// 	handleExpandGenreList();
+	// };
+	// const handleGenreDotSelect = (selectedTrack: number) => {
+	// 	setDisplayedTrack(selectedTrack);
+	// };
 
-	const handleExpandGenreList = () => {
-		if (isExpanded) {
-			topChevronPosition.value = withTiming(RFValue(5, 580));
-			bottomChevronPosition.value = withTiming(RFValue(5, 580));
-			translationXValue.value = withTiming(-200, { duration: 400 });
-			// backgroundOpacityValue.value = withTiming(0.1, { duration: 100 });
-			dotOpacityValue.value = withTiming(1, { duration: 150 });
-			nameOpacityValue.value = withTiming(0, { duration: 280 });
-			setFlipChevrons(undefined);
+	// const handleExpandGenreList = () => {
+	// 	if (isExpanded) {
+	// 		topChevronPosition.value = withTiming(RFValue(5, 580));
+	// 		bottomChevronPosition.value = withTiming(RFValue(5, 580));
+	// 		translationXValue.value = withTiming(-200, { duration: 400 });
+	// 		// backgroundOpacityValue.value = withTiming(0.1, { duration: 100 });
+	// 		dotOpacityValue.value = withTiming(1, { duration: 150 });
+	// 		nameOpacityValue.value = withTiming(0, { duration: 280 });
+	// 		setFlipChevrons(undefined);
 
-			// Set isExpanded to false after a delay to allow animations to complete
-			setIsExpanded(false);
-			// setTimeout(() => {
-			// }, 100);
-		} else {
-			// When expanding, set isExpanded to true first
-			setIsExpanded(true);
-			setFlipChevrons(true);
-			topChevronPosition.value = withTiming(RFValue(12, 580));
-			bottomChevronPosition.value = withTiming(RFValue(12, 580));
-			backgroundOpacityValue.value = withTiming(1, {
-				duration: 200
-			});
-			translationXValue.value = withTiming(15, { duration: 400 });
-			dotOpacityValue.value = withTiming(0, { duration: 100 });
-			nameOpacityValue.value = withTiming(1, { duration: 250 });
-		}
-	};
+	// 		// Set isExpanded to false after a delay to allow animations to complete
+	// 		setIsExpanded(false);
+	// 		// setTimeout(() => {
+	// 		// }, 100);
+	// 	} else {
+	// 		// When expanding, set isExpanded to true first
+	// 		setIsExpanded(true);
+	// 		setFlipChevrons(true);
+	// 		topChevronPosition.value = withTiming(RFValue(12, 580));
+	// 		bottomChevronPosition.value = withTiming(RFValue(12, 580));
+	// 		backgroundOpacityValue.value = withTiming(1, {
+	// 			duration: 200
+	// 		});
+	// 		translationXValue.value = withTiming(15, { duration: 400 });
+	// 		dotOpacityValue.value = withTiming(0, { duration: 100 });
+	// 		nameOpacityValue.value = withTiming(1, { duration: 250 });
+	// 	}
+	// };
 
-	const topChevronStyle = useAnimatedStyle(() => {
-		return {
-			top: topChevronPosition.value
-		};
-	});
-	const backgroundOpacityStyle = useAnimatedStyle(() => {
-		return {
-			opacity: backgroundOpacityValue.value
-		};
-	});
+	// const topChevronStyle = useAnimatedStyle(() => {
+	// 	return {
+	// 		top: topChevronPosition.value
+	// 	};
+	// });
+	// const backgroundOpacityStyle = useAnimatedStyle(() => {
+	// 	return {
+	// 		opacity: backgroundOpacityValue.value
+	// 	};
+	// });
 
-	const bottomChevronStyle = useAnimatedStyle(() => {
-		return {
-			bottom: bottomChevronPosition.value
-		};
-	});
+	// const bottomChevronStyle = useAnimatedStyle(() => {
+	// 	return {
+	// 		bottom: bottomChevronPosition.value
+	// 	};
+	// });
 
-	const dotOpacityStyle = useAnimatedStyle(() => {
-		return {
-			opacity: dotOpacityValue.value
-		};
-	});
+	// const dotOpacityStyle = useAnimatedStyle(() => {
+	// 	return {
+	// 		opacity: dotOpacityValue.value
+	// 	};
+	// });
 
-	const nameOpacityStyle = useAnimatedStyle(() => {
-		return {
-			opacity: nameOpacityValue.value,
-			transform: [{ translateX: translationXValue.value }]
-		};
-	});
+	// const nameOpacityStyle = useAnimatedStyle(() => {
+	// 	return {
+	// 		opacity: nameOpacityValue.value,
+	// 		transform: [{ translateX: translationXValue.value }]
+	// 	};
+	// });
 
 	return (
 		<>
@@ -221,13 +227,13 @@ const StickyTopNavigator = ({
 					</View>
 				)}
 
-				<ChevronComponent
-					handleExpandGenreList={handleExpandGenreList}
-					topChevronStyle={topChevronStyle}
-					bottomChevronStyle={bottomChevronStyle}
-					flipChevrons={!!flipChevrons}
-					accentColor={tracks[displayedTrack]?.accentColor}
-				/>
+				<View style={styles.genreChevronContainer}>
+					<MaterialCommunityIcons
+						name={"chevron-right"}
+						color={tracks[displayedTrack]?.accentColor}
+						size={45}
+					/>
+				</View>
 			</Animated.View>
 			<Animated.View
 				style={[
@@ -313,6 +319,13 @@ const styles = StyleSheet.create({
 		zIndex: 90,
 		width: "100%",
 		height: "100%"
+	},
+
+	genreChevronContainer: {
+		alignItems: "flex-end",
+		alignSelf: "flex-end",
+		width: "10%",
+		marginRight: "5%"
 	}
 });
 

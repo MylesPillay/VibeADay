@@ -4,12 +4,12 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { TrackLinksProps } from "./DailyTrackCard";
 
 const LinksComponent = ({
-	isExpanded,
+	// isExpanded,
 	trackLinks,
 	bgColour,
 	accentColor
 }: {
-	isExpanded: boolean;
+	// isExpanded: boolean;
 	trackLinks: TrackLinksProps;
 	bgColour: string;
 	accentColor: string;

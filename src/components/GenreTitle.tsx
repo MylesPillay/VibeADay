@@ -11,6 +11,8 @@ const GenreTitleComponent = ({ tracks, displayedTrack }: GenreTitleProps) => {
 	return (
 		<View style={styles.titleContainer}>
 			<Text
+				adjustsFontSizeToFit
+				numberOfLines={1}
 				style={[
 					styles.titleText,
 					{ color: tracks[displayedTrack]?.accentColor }

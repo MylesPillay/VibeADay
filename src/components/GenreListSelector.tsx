@@ -90,7 +90,6 @@ const GenreListSelector = ({
 						<TouchableOpacity
 							style={styles.navGenreTitleButton}
 							activeOpacity={0.4}
-							disabled={index === displayedTrack}
 							onPress={() => handleGenreListSelection(index)}>
 							<Text
 								style={[

@@ -101,43 +101,6 @@ const TrackGallery = (): JSX.Element => {
 
 		fetchTracks();
 	}, [selectedDay]);
-	// useEffect(() => {
-	// 	const fetchTracks = async () => {
-	// 		const supabase = createClient(
-	// 			process.env.SUPABASE_API_URL as string,
-	// 			process.env.SUPABASE_API_SECRET_ACCESS_TOKEN as string
-	// 		);
-	// 		try {
-	// 			let { data, error } = await supabase
-	// 				.from("daily_tracks")
-	// 				.select("*")
-	// 				.order("created_at", { ascending: true });
-
-	// 			if (error) throw error;
-	// 			if (data) {
-	// 				setTracks(data.slice(0, 5));
-	// 				setNavigatorTracks(
-	// 					data.slice(0, 5).map((track, index) => ({
-	// 						genreName: track.genre_title,
-	// 						bgColour: getGenreColor(
-	// 							track.genre_colour as number
-	// 						),
-	// 						accentColor: getGenreAccentColor(
-	// 							track.genre_colour as number
-	// 						),
-	// 						trackIndex: index
-	// 					}))
-	// 				);
-	// 			}
-	// 		} catch (error) {
-	// 			setError("Failed to fetch tracks");
-	// 			console.error(error);
-	// 		} finally {
-	// 		}
-	// 	};
-
-	// 	fetchTracks();
-	// }, []);
 
 	console.log(tracks, "this is the tracks");
 	console.log(navigatorTracks, "this is the navigator tracks");
@@ -243,9 +206,7 @@ const TrackGallery = (): JSX.Element => {
 					duration: 150
 				});
 			}, 11);
-			// nameOpacityValue.value = withTiming(0, {
-			// 	duration: 250
-			// });
+
 			translationXValue.value = withTiming(-200, {
 				duration: 150
 			});
@@ -381,11 +342,16 @@ const TrackGallery = (): JSX.Element => {
 						</View>
 					</View>
 					<View style={styles.trackInfoContainer}>
-						<Text style={styles.trackName}>
+						<Text
+							style={styles.trackName}
+							adjustsFontSizeToFit
+							numberOfLines={1}>
 							{tracks[displayedTrack]?.song_title}
 						</Text>
 						<View style={styles.artistNameContainer}>
 							<Text
+								adjustsFontSizeToFit
+								numberOfLines={1}
 								style={[
 									styles.artistName,
 									{
@@ -497,21 +463,21 @@ const styles = StyleSheet.create({
 	},
 	trackInfoContainer: {
 		height: "auto",
+		justifyContent: "space-between",
 		alignSelf: "center",
-		minWidth: "90%",
+		width: "90%",
 		minHeight: "9%",
 		margin: "2%",
 		marginTop: "10%",
 		paddingVertical: "3%",
 		padding: "6%",
 		borderRadius: 7,
-		backgroundColor: "#00000035"
+		backgroundColor: "#00000025"
 	},
 	trackName: {
 		fontSize: RFValue(13, 580),
 		letterSpacing: -0.1,
 		fontWeight: "600",
-		// marginBottom: "3%",
 		textAlign: "center",
 		color: "#FFFFFF"
 	},
@@ -523,7 +489,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center"
 	},
 	artistName: {
-		fontSize: RFValue(11, 580),
+		fontSize: RFValue(13, 580),
 		letterSpacing: -0.1,
 		fontWeight: "600"
 	},

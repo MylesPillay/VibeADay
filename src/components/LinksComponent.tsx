@@ -121,13 +121,11 @@ const styles = StyleSheet.create({
 		padding: "5%",
 		paddingHorizontal: "1%",
 		borderRadius: 7,
-		backgroundColor: "#00000035"
+		backgroundColor: "#00000025"
 	},
 	bandcampIconContainer: {
 		width: 25,
 		height: 25,
-		// backgroundColor: "#00A0D8",
-		// backgroundColor: accentColor,
 		borderRadius: 16,
 		justifyContent: "center",
 		alignItems: "center"

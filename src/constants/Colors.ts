@@ -29,50 +29,16 @@ export interface GenreColors {
 }
 
 export const genreColors: GenreColors = {
-	1: "#29524A", // Afro House
-	2: "#663858", // Drum & Bass
-	3: "#c2343b", // Easy Listening`
-	4: "#2e52b3", // Garage
-	5: "#58409c", // Techno
-	6: "#A5A299", // UK Hip-Hop 29524A FF5733
-	7: "#778899", // Deep House
+	1: "#29524A",
+	2: "#663858",
+	3: "#edc34c",
+  4: "#2e52b3",
+  5: "#58409c"
 };
 export const genreAccentColors: GenreColors = {
-	1: "#DDF093", // Afro House
-	2: "#e4adf7", // Drum & Bass
-	3: "#d5a6ff", // Easy Listening`
-	4: "orange", // Garage
-	5: "#37db70", // Techno
-	6: "#A5A299", // UK Hip-Hop 29524A FF5733
-	7: "#778899", // Deep House
+	1: "#DDF093",
+	2: "gold",
+	3: "#3607f0",
+  4: "#ffe30f",
+  5: "#37db70",
 };
-
-
-// // You can add more theme-related constants and objects here
-// export const colors = {
-// 	primary: "#6200EE",
-// 	secondary: "#03DAC6",
-// 	background: "#F6F6F6",
-// 	surface: "#FFFFFF",
-// 	error: "#B00020",
-// 	text: "#000000",
-// 	onPrimary: "#FFFFFF",
-// 	onSecondary: "#000000",
-// 	onBackground: "#000000",
-// 	onSurface: "#000000",
-// 	onError: "#FFFFFF",
-// };
-
-// export const spacing = {
-// 	small: 8,
-// 	medium: 16,
-// 	large: 24,
-// 	// Add more spacing values as needed
-// };
-
-// export const fontSizes = {
-// 	small: 12,
-// 	medium: 16,
-// 	large: 20,
-// 	// Add more font sizes as needed
-// };

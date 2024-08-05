@@ -172,8 +172,14 @@ const TrackGallery = (): JSX.Element => {
 		if (!isExpanded) {
 			setIsExpanded(true);
 			setFlipChevrons(true);
-			topChevronPosition.value = withTiming(RFValue(12, 580));
-			bottomChevronPosition.value = withTiming(RFValue(11, 580));
+			setTimeout(() => {
+				topChevronPosition.value = withTiming(RFValue(15, 580), {
+					duration: 100
+				});
+				bottomChevronPosition.value = withTiming(RFValue(8, 580), {
+					duration: 150
+				});
+			}, 150);
 			containerHeight.value = withTiming(windowHeight, { duration: 200 });
 			nameOpacityValue.value = withTiming(1, {
 				duration: 250
@@ -187,17 +193,23 @@ const TrackGallery = (): JSX.Element => {
 		} else {
 			setIsExpanded(false);
 			setFlipChevrons(false);
-			topChevronPosition.value = withTiming(RFValue(0, 580));
-			bottomChevronPosition.value = withTiming(RFValue(0, 580));
-			containerHeight.value = withTiming(50, { duration: 200 });
-			nameOpacityValue.value = withTiming(0, {
-				duration: 250
-			});
+			containerHeight.value = withTiming(140, { duration: 10 });
+			setTimeout(() => {
+				topChevronPosition.value = withTiming(RFValue(3, 580), {
+					duration: 150
+				});
+				bottomChevronPosition.value = withTiming(RFValue(5, 580), {
+					duration: 150
+				});
+			}, 11);
+			// nameOpacityValue.value = withTiming(0, {
+			// 	duration: 250
+			// });
 			translationXValue.value = withTiming(-200, {
-				duration: 300
+				duration: 150
 			});
 			translationXValueDays.value = withTiming(200, {
-				duration: 300
+				duration: 150
 			});
 		}
 	};

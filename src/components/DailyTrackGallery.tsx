@@ -6,7 +6,8 @@ import {
 	ActivityIndicator,
 	StyleSheet,
 	TouchableOpacity,
-	Text
+	Text,
+	Modal
 } from "react-native";
 import { createClient } from "@supabase/supabase-js";
 
@@ -24,6 +25,7 @@ import DailyTrackCard from "./DailyTrackCard";
 import ChevronComponent from "./sticky-top-nav/ChevronComponent";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import LinksComponent from "./LinksComponent";
+import GenreListSelector from "./GenreListSelector";
 
 interface Track {
 	genreName: string;
@@ -57,6 +59,8 @@ const TrackGallery = (): JSX.Element => {
 	const flatListRef = useRef<FlatList<Track> | null>(null);
 	const windowWidth = Dimensions.get("window").width;
 	const windowHeight = Dimensions.get("window").height;
+	const [isModalVisible, setIsModalVisible] = useState(false);
+
 	function getGenreColor(colorId: number): string {
 		return genreColors[colorId] || "#000000";
 	}
@@ -113,31 +117,39 @@ const TrackGallery = (): JSX.Element => {
 		};
 	});
 	const handleExpandGenreList = () => {
-		if (isExpanded) {
-			topChevronPosition.value = withTiming(RFValue(5, 580));
-			bottomChevronPosition.value = withTiming(RFValue(5, 580));
-			translationXValue.value = withTiming(-200, { duration: 400 });
-			// backgroundOpacityValue.value = withTiming(0.1, { duration: 100 });
-			dotOpacityValue.value = withTiming(1, { duration: 150 });
-			nameOpacityValue.value = withTiming(0, { duration: 280 });
-			setFlipChevrons(undefined);
-			// Set isExpanded to false after a delay to allow animations to complete
-			setIsExpanded(false);
-			// setTimeout(() => {
-			// }, 100);
-		} else {
-			// When expanding, set isExpanded to true first
-			setIsExpanded(true);
-			setFlipChevrons(true);
-			topChevronPosition.value = withTiming(RFValue(12, 580));
-			bottomChevronPosition.value = withTiming(RFValue(11, 580));
-			backgroundOpacityValue.value = withTiming(1, {
-				duration: 200
-			});
-			translationXValue.value = withTiming(15, { duration: 400 });
-			dotOpacityValue.value = withTiming(0, { duration: 100 });
-			nameOpacityValue.value = withTiming(1, { duration: 250 });
-		}
+		// if (isExpanded) {
+		// 	topChevronPosition.value = withTiming(RFValue(5, 580));
+		// 	bottomChevronPosition.value = withTiming(RFValue(5, 580));
+		// 	translationXValue.value = withTiming(-200, { duration: 400 });
+		// 	// backgroundOpacityValue.value = withTiming(0.1, { duration: 100 });
+		// 	dotOpacityValue.value = withTiming(1, { duration: 150 });
+		// 	nameOpacityValue.value = withTiming(0, { duration: 280 });
+		// 	setFlipChevrons(undefined);
+		// 	// Set isExpanded to false after a delay to allow animations to complete
+		// 	setIsExpanded(false);
+		// 	// setTimeout(() => {
+		// 	// }, 100);
+		// } else {
+		// 	// When expanding, set isExpanded to true first
+		// 	setIsExpanded(true);
+		// 	setFlipChevrons(true);
+		// 	topChevronPosition.value = withTiming(RFValue(12, 580));
+		// 	bottomChevronPosition.value = withTiming(RFValue(11, 580));
+		// 	backgroundOpacityValue.value = withTiming(1, {
+		// 		duration: 200
+		// 	});
+		// 	translationXValue.value = withTiming(15, { duration: 400 });
+		// 	dotOpacityValue.value = withTiming(0, { duration: 100 });
+		// 	nameOpacityValue.value = withTiming(1, { duration: 250 });
+		// }
+		setIsModalVisible(!isModalVisible);
+		setIsExpanded(!isExpanded);
+		nameOpacityValue.value = withTiming(isExpanded ? 0 : 1, {
+			duration: 250
+		});
+		translationXValue.value = withTiming(isExpanded ? -200 : 15, {
+			duration: 400
+		});
 	};
 
 	useEffect(() => {
@@ -377,6 +389,30 @@ const TrackGallery = (): JSX.Element => {
 						/>
 					</View>
 				</View>
+				<Modal
+					visible={isModalVisible}
+					style={[
+						styles.modal,
+						{ height: windowHeight, width: windowWidth }
+					]}
+					animationType='slide'
+					transparent={false}
+					onRequestClose={handleExpandGenreList}>
+					<GenreListSelector
+						tracks={navigatorTracks}
+						displayedTrack={displayedTrack}
+						isExpanded={isExpanded}
+						handleGenreListSelection={handleGenreListSelection}
+						nameOpacityStyle={nameOpacityStyle}
+						accentColor={
+							navigatorTracks[displayedTrack]?.accentColor
+						}
+						handleExpandGenreList={handleExpandGenreList}
+						topChevronStyle={topChevronStyle}
+						bottomChevronStyle={bottomChevronStyle}
+						flipChevrons={!!flipChevrons}
+					/>
+				</Modal>
 			</View>
 		</PanGestureHandler>
 	);
@@ -386,6 +422,12 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "column",
 		height: "100%"
+	},
+	modal: {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		alignContent: "center"
 	},
 	genreNavContainer: {
 		display: "flex",

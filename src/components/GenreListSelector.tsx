@@ -8,7 +8,8 @@ interface GenreListSelectorProps {
 	tracks: NavigatorTrack[];
 	displayedTrack: number;
 	handleGenreListSelection: (index: number) => void;
-	nameOpacityStyle: any;
+	genreNameAnimationStyle: any;
+	dayListAnimationStyles: any;
 	accentColor: string;
 	drop_day?: string;
 }
@@ -27,7 +28,8 @@ const GenreListSelector = ({
 	tracks,
 	displayedTrack,
 	handleGenreListSelection,
-	nameOpacityStyle,
+	genreNameAnimationStyle,
+	dayListAnimationStyles,
 	accentColor,
 	drop_day
 }: GenreListSelectorProps): JSX.Element => {
@@ -37,13 +39,16 @@ const GenreListSelector = ({
 				style={{
 					alignSelf: "flex-end",
 					alignContent: "center",
-					marginRight: "5%",
+					marginRight: "3%",
 					marginTop: "15%"
 				}}>
 				{days.map((day, index) => (
 					<Animated.View
 						key={index}
-						style={[styles.dayNameContainer, nameOpacityStyle]}>
+						style={[
+							styles.dayNameContainer,
+							dayListAnimationStyles
+						]}>
 						<TouchableOpacity
 							activeOpacity={0.6}
 							disabled={index === displayedTrack}
@@ -78,7 +83,7 @@ const GenreListSelector = ({
 						key={index}
 						style={[
 							styles.navGenreNameContainer,
-							nameOpacityStyle
+							genreNameAnimationStyle
 						]}>
 						<TouchableOpacity
 							style={styles.navGenreTitleButton}

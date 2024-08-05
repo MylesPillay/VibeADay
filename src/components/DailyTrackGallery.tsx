@@ -143,12 +143,19 @@ const TrackGallery = (): JSX.Element => {
 
 	// ANIMATION TEXT SLIDE IN AND OPACITY FADE IN  STYLE VARIABLES
 	const translationXValue = useSharedValue(-200);
+	const translationXValueDays = useSharedValue(0);
+
 	const nameOpacityValue = useSharedValue(1);
 
-	const nameOpacityStyle = useAnimatedStyle(() => {
+	const genreNameTextAnimationStyle = useAnimatedStyle(() => {
 		return {
 			opacity: nameOpacityValue.value,
 			transform: [{ translateX: translationXValue.value }]
+		};
+	});
+	const dayListAnimationStyles = useAnimatedStyle(() => {
+		return {
+			transform: [{ translateX: translationXValueDays.value }]
 		};
 	});
 
@@ -167,24 +174,30 @@ const TrackGallery = (): JSX.Element => {
 			setFlipChevrons(true);
 			topChevronPosition.value = withTiming(RFValue(12, 580));
 			bottomChevronPosition.value = withTiming(RFValue(11, 580));
-			containerHeight.value = withTiming(windowHeight, { duration: 300 });
+			containerHeight.value = withTiming(windowHeight, { duration: 200 });
 			nameOpacityValue.value = withTiming(1, {
 				duration: 250
 			});
 			translationXValue.value = withTiming(15, {
-				duration: 400
+				duration: 450
+			});
+			translationXValueDays.value = withTiming(6, {
+				duration: 450
 			});
 		} else {
 			setIsExpanded(false);
 			setFlipChevrons(false);
 			topChevronPosition.value = withTiming(RFValue(0, 580));
 			bottomChevronPosition.value = withTiming(RFValue(0, 580));
-			containerHeight.value = withTiming(50, { duration: 300 });
+			containerHeight.value = withTiming(50, { duration: 200 });
 			nameOpacityValue.value = withTiming(0, {
 				duration: 250
 			});
 			translationXValue.value = withTiming(-200, {
-				duration: 400
+				duration: 300
+			});
+			translationXValueDays.value = withTiming(200, {
+				duration: 300
 			});
 		}
 	};
@@ -286,8 +299,7 @@ const TrackGallery = (): JSX.Element => {
 										<TouchableOpacity
 											activeOpacity={1}
 											onPress={handleExpandGenreList}>
-											<Animated.View
-												style={topChevronStyle}>
+											<Animated.View>
 												<MaterialCommunityIcons
 													name={"chevron-right"}
 													color={
@@ -356,7 +368,10 @@ const TrackGallery = (): JSX.Element => {
 								handleGenreListSelection={
 									handleGenreListSelection
 								}
-								nameOpacityStyle={nameOpacityStyle}
+								genreNameAnimationStyle={
+									genreNameTextAnimationStyle
+								}
+								dayListAnimationStyles={dayListAnimationStyles}
 								accentColor={
 									navigatorTracks[displayedTrack]?.accentColor
 								}

@@ -100,11 +100,11 @@ const TrackGallery = (): JSX.Element => {
 		};
 	});
 
-	const dotOpacityStyle = useAnimatedStyle(() => {
-		return {
-			opacity: dotOpacityValue.value
-		};
-	});
+	// const dotOpacityStyle = useAnimatedStyle(() => {
+	// 	return {
+	// 		opacity: dotOpacityValue.value
+	// 	};
+	// });
 
 	const nameOpacityStyle = useAnimatedStyle(() => {
 		return {
@@ -129,8 +129,8 @@ const TrackGallery = (): JSX.Element => {
 			// When expanding, set isExpanded to true first
 			setIsExpanded(true);
 			setFlipChevrons(true);
-			topChevronPosition.value = withTiming(RFValue(5, 580));
-			bottomChevronPosition.value = withTiming(RFValue(5, 580));
+			topChevronPosition.value = withTiming(RFValue(12, 580));
+			bottomChevronPosition.value = withTiming(RFValue(11, 580));
 			backgroundOpacityValue.value = withTiming(1, {
 				duration: 200
 			});

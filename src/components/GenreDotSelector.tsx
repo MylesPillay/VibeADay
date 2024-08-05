@@ -48,18 +48,22 @@ const GenreDotSelector = ({
 									styles.genreDot,
 									{
 										height:
-											index === 0 ? 16 : 15 - (index + 2),
+											index === 0
+												? 16.5
+												: 17.5 - (index + 2.2),
 										width:
-											index === 0 ? 16 : 15 - (index + 2),
+											index === 0
+												? 16.5
+												: 18 - (index + 2.2),
 										borderColor:
 											index === displayedTrack
 												? track.accentColor
 												: "none",
 										borderWidth:
-											index === displayedTrack ? 3 : 0,
+											index === displayedTrack ? 2.5 : 0,
 										backgroundColor:
 											displayedTrack === index
-												? "#00000045"
+												? "#00000010"
 												: "#000000"
 									}
 								]}
@@ -79,7 +83,8 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		justifyContent: "flex-start",
 		width: "auto",
-		height: "40%",
+		paddingTop: "2%",
+		height: "50%",
 		// paddingTop: RFValue(8, 580),
 		alignItems: "center"
 		// top: "3%",
@@ -90,8 +95,8 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		alignContent: "center",
-		width: 40,
-		height: 40
+		width: 45,
+		height: 45
 	},
 	genreDot: {
 		borderRadius: 100

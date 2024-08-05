@@ -148,11 +148,11 @@ const TrackGallery = (): JSX.Element => {
 			);
 			try {
 				let { data, error } = await supabase
-					.from("dailyTracks")
+					.from("daily_tracks")
 					.select("*");
 				if (error) throw error;
 				if (data) {
-					setTracks(data.slice(0, 5));
+					setTracks(data.slice(0, 8));
 					setNavigatorTracks(
 						data.map((track, index) => ({
 							genreName: track.genre_title,
@@ -249,7 +249,7 @@ const TrackGallery = (): JSX.Element => {
 						}}>
 						<View style={styles.genreNavContainer}>
 							<GenreDotSelector
-								tracks={navigatorTracks.slice(0, 5)}
+								tracks={navigatorTracks.slice(0, 8)}
 								displayedTrack={displayedTrack}
 								handleGenreDotSelect={handleGenreDotSelect}
 								handleGenreListSelection={

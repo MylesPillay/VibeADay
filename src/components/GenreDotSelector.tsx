@@ -14,26 +14,15 @@ interface GenreDotSelectorProps {
 	handleGenreListSelection: (index: number) => void;
 	handleGenreDotSelect: (index: number) => void;
 	nameOpacityStyle: any;
-	backgroundOpacityStyle: any;
 }
 
 const GenreDotSelector = ({
 	tracks,
 	displayedTrack,
-	// isExpanded,
 	handleGenreDotSelect
 }: GenreDotSelectorProps): JSX.Element => {
-	const windowHeight = Dimensions.get("window").height;
-	const windowWidth = Dimensions.get("window").width;
 	return (
-		<View
-			style={[
-				styles.genreNavContainer
-				// {
-				// 	height: isExpanded ? windowHeight : "auto",
-				// 	width: isExpanded ? windowWidth * 0.84 : "auto"
-				// }
-			]}>
+		<View style={[styles.genreNavContainer]}>
 			{tracks.map((track, index) => (
 				<Animated.View key={index} style={[styles.genreNavButton]}>
 					<TouchableOpacity

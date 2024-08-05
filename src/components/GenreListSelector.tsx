@@ -23,6 +23,8 @@ interface GenreListSelectorProps {
 	topChevronStyle: any;
 	bottomChevronStyle: any;
 	flipChevrons: boolean;
+	removeChevrons: boolean;
+	setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const GenreListSelector = ({
@@ -34,18 +36,18 @@ const GenreListSelector = ({
 	handleExpandGenreList,
 	topChevronStyle,
 	bottomChevronStyle,
-	flipChevrons
+	flipChevrons,
+	removeChevrons,
+	setIsExpanded
 }: GenreListSelectorProps): JSX.Element => {
-	const windowHeight = Dimensions.get("window").height;
-	const windowWidth = Dimensions.get("window").width;
-
 	return (
 		<View
 			style={[
 				styles.genreNavContainer,
 				{ backgroundColor: tracks[displayedTrack]?.bgColour }
 			]}>
-			<View style={{ marginBottom: "15%" }}>
+			{/* <View style={{ marginBottom: "15%" }}> */}
+			<View style={{}}>
 				{tracks.map((track, index) => (
 					<Animated.View
 						key={index}
@@ -75,15 +77,19 @@ const GenreListSelector = ({
 					</Animated.View>
 				))}
 			</View>
-			<View style={styles.chevronContainer}>
-				<ChevronComponent
-					handleExpandGenreList={handleExpandGenreList}
-					topChevronStyle={topChevronStyle}
-					bottomChevronStyle={bottomChevronStyle}
-					flipChevrons={!!flipChevrons}
-					accentColor={tracks[displayedTrack]?.accentColor}
-				/>
-			</View>
+			{!removeChevrons ? (
+				<></>
+			) : (
+				<View style={styles.chevronContainer}>
+					<ChevronComponent
+						handleExpandGenreList={handleExpandGenreList}
+						topChevronStyle={topChevronStyle}
+						bottomChevronStyle={bottomChevronStyle}
+						flipChevrons={true}
+						accentColor={tracks[displayedTrack]?.accentColor}
+					/>
+				</View>
+			)}
 		</View>
 	);
 };
@@ -91,14 +97,11 @@ const GenreListSelector = ({
 const styles = StyleSheet.create({
 	genreNavContainer: {
 		display: "flex",
-		flexDirection: "row",
-
+		flexDirection: "column",
 		justifyContent: "space-between",
 		paddingVertical: "5%",
 		paddingHorizontal: "2%",
-		paddingTop: RFValue(8, 580),
-		alignItems: "flex-end",
-		height: "100%"
+		paddingTop: RFValue(8, 580)
 	},
 	navGenreNameContainer: {
 		height: "auto",
@@ -125,7 +128,8 @@ const styles = StyleSheet.create({
 	},
 	chevronContainer: {
 		margin: "5%",
-		marginBottom: "17%"
+		marginBottom: "17%",
+		backgroundColor: "yellow"
 	}
 });
 

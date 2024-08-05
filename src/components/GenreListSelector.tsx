@@ -40,7 +40,7 @@ const GenreListSelector = ({
 					alignSelf: "flex-end",
 					alignContent: "center",
 					marginTop: "12.5%",
-					marginBottom: "2.5%"
+					paddingBottom: "2.5%"
 				}}>
 				{days.map((day, index) => (
 					<Animated.View
@@ -50,7 +50,7 @@ const GenreListSelector = ({
 							dayListAnimationStyles
 						]}>
 						<TouchableOpacity
-							activeOpacity={0.6}
+							activeOpacity={0.2}
 							disabled={index === displayedTrack}
 							onPress={() => handleGenreListSelection(index)}>
 							<Text
@@ -87,7 +87,7 @@ const GenreListSelector = ({
 						]}>
 						<TouchableOpacity
 							style={styles.navGenreTitleButton}
-							activeOpacity={0.6}
+							activeOpacity={0.4}
 							disabled={index === displayedTrack}
 							onPress={() => handleGenreListSelection(index)}>
 							<Text

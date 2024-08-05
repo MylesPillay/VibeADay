@@ -374,21 +374,26 @@ const TrackGallery = (): JSX.Element => {
 							}
 						]}>
 						{isExpanded ? (
-							<GenreListSelector
-								tracks={navigatorTracks}
-								displayedTrack={displayedTrack}
-								handleGenreListSelection={
-									handleGenreListSelection
-								}
-								genreNameAnimationStyle={
-									genreNameTextAnimationStyle
-								}
-								dayListAnimationStyles={dayListAnimationStyles}
-								accentColor={
-									navigatorTracks[displayedTrack]?.accentColor
-								}
-								drop_day={tracks[displayedTrack]?.drop_day}
-							/>
+							<View style={{ zIndex: 300, width: "100%" }}>
+								<GenreListSelector
+									tracks={navigatorTracks}
+									displayedTrack={displayedTrack}
+									handleGenreListSelection={
+										handleGenreListSelection
+									}
+									genreNameAnimationStyle={
+										genreNameTextAnimationStyle
+									}
+									dayListAnimationStyles={
+										dayListAnimationStyles
+									}
+									accentColor={
+										navigatorTracks[displayedTrack]
+											?.accentColor
+									}
+									drop_day={tracks[displayedTrack]?.drop_day}
+								/>
+							</View>
 						) : (
 							<></>
 						)}

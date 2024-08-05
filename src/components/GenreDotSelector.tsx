@@ -1,19 +1,12 @@
-import React, { useState } from "react";
-import { View, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
+import React from "react";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import Animated from "react-native-reanimated";
-import { RFValue } from "react-native-responsive-fontsize";
 
 import { NavigatorTrack } from "./DailyTrackGallery";
 interface GenreDotSelectorProps {
 	tracks: NavigatorTrack[];
 	displayedTrack: number;
-	setDisplayedTrack: React.Dispatch<React.SetStateAction<number>>;
-	// isExpanded: boolean;
-	setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
-	accentColor: string;
-	handleGenreListSelection: (index: number) => void;
 	handleGenreDotSelect: (index: number) => void;
-	nameOpacityStyle: any;
 }
 
 const GenreDotSelector = ({
@@ -68,16 +61,12 @@ const GenreDotSelector = ({
 const styles = StyleSheet.create({
 	genreNavContainer: {
 		display: "flex",
-		// backgroundColor: "green",
 		flexDirection: "column",
 		justifyContent: "flex-start",
 		width: "auto",
 		paddingTop: "2%",
 		height: "50%",
-		// paddingTop: RFValue(8, 580),
 		alignItems: "center"
-		// top: "3%",
-		// left: "1%"
 	},
 	genreNavButton: {
 		display: "flex",

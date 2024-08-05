@@ -23,9 +23,7 @@ const GenreTitleComponent = ({ tracks, displayedTrack }: GenreTitleProps) => {
 
 const styles = StyleSheet.create({
 	titleContainer: {
-		// justifyContent: "flex-start",
 		textAlign: "center",
-
 		alignItems: "center",
 		alignContent: "center",
 		flex: 1

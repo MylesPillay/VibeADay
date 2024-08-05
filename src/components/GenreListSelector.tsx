@@ -1,12 +1,5 @@
 import React from "react";
-import {
-	View,
-	Modal,
-	StyleSheet,
-	TouchableOpacity,
-	Text,
-	Dimensions
-} from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import Animated from "react-native-reanimated";
 import { RFValue } from "react-native-responsive-fontsize";
 import { NavigatorTrack } from "./DailyTrackGallery";
@@ -14,21 +7,20 @@ import { NavigatorTrack } from "./DailyTrackGallery";
 interface GenreListSelectorProps {
 	tracks: NavigatorTrack[];
 	displayedTrack: number;
-	isExpanded: boolean;
-	accentColor: string;
 	handleGenreListSelection: (index: number) => void;
 	nameOpacityStyle: any;
+	accentColor: string;
 	drop_day?: string;
 }
 
 const days = [
-	{ dayName: "Monday", date: "2023-08-07" },
-	{ dayName: "Tuesday", date: "2023-08-08" },
-	{ dayName: "Wednesday", date: "2023-08-09" },
-	{ dayName: "Thursday", date: "2023-08-07" },
-	{ dayName: "Friday", date: "2023-08-08" },
-	{ dayName: "Saturday", date: "2023-08-09" },
-	{ dayName: "Sunday", date: "2023-08-09" }
+	{ dayName: "Monday" },
+	{ dayName: "Tuesday" },
+	{ dayName: "Wednesday" },
+	{ dayName: "Thursday" },
+	{ dayName: "Friday" },
+	{ dayName: "Saturday" },
+	{ dayName: "Sunday" }
 ];
 
 const GenreListSelector = ({
@@ -40,11 +32,7 @@ const GenreListSelector = ({
 	drop_day
 }: GenreListSelectorProps): JSX.Element => {
 	return (
-		<View
-			style={[
-				styles.genreNavContainer
-				// { backgroundColor: tracks[displayedTrack]?.bgColour }
-			]}>
+		<View style={[styles.genreNavContainer]}>
 			<View
 				style={{
 					alignSelf: "flex-end",
@@ -57,7 +45,6 @@ const GenreListSelector = ({
 						key={index}
 						style={[styles.dayNameContainer, nameOpacityStyle]}>
 						<TouchableOpacity
-							style={styles.navDayInitialButton}
 							activeOpacity={0.6}
 							disabled={index === displayedTrack}
 							onPress={() => handleGenreListSelection(index)}>
@@ -149,7 +136,6 @@ const styles = StyleSheet.create({
 		alignContent: "center",
 		paddingLeft: 0
 	},
-	navDayInitialButton: {},
 	genreText: {
 		textAlignVertical: "center",
 		fontFamily: "sans-serif",

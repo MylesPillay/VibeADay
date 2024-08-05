@@ -1,15 +1,21 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet, Linking } from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { TrackLinksProps } from "./DailyTrackCard";
+
+export interface TrackLinksProps {
+	spotifyURL?: string;
+	soundcloudURL?: string;
+	bandcampURL?: string;
+	appleMusicURL?: string;
+	facebookURL?: string;
+	instagramURL?: string;
+}
 
 const LinksComponent = ({
-	// isExpanded,
 	trackLinks,
 	bgColour,
 	accentColor
 }: {
-	// isExpanded: boolean;
 	trackLinks: TrackLinksProps;
 	bgColour: string;
 	accentColor: string;

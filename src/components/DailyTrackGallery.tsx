@@ -6,8 +6,7 @@ import {
 	ActivityIndicator,
 	StyleSheet,
 	TouchableOpacity,
-	Text,
-	Modal
+	Text
 } from "react-native";
 import { createClient } from "@supabase/supabase-js";
 
@@ -21,11 +20,11 @@ import Animated, {
 import { RFValue } from "react-native-responsive-fontsize";
 import GenreDotSelector from "./GenreDotSelector";
 import GenreTitleComponent from "./GenreTitle";
-import DailyTrackCard from "./DailyTrackCard";
 import ChevronComponent from "./sticky-top-nav/ChevronComponent";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import LinksComponent from "./LinksComponent";
 import GenreListSelector from "./GenreListSelector";
+import DailyTrackArtwork from "./DailyTrackArtwork";
 
 interface Track {
 	genreName: string;
@@ -60,15 +59,54 @@ const TrackGallery = (): JSX.Element => {
 	const [navigatorTracks, setNavigatorTracks] = useState<NavigatorTrack[]>(
 		[]
 	);
+
+	useEffect(() => {
+		const fetchTracks = async () => {
+			const supabase = createClient(
+				process.env.SUPABASE_API_URL as string,
+				process.env.SUPABASE_API_SECRET_ACCESS_TOKEN as string
+			);
+			try {
+				let { data, error } = await supabase
+					.from("daily_tracks")
+					.select("*")
+					.order("created_at", { ascending: true });
+
+				if (error) throw error;
+				if (data) {
+					setTracks(data.slice(0, 5));
+					setNavigatorTracks(
+						data.slice(0, 5).map((track, index) => ({
+							genreName: track.genre_title,
+							bgColour: getGenreColor(
+								track.genre_colour as number
+							),
+							accentColor: getGenreAccentColor(
+								track.genre_colour as number
+							),
+							trackIndex: index
+						}))
+					);
+				}
+			} catch (error) {
+				setError("Failed to fetch tracks");
+				console.error(error);
+			} finally {
+			}
+		};
+
+		fetchTracks();
+	}, []);
+
+	console.log(tracks, "this is the tracks");
+	console.log(navigatorTracks, "this is the navigator tracks");
 	const [isExpanded, setIsExpanded] = React.useState<boolean>(false);
 	const [loading, setLoading] = useState(false);
-	const [removeChevron, setRemoveChevron] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [displayedTrack, setDisplayedTrack] = React.useState<number>(0);
 	const flatListRef = useRef<FlatList<Track> | null>(null);
 	const windowWidth = Dimensions.get("window").width;
 	const windowHeight = Dimensions.get("window").height;
-	const [isModalVisible, setIsModalVisible] = useState(false);
 
 	function getGenreColor(colorId: number): string {
 		return genreColors[colorId] || "#000000";
@@ -76,18 +114,6 @@ const TrackGallery = (): JSX.Element => {
 	function getGenreAccentColor(colorId: number): string {
 		return genreAccentColors[colorId] || "#000000";
 	}
-
-	console.log(tracks, "this is the tracks");
-	console.log(navigatorTracks, "this is the navigator tracks");
-
-	const [flipChevrons, setFlipChevrons] = useState<boolean | undefined>(
-		undefined
-	);
-	const topChevronPosition = useSharedValue(RFValue(5, 580));
-	const bottomChevronPosition = useSharedValue(3);
-	const translationXValue = useSharedValue(-200);
-	const containerHeight = useSharedValue(250);
-	const nameOpacityValue = useSharedValue(1);
 	const handleGenreListSelection = (selectedTrack: number) => {
 		setDisplayedTrack(selectedTrack);
 		handleExpandGenreList();
@@ -95,17 +121,29 @@ const TrackGallery = (): JSX.Element => {
 	const handleGenreDotSelect = (selectedTrack: number) => {
 		setDisplayedTrack(selectedTrack);
 	};
+
+	const [flipChevrons, setFlipChevrons] = useState<boolean | undefined>(
+		undefined
+	);
+	// TOP CHEVRON ANIMATION STYLE VARIABLES
+	const topChevronPosition = useSharedValue(RFValue(5, 580));
 	const topChevronStyle = useAnimatedStyle(() => {
 		return {
 			top: topChevronPosition.value
 		};
 	});
 
+	// BOTTOM CHEVRON ANIMATION STYLE VARIABLES
+	const bottomChevronPosition = useSharedValue(3);
 	const bottomChevronStyle = useAnimatedStyle(() => {
 		return {
 			bottom: bottomChevronPosition.value
 		};
 	});
+
+	// ANIMATION TEXT SLIDE IN AND OPACITY FADE IN  STYLE VARIABLES
+	const translationXValue = useSharedValue(-200);
+	const nameOpacityValue = useSharedValue(1);
 
 	const nameOpacityStyle = useAnimatedStyle(() => {
 		return {
@@ -114,6 +152,8 @@ const TrackGallery = (): JSX.Element => {
 		};
 	});
 
+	// BOTTOM NAV BAR CHEVRON CONTAINER ANIMATION AND HEIGHT STYLE VARIABLES
+	const containerHeight = useSharedValue(50);
 	const containerStyle = useAnimatedStyle(() => {
 		return {
 			height: containerHeight.value,
@@ -149,45 +189,7 @@ const TrackGallery = (): JSX.Element => {
 		}
 	};
 
-	useEffect(() => {
-		const fetchTracks = async () => {
-			const supabase = createClient(
-				process.env.SUPABASE_API_URL as string,
-				process.env.SUPABASE_API_SECRET_ACCESS_TOKEN as string
-			);
-			try {
-				let { data, error } = await supabase
-					.from("daily_tracks")
-					.select("*")
-					.order("created_at", { ascending: true });
-
-				if (error) throw error;
-				if (data) {
-					setTracks(data.slice(0, 5));
-					setNavigatorTracks(
-						data.slice(0, 5).map((track, index) => ({
-							genreName: track.genre_title,
-							bgColour: getGenreColor(
-								track.genre_colour as number
-							),
-							accentColor: getGenreAccentColor(
-								track.genre_colour as number
-							),
-							trackIndex: index
-						}))
-					);
-				}
-			} catch (error) {
-				setError("Failed to fetch tracks");
-				console.error(error);
-			} finally {
-				// setLoading(false);
-			}
-		};
-
-		fetchTracks();
-	}, []);
-
+	// ANIMATE SCROLL THROUGH TRACKS UP AND DOWN HANDLERS
 	const goToPreviousTrack = () => {
 		if (displayedTrack > 0) {
 			flatListRef.current?.scrollToIndex({
@@ -256,22 +258,12 @@ const TrackGallery = (): JSX.Element => {
 						style={{
 							flexDirection: "row",
 							width: "100%"
-							// height: "100%"
 						}}>
 						<View style={styles.genreNavContainer}>
 							<GenreDotSelector
 								tracks={navigatorTracks.slice(0, 5)}
 								displayedTrack={displayedTrack}
 								handleGenreDotSelect={handleGenreDotSelect}
-								handleGenreListSelection={
-									handleGenreListSelection
-								}
-								setDisplayedTrack={setDisplayedTrack}
-								setIsExpanded={setIsExpanded}
-								accentColor={
-									navigatorTracks[displayedTrack]?.accentColor
-								}
-								nameOpacityStyle={nameOpacityStyle}
 							/>
 							<View
 								style={{
@@ -314,31 +306,10 @@ const TrackGallery = (): JSX.Element => {
 										width: "100%",
 										marginTop: "10%"
 									}}>
-									<DailyTrackCard
-										trackLinks={trackLinks}
-										trackName={
-											tracks[displayedTrack]?.song_title
-										}
-										artistName={
-											tracks[displayedTrack]?.song_artist
-										}
-										genreName={
-											tracks[displayedTrack]?.genreName
-										}
+									<DailyTrackArtwork
 										artwork={{
 											uri: tracks[displayedTrack]?.artwork
 										}}
-										goToPreviousTrack={goToPreviousTrack}
-										goToNextTrack={goToNextTrack}
-										bgColour={
-											navigatorTracks[displayedTrack]
-												?.bgColour
-										}
-										accentColor={
-											navigatorTracks[displayedTrack]
-												?.accentColor
-										}
-										isExpanded={isExpanded}
 									/>
 								</View>
 							</View>
@@ -382,7 +353,6 @@ const TrackGallery = (): JSX.Element => {
 							<GenreListSelector
 								tracks={navigatorTracks}
 								displayedTrack={displayedTrack}
-								isExpanded={isExpanded}
 								handleGenreListSelection={
 									handleGenreListSelection
 								}

@@ -53,7 +53,7 @@ const GenreListSelector = ({
 						]}>
 						<TouchableOpacity
 							activeOpacity={0.2}
-							disabled={index === displayedTrack}
+							disabled={drop_day === day.dayName}
 							onPress={() => handleDaySelection(day.dayName)}>
 							<Text
 								style={[

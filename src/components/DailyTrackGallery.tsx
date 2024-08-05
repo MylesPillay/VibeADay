@@ -160,7 +160,7 @@ const TrackGallery = (): JSX.Element => {
 	});
 
 	// BOTTOM NAV BAR CHEVRON CONTAINER ANIMATION AND HEIGHT STYLE VARIABLES
-	const containerHeight = useSharedValue(50);
+	const containerHeight = useSharedValue(130);
 	const containerStyle = useAnimatedStyle(() => {
 		return {
 			height: containerHeight.value,
@@ -181,7 +181,7 @@ const TrackGallery = (): JSX.Element => {
 			translationXValue.value = withTiming(15, {
 				duration: 450
 			});
-			translationXValueDays.value = withTiming(6, {
+			translationXValueDays.value = withTiming(-20, {
 				duration: 450
 			});
 		} else {
@@ -384,6 +384,7 @@ const TrackGallery = (): JSX.Element => {
 							style={[
 								styles.chevronContainer,
 								{
+									bottom: isExpanded ? "1%" : "40%",
 									display: "flex",
 									justifyContent: "flex-start"
 								}
@@ -430,8 +431,9 @@ const styles = StyleSheet.create({
 	},
 
 	chevronContainer: {
+		justifyContent: "flex-start",
+
 		alignItems: "flex-end",
-		alignSelf: "flex-end",
 		width: "100%"
 	},
 	trackInfoContainer: {
@@ -470,7 +472,7 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		bottom: 0,
 		width: "100%",
-		marginBottom: "17.5%",
+		marginBottom: "5%",
 		justifyContent: "center",
 		alignItems: "center"
 	}

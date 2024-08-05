@@ -39,8 +39,8 @@ const GenreListSelector = ({
 				style={{
 					alignSelf: "flex-end",
 					alignContent: "center",
-					marginRight: "3%",
-					marginTop: "15%"
+					marginTop: "12.5%",
+					marginBottom: "2.5%"
 				}}>
 				{days.map((day, index) => (
 					<Animated.View
@@ -77,7 +77,7 @@ const GenreListSelector = ({
 					</Animated.View>
 				))}
 			</View>
-			<View style={{}}>
+			<View style={{ marginTop: "2.5%" }}>
 				{tracks.map((track, index) => (
 					<Animated.View
 						key={index}
@@ -116,17 +116,16 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "column",
 		width: "100%",
-		height: "100%",
+		height: "70%",
 		justifyContent: "space-between",
-		paddingTop: "60%",
+		// paddingTop: "60%",
 		paddingVertical: "5%"
 	},
 	navGenreNameContainer: {
 		height: "auto",
 		paddingBottom: RFValue(8, 580),
 		textAlign: "left",
-		alignItems: "flex-start",
-		alignContent: "flex-start"
+		alignItems: "flex-start"
 	},
 	dayNameContainer: {
 		height: "auto",

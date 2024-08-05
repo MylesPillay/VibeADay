@@ -162,17 +162,3 @@
 // });
 
 // export default TrackGallery;
-SET facebook_url = TRIM(BOTH FROM facebook_url)
-WHERE facebook_url <> TRIM(BOTH FROM facebook_url);
-
-SET spotify_url = TRIM(BOTH FROM spotify_url)
-WHERE spotify_url <> TRIM(BOTH FROM spotify_url);
-
-SET soundcloud_url = TRIM(BOTH FROM soundcloud_url)
-WHERE soundcloud_url <> TRIM(BOTH FROM soundcloud_url);
-
-SET bandcamp_url = TRIM(BOTH FROM bandcamp_url)
-WHERE bandcamp_url <> TRIM(BOTH FROM bandcamp_url);
-
-SET instagram_url = TRIM(BOTH FROM instagram_url)
-WHERE instagram_url <> TRIM(BOTH FROM instagram_url);

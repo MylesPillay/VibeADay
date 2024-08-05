@@ -10,7 +10,6 @@ import {
 import Animated from "react-native-reanimated";
 import { RFValue } from "react-native-responsive-fontsize";
 import { NavigatorTrack } from "./DailyTrackGallery";
-import ChevronComponent from "./sticky-top-nav/ChevronComponent";
 
 interface GenreListSelectorProps {
 	tracks: NavigatorTrack[];
@@ -19,6 +18,7 @@ interface GenreListSelectorProps {
 	accentColor: string;
 	handleGenreListSelection: (index: number) => void;
 	nameOpacityStyle: any;
+	drop_day?: string;
 }
 
 const days = [
@@ -27,14 +27,17 @@ const days = [
 	{ dayName: "Wednesday", date: "2023-08-09" },
 	{ dayName: "Thursday", date: "2023-08-07" },
 	{ dayName: "Friday", date: "2023-08-08" },
-	{ dayName: "Saturday", date: "2023-08-09" }
+	{ dayName: "Saturday", date: "2023-08-09" },
+	{ dayName: "Sunday", date: "2023-08-09" }
 ];
 
 const GenreListSelector = ({
 	tracks,
 	displayedTrack,
 	handleGenreListSelection,
-	nameOpacityStyle
+	nameOpacityStyle,
+	accentColor,
+	drop_day
 }: GenreListSelectorProps): JSX.Element => {
 	return (
 		<View
@@ -45,6 +48,7 @@ const GenreListSelector = ({
 			<View
 				style={{
 					alignSelf: "flex-end",
+					alignContent: "center",
 					marginRight: "5%",
 					marginTop: "15%"
 				}}>
@@ -53,7 +57,7 @@ const GenreListSelector = ({
 						key={index}
 						style={[styles.dayNameContainer, nameOpacityStyle]}>
 						<TouchableOpacity
-							style={styles.navGenreTitleButton}
+							style={styles.navDayInitialButton}
 							activeOpacity={0.6}
 							disabled={index === displayedTrack}
 							onPress={() => handleGenreListSelection(index)}>
@@ -62,14 +66,20 @@ const GenreListSelector = ({
 									styles.dayText,
 									{
 										color:
-											day.dayName === "Sunday"
-												? "purple"
+											day.dayName === drop_day
+												? accentColor
+												: "#000000",
+										textDecorationLine:
+											day.dayName === drop_day
+												? "underline"
+												: "none",
+										textDecorationColor:
+											day.dayName === drop_day
+												? accentColor
 												: "#000000"
 									}
 								]}>
-								{day.dayName === "Sunday"
-									? day.dayName
-									: day.dayName.slice(0, 1)}
+								{day.dayName}
 							</Text>
 						</TouchableOpacity>
 					</Animated.View>
@@ -129,9 +139,8 @@ const styles = StyleSheet.create({
 	dayNameContainer: {
 		height: "auto",
 		paddingBottom: RFValue(8, 580),
-		textAlign: "right",
-		alignItems: "flex-start",
-		alignContent: "flex-start"
+		justifyContent: "center",
+		alignItems: "flex-end"
 	},
 	navGenreTitleButton: {
 		display: "flex",
@@ -140,16 +149,14 @@ const styles = StyleSheet.create({
 		alignContent: "center",
 		paddingLeft: 0
 	},
+	navDayInitialButton: {},
 	genreText: {
 		textAlignVertical: "center",
-		textAlign: "left",
 		fontFamily: "sans-serif",
 		fontWeight: "600",
 		fontSize: 28
 	},
 	dayText: {
-		textAlignVertical: "center",
-		textAlign: "right",
 		fontFamily: "sans-serif",
 		fontWeight: "600",
 		fontSize: 28

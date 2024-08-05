@@ -39,6 +39,14 @@ interface Track {
 	apple_music_url?: string;
 	facebook_url?: string;
 	instagram_url?: string;
+	drop_day?:
+		| "Monday"
+		| "Tuesday"
+		| "Wednesday"
+		| "Thursday"
+		| "Friday"
+		| "Saturday"
+		| "Sunday";
 }
 
 export interface NavigatorTrack {
@@ -99,12 +107,6 @@ const TrackGallery = (): JSX.Element => {
 		};
 	});
 
-	// const dotOpacityStyle = useAnimatedStyle(() => {
-	// 	return {
-	// 		opacity: dotOpacityValue.value
-	// 	};
-	// });
-
 	const nameOpacityStyle = useAnimatedStyle(() => {
 		return {
 			opacity: nameOpacityValue.value,
@@ -115,7 +117,7 @@ const TrackGallery = (): JSX.Element => {
 	const containerStyle = useAnimatedStyle(() => {
 		return {
 			height: containerHeight.value,
-			zIndex: isExpanded ? 100 : 250 // Ensure it covers the rest of the screen when expanded
+			zIndex: isExpanded ? 100 : 250
 		};
 	});
 
@@ -156,12 +158,14 @@ const TrackGallery = (): JSX.Element => {
 			try {
 				let { data, error } = await supabase
 					.from("daily_tracks")
-					.select("*");
+					.select("*")
+					.order("created_at", { ascending: true });
+
 				if (error) throw error;
 				if (data) {
-					setTracks(data.slice(0, 8));
+					setTracks(data.slice(0, 5));
 					setNavigatorTracks(
-						data.map((track, index) => ({
+						data.slice(0, 5).map((track, index) => ({
 							genreName: track.genre_title,
 							bgColour: getGenreColor(
 								track.genre_colour as number
@@ -256,7 +260,7 @@ const TrackGallery = (): JSX.Element => {
 						}}>
 						<View style={styles.genreNavContainer}>
 							<GenreDotSelector
-								tracks={navigatorTracks.slice(0, 8)}
+								tracks={navigatorTracks.slice(0, 5)}
 								displayedTrack={displayedTrack}
 								handleGenreDotSelect={handleGenreDotSelect}
 								handleGenreListSelection={
@@ -386,6 +390,7 @@ const TrackGallery = (): JSX.Element => {
 								accentColor={
 									navigatorTracks[displayedTrack]?.accentColor
 								}
+								drop_day={tracks[displayedTrack]?.drop_day}
 							/>
 						) : (
 							<></>

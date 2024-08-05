@@ -78,6 +78,7 @@ const TrackGallery = (): JSX.Element => {
 	const topChevronPosition = useSharedValue(RFValue(5, 580));
 	const bottomChevronPosition = useSharedValue(3);
 	const translationXValue = useSharedValue(-200);
+	const containerHeight = useSharedValue(250);
 	const nameOpacityValue = useSharedValue(1);
 	const handleGenreListSelection = (selectedTrack: number) => {
 		setDisplayedTrack(selectedTrack);
@@ -110,37 +111,39 @@ const TrackGallery = (): JSX.Element => {
 			transform: [{ translateX: translationXValue.value }]
 		};
 	});
+
+	const containerStyle = useAnimatedStyle(() => {
+		return {
+			height: containerHeight.value,
+			zIndex: isExpanded ? 100 : 250 // Ensure it covers the rest of the screen when expanded
+		};
+	});
+
 	const handleExpandGenreList = () => {
 		if (!isExpanded) {
-			setIsModalVisible(true);
 			setIsExpanded(true);
 			setFlipChevrons(true);
 			topChevronPosition.value = withTiming(RFValue(12, 580));
 			bottomChevronPosition.value = withTiming(RFValue(11, 580));
+			containerHeight.value = withTiming(windowHeight, { duration: 300 });
 			nameOpacityValue.value = withTiming(1, {
 				duration: 250
 			});
 			translationXValue.value = withTiming(15, {
 				duration: 400
 			});
-			setTimeout(() => {
-				setRemoveChevron(true);
-			}, 300);
 		} else {
-			setIsModalVisible(false);
 			setIsExpanded(false);
 			setFlipChevrons(false);
 			topChevronPosition.value = withTiming(RFValue(0, 580));
 			bottomChevronPosition.value = withTiming(RFValue(0, 580));
+			containerHeight.value = withTiming(50, { duration: 300 });
 			nameOpacityValue.value = withTiming(0, {
 				duration: 250
 			});
 			translationXValue.value = withTiming(-200, {
 				duration: 400
 			});
-			setTimeout(() => {
-				setRemoveChevron(false);
-			}, 300);
 		}
 	};
 
@@ -354,58 +357,47 @@ const TrackGallery = (): JSX.Element => {
 							</Text>
 						</View>
 					</View>
-					{isExpanded ? (
-						<></>
-					) : (
-						<LinksComponent
-							trackLinks={trackLinks}
-							bgColour={navigatorTracks[displayedTrack]?.bgColour}
-							accentColor={
-								navigatorTracks[displayedTrack]?.accentColor
-							}
-						/>
-					)}
 
-					<Modal
-						visible={isExpanded}
+					<LinksComponent
+						trackLinks={trackLinks}
+						bgColour={navigatorTracks[displayedTrack]?.bgColour}
+						accentColor={
+							navigatorTracks[displayedTrack]?.accentColor
+						}
+					/>
+					<Animated.View
 						style={[
-							styles.modal,
+							styles.expandableContainer,
+							containerStyle,
 							{
-								height: windowHeight * 0.75,
-								width: windowWidth * 0.8
+								backgroundColor:
+									navigatorTracks[displayedTrack]?.bgColour
 							}
-						]}
-						animationType='slide'
-						transparent={true}
-						onRequestClose={handleExpandGenreList}>
-						<GenreListSelector
-							tracks={navigatorTracks}
-							displayedTrack={displayedTrack}
-							isExpanded={isExpanded}
-							setIsExpanded={setIsExpanded}
-							handleGenreListSelection={handleGenreListSelection}
-							nameOpacityStyle={nameOpacityStyle}
-							accentColor={
-								navigatorTracks[displayedTrack]?.accentColor
-							}
-							handleExpandGenreList={handleExpandGenreList}
-							topChevronStyle={topChevronStyle}
-							bottomChevronStyle={bottomChevronStyle}
-							flipChevrons={!!flipChevrons}
-							removeChevrons={removeChevron}
-						/>
-					</Modal>
-					<View
-						style={[
-							styles.chevronContainer
-							// {
-							// 	backgroundColor:
-							// 		navigatorTracks[displayedTrack]?.bgColour
-							// }
 						]}>
 						{isExpanded ? (
-							<></>
+							<GenreListSelector
+								tracks={navigatorTracks}
+								displayedTrack={displayedTrack}
+								isExpanded={isExpanded}
+								handleGenreListSelection={
+									handleGenreListSelection
+								}
+								nameOpacityStyle={nameOpacityStyle}
+								accentColor={
+									navigatorTracks[displayedTrack]?.accentColor
+								}
+							/>
 						) : (
+							<></>
+						)}
+						<View
+							style={[
+								styles.chevronContainer,
+								{
+									display: "flex",
+									justifyContent: "flex-start"
+								}
+							]}>
 							<ChevronComponent
 								handleExpandGenreList={handleExpandGenreList}
 								topChevronStyle={topChevronStyle}
@@ -415,8 +407,8 @@ const TrackGallery = (): JSX.Element => {
 									navigatorTracks[displayedTrack]?.accentColor
 								}
 							/>
-						)}
-					</View>
+						</View>
+					</Animated.View>
 				</View>
 			</View>
 		</PanGestureHandler>
@@ -483,6 +475,14 @@ const styles = StyleSheet.create({
 		fontSize: RFValue(11, 580),
 		letterSpacing: -0.1,
 		fontWeight: "600"
+	},
+	expandableContainer: {
+		position: "absolute",
+		bottom: 0,
+		width: "100%",
+		marginBottom: "17.5%",
+		justifyContent: "center",
+		alignItems: "center"
 	}
 });
 

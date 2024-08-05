@@ -59,7 +59,10 @@ const TrackGallery = (): JSX.Element => {
 	const [navigatorTracks, setNavigatorTracks] = useState<NavigatorTrack[]>(
 		[]
 	);
-
+	const [selectedDay, setSelectedDay] = useState<string>("Sunday");
+	const handleDaySelection = (day: string) => {
+		setSelectedDay(day);
+	};
 	useEffect(() => {
 		const fetchTracks = async () => {
 			const supabase = createClient(
@@ -70,13 +73,15 @@ const TrackGallery = (): JSX.Element => {
 				let { data, error } = await supabase
 					.from("daily_tracks")
 					.select("*")
-					.order("created_at", { ascending: true });
+					.eq("drop_day", selectedDay) // Filter by selected day
+					.order("created_at", { ascending: false })
+					.limit(5); // Limit to 5 tracks
 
 				if (error) throw error;
 				if (data) {
-					setTracks(data.slice(0, 5));
+					setTracks(data);
 					setNavigatorTracks(
-						data.slice(0, 5).map((track, index) => ({
+						data.map((track, index) => ({
 							genreName: track.genre_title,
 							bgColour: getGenreColor(
 								track.genre_colour as number
@@ -91,12 +96,48 @@ const TrackGallery = (): JSX.Element => {
 			} catch (error) {
 				setError("Failed to fetch tracks");
 				console.error(error);
-			} finally {
 			}
 		};
 
 		fetchTracks();
-	}, []);
+	}, [selectedDay]);
+	// useEffect(() => {
+	// 	const fetchTracks = async () => {
+	// 		const supabase = createClient(
+	// 			process.env.SUPABASE_API_URL as string,
+	// 			process.env.SUPABASE_API_SECRET_ACCESS_TOKEN as string
+	// 		);
+	// 		try {
+	// 			let { data, error } = await supabase
+	// 				.from("daily_tracks")
+	// 				.select("*")
+	// 				.order("created_at", { ascending: true });
+
+	// 			if (error) throw error;
+	// 			if (data) {
+	// 				setTracks(data.slice(0, 5));
+	// 				setNavigatorTracks(
+	// 					data.slice(0, 5).map((track, index) => ({
+	// 						genreName: track.genre_title,
+	// 						bgColour: getGenreColor(
+	// 							track.genre_colour as number
+	// 						),
+	// 						accentColor: getGenreAccentColor(
+	// 							track.genre_colour as number
+	// 						),
+	// 						trackIndex: index
+	// 					}))
+	// 				);
+	// 			}
+	// 		} catch (error) {
+	// 			setError("Failed to fetch tracks");
+	// 			console.error(error);
+	// 		} finally {
+	// 		}
+	// 	};
+
+	// 	fetchTracks();
+	// }, []);
 
 	console.log(tracks, "this is the tracks");
 	console.log(navigatorTracks, "this is the navigator tracks");
@@ -392,6 +433,7 @@ const TrackGallery = (): JSX.Element => {
 											?.accentColor
 									}
 									drop_day={tracks[displayedTrack]?.drop_day}
+									handleDaySelection={handleDaySelection}
 								/>
 							</View>
 						) : (

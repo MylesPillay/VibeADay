@@ -12,6 +12,7 @@ interface GenreListSelectorProps {
 	dayListAnimationStyles: any;
 	accentColor: string;
 	drop_day?: string;
+	handleDaySelection: (day: string) => void;
 }
 
 const days = [
@@ -31,7 +32,8 @@ const GenreListSelector = ({
 	genreNameAnimationStyle,
 	dayListAnimationStyles,
 	accentColor,
-	drop_day
+	drop_day,
+	handleDaySelection
 }: GenreListSelectorProps): JSX.Element => {
 	return (
 		<View style={[styles.genreNavContainer]}>
@@ -52,7 +54,7 @@ const GenreListSelector = ({
 						<TouchableOpacity
 							activeOpacity={0.2}
 							disabled={index === displayedTrack}
-							onPress={() => handleGenreListSelection(index)}>
+							onPress={() => handleDaySelection(day.dayName)}>
 							<Text
 								style={[
 									styles.dayText,

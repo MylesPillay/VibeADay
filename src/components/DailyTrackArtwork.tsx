@@ -29,7 +29,7 @@ const DailyTrackArtwork = ({
 					style={[
 						styles.artwork,
 						{
-							borderColor: "#FFFFFF65",
+							// borderColor: "#FFFFFF65",
 							height: windowHeight * 0.28,
 							width: windowHeight * 0.28
 						}

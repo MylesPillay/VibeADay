@@ -25,8 +25,9 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import LinksComponent from "./LinksComponent";
 import GenreListSelector from "./GenreListSelector";
 import DailyTrackArtwork from "./DailyTrackArtwork";
+import { useNavigation, useRouter } from "expo-router";
 
-interface Track {
+export interface Track {
 	genreName: string;
 	created_at: string;
 	song_title: string;
@@ -55,6 +56,7 @@ export interface NavigatorTrack {
 	trackIndex: number;
 }
 const TrackGallery = (): JSX.Element => {
+	const router = useRouter();
 	const [tracks, setTracks] = useState<Track[]>([]);
 	const [navigatorTracks, setNavigatorTracks] = useState<NavigatorTrack[]>(
 		[]
@@ -257,6 +259,13 @@ const TrackGallery = (): JSX.Element => {
 		instagramURL: tracks[displayedTrack]?.instagram_url
 	};
 
+	const navigateToGenrePlaylist = () => {
+		router.push({
+			pathname: "./genre-playlist",
+			params: { genreName: tracks[displayedTrack]?.genreName }
+		});
+	};
+
 	console.log(trackLinks, "this is the track links");
 	if (loading) {
 		return <ActivityIndicator size='large' />;
@@ -310,7 +319,7 @@ const TrackGallery = (): JSX.Element => {
 									<View style={{}}>
 										<TouchableOpacity
 											activeOpacity={1}
-											onPress={() => {}}>
+											onPress={navigateToGenrePlaylist}>
 											<Animated.View>
 												<MaterialCommunityIcons
 													name={"chevron-up"}

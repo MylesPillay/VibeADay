@@ -7,14 +7,14 @@ interface GenreTitleProps {
 	displayedTrack: number;
 	tracks?: NavigatorTrack[];
 	genreName?: string;
-	accentColor?: string;
+	accentColour?: string;
 }
 
 const GenreTitleComponent = ({
 	tracks,
 	displayedTrack,
 	genreName,
-	accentColor
+	accentColour
 }: GenreTitleProps) => {
 	return (
 		<View style={styles.titleContainer}>
@@ -24,9 +24,9 @@ const GenreTitleComponent = ({
 				style={[
 					styles.titleText,
 					{
-						color: accentColor
-							? accentColor
-							: tracks?.[displayedTrack]?.accentColor
+						color: accentColour
+							? accentColour
+							: tracks?.[displayedTrack]?.accentColour
 					}
 				]}>
 				{genreName ? genreName : tracks?.[displayedTrack]?.genreName}

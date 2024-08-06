@@ -39,7 +39,7 @@ const GenreDotSelector = ({
 												: 18 - (index + 2.2),
 										borderColor:
 											index === displayedTrack
-												? track.accentColor
+												? track.accentColour
 												: "none",
 										borderWidth:
 											index === displayedTrack ? 2.5 : 0,

@@ -35,7 +35,7 @@ export const genreColors: GenreColors = {
   4: "#2e52b3",
   5: "#58409c"
 };
-export const genreAccentColors: GenreColors = {
+export const genreAccentColours: GenreColors = {
 	1: "#DDF093",
 	2: "gold",
 	3: "#3607f0",

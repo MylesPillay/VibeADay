@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { createClient } from "@supabase/supabase-js";
 
-import { genreAccentColors, genreColors } from "../constants/Colors";
+import { genreAccentColours, genreColors } from "../constants/Colors";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import Animated, {
 	useAnimatedStyle,
@@ -53,7 +53,7 @@ export interface Track {
 export interface NavigatorTrack {
 	genreName: string;
 	bgColour: string;
-	accentColor: string;
+	accentColour: string;
 	trackIndex: number;
 }
 const TrackGallery = (): JSX.Element => {
@@ -86,10 +86,10 @@ const TrackGallery = (): JSX.Element => {
 					setNavigatorTracks(
 						data.map((track, index) => ({
 							genreName: track.genre_title,
-							bgColour: getGenreColor(
+							bgColour: getGenreColour(
 								track.genre_colour as number
 							),
-							accentColor: getGenreAccentColor(
+							accentColour: getGenreAccentColour(
 								track.genre_colour as number
 							),
 							trackIndex: index
@@ -115,11 +115,11 @@ const TrackGallery = (): JSX.Element => {
 	const windowWidth = Dimensions.get("window").width;
 	const windowHeight = Dimensions.get("window").height;
 
-	function getGenreColor(colorId: number): string {
+	function getGenreColour(colorId: number): string {
 		return genreColors[colorId] || "#000000";
 	}
-	function getGenreAccentColor(colorId: number): string {
-		return genreAccentColors[colorId] || "#000000";
+	function getGenreAccentColour(colorId: number): string {
+		return genreAccentColours[colorId] || "#000000";
 	}
 	const handleGenreListSelection = (selectedTrack: number) => {
 		setDisplayedTrack(selectedTrack);
@@ -263,7 +263,11 @@ const TrackGallery = (): JSX.Element => {
 	const navigateToGenrePlaylist = () => {
 		router.push({
 			pathname: "./genre-playlist",
-			params: { genreName: navigatorTracks[displayedTrack]?.genreName }
+			params: {
+				genreName: navigatorTracks[displayedTrack]?.genreName,
+				bgColor: navigatorTracks[displayedTrack]?.bgColour,
+				accentColor: navigatorTracks[displayedTrack]?.accentColour
+			}
 		});
 	};
 
@@ -317,7 +321,7 @@ const TrackGallery = (): JSX.Element => {
 										tracks={navigatorTracks}
 										displayedTrack={displayedTrack}
 									/>
-									<View style={{}}>
+									<View style={{ top: 3 }}>
 										<TouchableOpacity
 											activeOpacity={1}
 											onPress={navigateToGenrePlaylist}>
@@ -331,7 +335,7 @@ const TrackGallery = (): JSX.Element => {
 															  ]?.bgColour
 															: navigatorTracks[
 																	displayedTrack
-															  ]?.accentColor
+															  ]?.accentColour
 													}
 													style={{
 														transform: [
@@ -373,7 +377,7 @@ const TrackGallery = (): JSX.Element => {
 									styles.artistName,
 									{
 										color: navigatorTracks[displayedTrack]
-											?.accentColor
+											?.accentColour
 									}
 								]}>
 								{tracks[displayedTrack]?.song_artist}
@@ -384,8 +388,8 @@ const TrackGallery = (): JSX.Element => {
 					<LinksComponent
 						trackLinks={trackLinks}
 						bgColour={navigatorTracks[displayedTrack]?.bgColour}
-						accentColor={
-							navigatorTracks[displayedTrack]?.accentColor
+						accentColour={
+							navigatorTracks[displayedTrack]?.accentColour
 						}
 					/>
 					<Animated.View
@@ -411,9 +415,9 @@ const TrackGallery = (): JSX.Element => {
 									dayListAnimationStyles={
 										dayListAnimationStyles
 									}
-									accentColor={
+									accentColour={
 										navigatorTracks[displayedTrack]
-											?.accentColor
+											?.accentColour
 									}
 									drop_day={tracks[displayedTrack]?.drop_day}
 									handleDaySelection={handleDaySelection}
@@ -436,8 +440,9 @@ const TrackGallery = (): JSX.Element => {
 								topChevronStyle={topChevronStyle}
 								bottomChevronStyle={bottomChevronStyle}
 								flipChevrons={!!flipChevrons}
-								accentColor={
-									navigatorTracks[displayedTrack]?.accentColor
+								accentColour={
+									navigatorTracks[displayedTrack]
+										?.accentColour
 								}
 							/>
 						</View>
@@ -463,10 +468,11 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "row",
 		justifyContent: "space-between",
-		width: "100%"
+		width: "99%"
 	},
 	genreTitleContainer: {
 		display: "flex",
+		marginLeft: "-2%",
 		flexDirection: "row",
 		justifyContent: "space-between",
 		width: "93%",

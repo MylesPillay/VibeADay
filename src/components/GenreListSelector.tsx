@@ -10,7 +10,7 @@ interface GenreListSelectorProps {
 	handleGenreListSelection: (index: number) => void;
 	genreNameAnimationStyle: any;
 	dayListAnimationStyles: any;
-	accentColor: string;
+	accentColour: string;
 	drop_day?: string;
 	handleDaySelection: (day: string) => void;
 }
@@ -31,7 +31,7 @@ const GenreListSelector = ({
 	handleGenreListSelection,
 	genreNameAnimationStyle,
 	dayListAnimationStyles,
-	accentColor,
+	accentColour,
 	drop_day,
 	handleDaySelection
 }: GenreListSelectorProps): JSX.Element => {
@@ -61,7 +61,7 @@ const GenreListSelector = ({
 									{
 										color:
 											day.dayName === drop_day
-												? accentColor
+												? accentColour
 												: "#000000",
 										textDecorationLine:
 											day.dayName === drop_day
@@ -69,7 +69,7 @@ const GenreListSelector = ({
 												: "none",
 										textDecorationColor:
 											day.dayName === drop_day
-												? accentColor
+												? accentColour
 												: "#000000"
 									}
 								]}>
@@ -98,7 +98,7 @@ const GenreListSelector = ({
 										color:
 											index ===
 											tracks[displayedTrack].trackIndex
-												? track.accentColor
+												? track.accentColour
 												: "#000000"
 									}
 								]}>

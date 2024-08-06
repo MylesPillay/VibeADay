@@ -14,11 +14,11 @@ export interface TrackLinksProps {
 const LinksComponent = ({
 	trackLinks,
 	bgColour,
-	accentColor
+	accentColour
 }: {
 	trackLinks: TrackLinksProps;
 	bgColour: string;
-	accentColor: string;
+	accentColour: string;
 }): JSX.Element => {
 	const handleLinkPress = (url: string) => {
 		Linking.openURL(url)
@@ -38,7 +38,7 @@ const LinksComponent = ({
 				<MaterialCommunityIcons
 					name='spotify'
 					size={32}
-					color={!trackLinks?.spotifyURL ? "#00000055" : accentColor}
+					color={!trackLinks?.spotifyURL ? "#00000055" : accentColour}
 				/>
 			</TouchableOpacity>
 			<TouchableOpacity
@@ -48,7 +48,7 @@ const LinksComponent = ({
 					name='soundcloud'
 					size={32}
 					color={
-						!trackLinks?.soundcloudURL ? "#00000055" : accentColor
+						!trackLinks?.soundcloudURL ? "#00000055" : accentColour
 					}
 				/>
 			</TouchableOpacity>
@@ -61,7 +61,7 @@ const LinksComponent = ({
 						{
 							backgroundColor: !trackLinks?.spotifyURL
 								? "#00000055"
-								: accentColor
+								: accentColour
 						}
 					]}>
 					<View
@@ -78,7 +78,7 @@ const LinksComponent = ({
 					name='apple'
 					size={32}
 					color={
-						!trackLinks?.appleMusicURL ? "#00000055" : accentColor
+						!trackLinks?.appleMusicURL ? "#00000055" : accentColour
 					}
 				/>
 			</TouchableOpacity>
@@ -89,7 +89,7 @@ const LinksComponent = ({
 					name='instagram'
 					size={32}
 					color={
-						!trackLinks?.instagramURL ? "#00000055" : accentColor
+						!trackLinks?.instagramURL ? "#00000055" : accentColour
 					}
 				/>
 			</TouchableOpacity>
@@ -99,7 +99,9 @@ const LinksComponent = ({
 				<MaterialCommunityIcons
 					name='facebook'
 					size={32}
-					color={!trackLinks?.facebookURL ? "#00000055" : accentColor}
+					color={
+						!trackLinks?.facebookURL ? "#00000055" : accentColour
+					}
 				/>
 			</TouchableOpacity>
 		</View>

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { NavigatorTrack } from "./DailyTrackGallery";
+import { RFValue } from "react-native-responsive-fontsize";
 
 interface GenreTitleProps {
 	tracks: NavigatorTrack[];
@@ -28,7 +29,8 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		alignItems: "center",
 		alignContent: "center",
-		flex: 1
+		flex: 1,
+		marginHorizontal: RFValue(5, 580)
 	},
 	titleText: {
 		fontWeight: "600",

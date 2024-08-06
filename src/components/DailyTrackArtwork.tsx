@@ -29,8 +29,8 @@ const DailyTrackArtwork = ({
 					style={[
 						styles.artwork,
 						{
-							height: windowHeight * 0.28,
-							width: windowHeight * 0.28
+							height: windowHeight * 0.31,
+							width: windowHeight * 0.31
 						}
 					]}
 				/>
@@ -42,7 +42,7 @@ const DailyTrackArtwork = ({
 const styles = StyleSheet.create({
 	cardContainer: {
 		alignItems: "center",
-		paddingVertical: "4%"
+		paddingVertical: 0
 	},
 	artworkContainer: {
 		alignItems: "flex-start"

@@ -273,7 +273,7 @@ const TrackGallery = (): JSX.Element => {
 				style={{
 					display: "flex",
 					paddingVertical: "5%",
-					paddingHorizontal: "5%",
+
 					paddingTop: "20%",
 					height: windowHeight,
 					width: windowWidth,
@@ -284,9 +284,10 @@ const TrackGallery = (): JSX.Element => {
 					<View
 						style={{
 							flexDirection: "row",
-							width: "100%"
+							width: "100%",
+							justifyContent: "space-between"
 						}}>
-						<View style={styles.genreNavContainer}>
+						<View style={[styles.genreNavContainer]}>
 							<GenreDotSelector
 								tracks={navigatorTracks.slice(0, 5)}
 								displayedTrack={displayedTrack}
@@ -296,6 +297,7 @@ const TrackGallery = (): JSX.Element => {
 								style={{
 									flexDirection: "column",
 									height: "auto",
+									width: "102%",
 									justifyContent: "space-between",
 									alignContent: "center",
 									alignItems: "center"
@@ -305,22 +307,27 @@ const TrackGallery = (): JSX.Element => {
 										tracks={navigatorTracks}
 										displayedTrack={displayedTrack}
 									/>
-									<View
-										style={{
-											justifyContent: "flex-end",
-											alignContent: "center"
-										}}>
+									<View style={{}}>
 										<TouchableOpacity
 											activeOpacity={1}
-											onPress={handleExpandGenreList}>
+											onPress={() => {}}>
 											<Animated.View>
 												<MaterialCommunityIcons
-													name={"chevron-right"}
+													name={"chevron-up"}
 													color={
-														navigatorTracks[
-															displayedTrack
-														]?.accentColor
+														isExpanded
+															? navigatorTracks[
+																	displayedTrack
+															  ]?.bgColour
+															: navigatorTracks[
+																	displayedTrack
+															  ]?.accentColor
 													}
+													style={{
+														transform: [
+															{ rotate: "90deg" }
+														]
+													}}
 													size={46}
 												/>
 											</Animated.View>
@@ -411,7 +418,7 @@ const TrackGallery = (): JSX.Element => {
 								{
 									bottom: isExpanded ? "1%" : "40%",
 									display: "flex",
-									justifyContent: "flex-start"
+									justifyContent: "center"
 								}
 							]}>
 							<ChevronComponent
@@ -434,7 +441,8 @@ const styles = StyleSheet.create({
 	mainTrackContainer: {
 		display: "flex",
 		flexDirection: "column",
-		height: "100%"
+		height: "100%",
+		paddingHorizontal: "5%"
 	},
 	modal: {
 		justifyContent: "center",
@@ -451,22 +459,21 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "row",
 		justifyContent: "space-between",
-		width: "90%",
+		width: "93%",
 		alignItems: "center"
 	},
 
 	chevronContainer: {
-		justifyContent: "flex-start",
-
+		justifyContent: "center",
 		alignItems: "flex-end",
 		width: "100%"
 	},
 	trackInfoContainer: {
 		height: "auto",
-		justifyContent: "space-between",
+		minHeight: "12%",
+		justifyContent: "space-evenly",
 		alignSelf: "center",
 		width: "90%",
-		minHeight: "9%",
 		margin: "2%",
 		marginTop: "10%",
 		paddingVertical: "3%",
@@ -496,8 +503,8 @@ const styles = StyleSheet.create({
 	expandableContainer: {
 		position: "absolute",
 		bottom: 0,
-		width: "100%",
-		marginBottom: "5%",
+		width: "110%",
+		marginBottom: "2.5%",
 		justifyContent: "center",
 		alignItems: "center"
 	}

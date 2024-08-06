@@ -2,6 +2,7 @@ import React from "react";
 import { View, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import Animated from "react-native-reanimated";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { RFValue } from "react-native-responsive-fontsize";
 
 interface ChevronComponentProps {
 	handleExpandGenreList: () => void;

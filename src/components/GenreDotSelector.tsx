@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "flex-start",
-		width: "auto",
+		width: "7%",
 		paddingTop: "2%",
 		height: "50%",
 		alignItems: "center"

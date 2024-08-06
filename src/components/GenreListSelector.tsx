@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: "70%",
 		justifyContent: "space-between",
-		// paddingTop: "60%",
 		paddingVertical: "5%"
 	},
 	navGenreNameContainer: {

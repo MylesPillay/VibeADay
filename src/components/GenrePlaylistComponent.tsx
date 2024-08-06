@@ -61,11 +61,22 @@ const GenrePlaylistComponent = ({
 	console.log(tracks, "this is the tracks");
 
 	return (
-		<FlatList
-			data={tracks}
-			keyExtractor={(item: any) => item.id.toString()}
-			renderItem={({ item }) => <PlaylistItem track={item} />}
-		/>
+		<View
+			style={{
+				display: "flex",
+				flex: 1,
+				justifyContent: "center",
+				alignItems: "center",
+				paddingTop: "20%",
+				width: "100%",
+				height: "100%"
+			}}>
+			<FlatList
+				data={tracks}
+				keyExtractor={(item: any) => item.id.toString()}
+				renderItem={({ item }) => <PlaylistItem track={item} />}
+			/>
+		</View>
 	);
 };
 

@@ -262,7 +262,7 @@ const TrackGallery = (): JSX.Element => {
 	const navigateToGenrePlaylist = () => {
 		router.push({
 			pathname: "./genre-playlist",
-			params: { genreName: tracks[displayedTrack]?.genreName }
+			params: { genreName: navigatorTracks[displayedTrack]?.genreName }
 		});
 	};
 

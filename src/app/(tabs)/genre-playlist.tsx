@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import DailyTrackGallery from "../../components/DailyTrackGallery";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import GenrePlaylistComponent, {
 	GenrePlaylistParams

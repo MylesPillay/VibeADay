@@ -20,7 +20,9 @@ const PlaylistItem = ({ track }: any) => {
 
 const styles = StyleSheet.create({
 	container: {
+		display: "flex",
 		flexDirection: "row",
+		width: "100%",
 		alignItems: "center",
 		padding: 10,
 		borderBottomWidth: 1,
@@ -33,10 +35,11 @@ const styles = StyleSheet.create({
 	},
 	infoContainer: {
 		marginLeft: 10,
-		flex: 1
+		width: "100%"
 	},
 	trackName: {
 		fontSize: RFValue(14),
+		width: "100%",
 		fontWeight: "bold"
 	},
 	artistName: {

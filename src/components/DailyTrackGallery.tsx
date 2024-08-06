@@ -39,6 +39,7 @@ export interface Track {
 	apple_music_url?: string;
 	facebook_url?: string;
 	instagram_url?: string;
+	genre_colour: number;
 	drop_day?:
 		| "Monday"
 		| "Tuesday"
@@ -75,9 +76,9 @@ const TrackGallery = (): JSX.Element => {
 				let { data, error } = await supabase
 					.from("daily_tracks")
 					.select("*")
-					.eq("drop_day", selectedDay) // Filter by selected day
+					.eq("drop_day", selectedDay)
 					.order("created_at", { ascending: false })
-					.limit(5); // Limit to 5 tracks
+					.limit(5);
 
 				if (error) throw error;
 				if (data) {

@@ -15,7 +15,7 @@ export default function GenrePlaylistScreen() {
 	return (
 		<View style={styles.spacerWrapper}>
 			<GestureHandlerRootView style={{ flex: 1 }}>
-				<GenrePlaylistComponent route={route} />
+				<GenrePlaylistComponent />
 			</GestureHandlerRootView>
 		</View>
 	);

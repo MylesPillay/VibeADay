@@ -4,11 +4,18 @@ import { NavigatorTrack } from "./DailyTrackGallery";
 import { RFValue } from "react-native-responsive-fontsize";
 
 interface GenreTitleProps {
-	tracks: NavigatorTrack[];
 	displayedTrack: number;
+	tracks?: NavigatorTrack[];
+	genreName?: string;
+	accentColor?: string;
 }
 
-const GenreTitleComponent = ({ tracks, displayedTrack }: GenreTitleProps) => {
+const GenreTitleComponent = ({
+	tracks,
+	displayedTrack,
+	genreName,
+	accentColor
+}: GenreTitleProps) => {
 	return (
 		<View style={styles.titleContainer}>
 			<Text
@@ -16,9 +23,13 @@ const GenreTitleComponent = ({ tracks, displayedTrack }: GenreTitleProps) => {
 				numberOfLines={1}
 				style={[
 					styles.titleText,
-					{ color: tracks[displayedTrack]?.accentColor }
+					{
+						color: accentColor
+							? accentColor
+							: tracks?.[displayedTrack]?.accentColor
+					}
 				]}>
-				{tracks[displayedTrack]?.genreName}
+				{genreName ? genreName : tracks?.[displayedTrack]?.genreName}
 			</Text>
 		</View>
 	);

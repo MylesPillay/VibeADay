@@ -11,15 +11,13 @@ import { Track } from "./DailyTrackGallery";
 import PlaylistItem from "./PlaylistItem";
 import { RouteProp } from "@react-navigation/native";
 import { useGlobalSearchParams, useLocalSearchParams } from "expo-router";
+import { genreAccentColors, genreColors } from "../constants/Colors";
+import GenreTitleComponent from "./GenreTitle";
 export type GenrePlaylistParams = {
 	genreName: string;
 };
 
-const GenrePlaylistComponent = ({
-	route
-}: {
-	route: RouteProp<Record<string, GenrePlaylistParams>, string>;
-}) => {
+const GenrePlaylistComponent = ({}: {}) => {
 	const { genreName } = useGlobalSearchParams();
 	const [tracks, setTracks] = useState<Track[]>([]);
 	const [loading, setLoading] = useState(true);
@@ -51,6 +49,13 @@ const GenrePlaylistComponent = ({
 		fetchTracks();
 	}, [genreName]);
 
+	function getGenreColor(colorId: number): string {
+		return genreColors[colorId] || "#ffffff";
+	}
+	function getGenreAccentColor(colorId: number): string {
+		return genreAccentColors[colorId] || "#000000";
+	}
+
 	if (loading) {
 		return <ActivityIndicator size='large' />;
 	}
@@ -59,7 +64,8 @@ const GenrePlaylistComponent = ({
 		return <Text>{error}</Text>;
 	}
 	console.log(tracks, "this is the tracks");
-
+	const backgroundColor = getGenreColor(tracks[0].genre_colour);
+	const accentColour = getGenreAccentColor(tracks[0].genre_colour);
 	return (
 		<View
 			style={{
@@ -69,13 +75,25 @@ const GenrePlaylistComponent = ({
 				alignItems: "center",
 				paddingTop: "20%",
 				width: "100%",
-				height: "100%"
+				height: "100%",
+				backgroundColor: backgroundColor
 			}}>
-			<FlatList
-				data={tracks}
-				keyExtractor={(item: any) => item.id.toString()}
-				renderItem={({ item }) => <PlaylistItem track={item} />}
+			<GenreTitleComponent
+				displayedTrack={0}
+				genreName={genreName as string}
+				accentColor={accentColour}
 			/>
+			<View
+				style={{
+					height: "90%",
+					marginHorizontal: "10%",
+					alignItems: "center",
+					justifyContent: "flex-start"
+				}}>
+				{tracks.map((track, index) => (
+					<PlaylistItem track={track} accentColour={accentColour} />
+				))}
+			</View>
 		</View>
 	);
 };

@@ -5,7 +5,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { RFValue } from "react-native-responsive-fontsize";
 
 interface ChevronComponentProps {
-	handleExpandGenreList: () => void;
+	onPress: () => void;
 	topChevronStyle: any;
 	bottomChevronStyle: any;
 	flipChevrons: boolean;
@@ -13,7 +13,7 @@ interface ChevronComponentProps {
 }
 
 const ChevronComponent = ({
-	handleExpandGenreList,
+	onPress,
 	topChevronStyle,
 	bottomChevronStyle,
 	flipChevrons,
@@ -26,7 +26,7 @@ const ChevronComponent = ({
 				styles.chevronIconsContainer,
 				{ maxHeight: windowHeight * 0.08 }
 			]}>
-			<TouchableOpacity activeOpacity={1} onPress={handleExpandGenreList}>
+			<TouchableOpacity activeOpacity={1} onPress={onPress}>
 				<Animated.View style={topChevronStyle}>
 					<MaterialCommunityIcons
 						name={!flipChevrons ? "chevron-up" : "chevron-down"}

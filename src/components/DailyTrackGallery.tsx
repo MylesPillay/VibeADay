@@ -3,20 +3,15 @@ import {
 	View,
 	FlatList,
 	Dimensions,
-	ActivityIndicator,
 	StyleSheet,
 	TouchableOpacity,
 	Text
 } from "react-native";
 import { createClient } from "@supabase/supabase-js";
 
-import { genreAccentColors, genreColors } from "../utils/constants/Colors";
+import { getGenreAccentColor, getGenreColor } from "../utils/constants/Colors";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
-import Animated, {
-	useAnimatedStyle,
-	useSharedValue,
-	withTiming
-} from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import { RFValue } from "react-native-responsive-fontsize";
 import GenreDotSelector from "./GenreDotSelector";
 import GenreTitleComponent from "./GenreTitle";
@@ -25,37 +20,26 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import LinksComponent from "./LinksComponent";
 import GenreListSelector from "./GenreListSelector";
 import DailyTrackArtwork from "./DailyTrackArtwork";
-import { useNavigation, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
+import LoadingComponent from "./LoadingScreen";
+import { NavigatorTrack, Track } from "../utils/types/Tracks";
 
-export interface Track {
-	genreName: string;
-	created_at: string;
-	song_title: string;
-	song_artist: string;
-	artwork: string;
-	spotify_url?: string;
-	soundcloud_url?: string;
-	bandcamp_url?: string;
-	apple_music_url?: string;
-	facebook_url?: string;
-	instagram_url?: string;
-	genre_colour: number;
-	drop_day?:
-		| "Monday"
-		| "Tuesday"
-		| "Wednesday"
-		| "Thursday"
-		| "Friday"
-		| "Saturday"
-		| "Sunday";
-}
+import {
+	bottomChevronStyle,
+	containerStyle,
+	dayListAnimationStyles,
+	genreNameTextAnimationStyle,
+	handleExpandGenreList,
+	topChevronStyle
+} from "../utils/constants/Animations";
+import {
+	handleGenreDotSelect,
+	handleGenreListSelection
+} from "../utils/helpers/functions";
 
-export interface NavigatorTrack {
-	genreName: string;
-	bgColor: string;
-	accentColor: string;
-	trackIndex: number;
-}
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+
 const TrackGallery = (): JSX.Element => {
 	const router = useRouter();
 	const [tracks, setTracks] = useState<Track[]>([]);
@@ -114,112 +98,10 @@ const TrackGallery = (): JSX.Element => {
 	const [error, setError] = useState<string | null>(null);
 	const [displayedTrack, setDisplayedTrack] = React.useState<number>(0);
 	const flatListRef = useRef<FlatList<Track> | null>(null);
-	const windowWidth = Dimensions.get("window").width;
-	const windowHeight = Dimensions.get("window").height;
-
-	function getGenreColor(colorId: number): string {
-		return genreColors[colorId] || "#FFFFFF";
-	}
-	function getGenreAccentColor(colorId: number): string {
-		return genreAccentColors[colorId] || "#000000";
-	}
-	const handleGenreListSelection = (selectedTrack: number) => {
-		setDisplayedTrack(selectedTrack);
-		handleExpandGenreList();
-	};
-	const handleGenreDotSelect = (selectedTrack: number) => {
-		setDisplayedTrack(selectedTrack);
-	};
 
 	const [flipChevrons, setFlipChevrons] = useState<boolean | undefined>(
 		undefined
 	);
-	// TOP CHEVRON ANIMATION STYLE VARIABLES
-	const topChevronPosition = useSharedValue(RFValue(5, 580));
-	const topChevronStyle = useAnimatedStyle(() => {
-		return {
-			top: topChevronPosition.value
-		};
-	});
-
-	// BOTTOM CHEVRON ANIMATION STYLE VARIABLES
-	const bottomChevronPosition = useSharedValue(3);
-	const bottomChevronStyle = useAnimatedStyle(() => {
-		return {
-			bottom: bottomChevronPosition.value
-		};
-	});
-
-	// ANIMATION TEXT SLIDE IN AND OPACITY FADE IN  STYLE VARIABLES
-	const translationXValue = useSharedValue(-200);
-	const translationXValueDays = useSharedValue(0);
-
-	const nameOpacityValue = useSharedValue(1);
-
-	const genreNameTextAnimationStyle = useAnimatedStyle(() => {
-		return {
-			opacity: nameOpacityValue.value,
-			transform: [{ translateX: translationXValue.value }]
-		};
-	});
-	const dayListAnimationStyles = useAnimatedStyle(() => {
-		return {
-			transform: [{ translateX: translationXValueDays.value }]
-		};
-	});
-
-	// BOTTOM NAV BAR CHEVRON CONTAINER ANIMATION AND HEIGHT STYLE VARIABLES
-	const containerHeight = useSharedValue(30);
-	const containerStyle = useAnimatedStyle(() => {
-		return {
-			height: containerHeight.value,
-			zIndex: isExpanded ? 100 : 250
-		};
-	});
-
-	const handleExpandGenreList = () => {
-		if (!isExpanded) {
-			setIsExpanded(true);
-			setFlipChevrons(true);
-			setTimeout(() => {
-				topChevronPosition.value = withTiming(RFValue(15, 580), {
-					duration: 100
-				});
-				bottomChevronPosition.value = withTiming(RFValue(8, 580), {
-					duration: 150
-				});
-			}, 150);
-			containerHeight.value = withTiming(windowHeight, { duration: 200 });
-			nameOpacityValue.value = withTiming(1, {
-				duration: 250
-			});
-			translationXValue.value = withTiming(15, {
-				duration: 450
-			});
-			translationXValueDays.value = withTiming(-20, {
-				duration: 450
-			});
-		} else {
-			setIsExpanded(false);
-			setFlipChevrons(false);
-			containerHeight.value = withTiming(30, { duration: 10 });
-			setTimeout(() => {
-				topChevronPosition.value = withTiming(RFValue(3, 580), {
-					duration: 150
-				});
-				bottomChevronPosition.value = withTiming(RFValue(5, 580), {
-					duration: 150
-				});
-			}, 11);
-
-			translationXValue.value = withTiming(-200, {
-				duration: 150
-			});
-			translationXValueDays.value = withTiming(200, {
-				duration: 150
-			});
-		}
-	};
 
 	// ANIMATE SCROLL THROUGH TRACKS UP AND DOWN HANDLERS
 	const goToPreviousTrack = () => {
@@ -281,29 +163,13 @@ const TrackGallery = (): JSX.Element => {
 	// console.log(navigatorTracks, "this is the navigator tracks");
 
 	return loading && !tracks.length ? (
-		<View
-			style={{
-				display: "flex",
-				justifyContent: "center",
-				alignItems: "center",
-				alignContent: "center",
-				width: "100%",
-				height: "100%",
-				backgroundColor: genreColors[1]?.toString()
-			}}>
-			<ActivityIndicator
-				color={genreAccentColors[1]?.toString()}
-				size={"large"}
-			/>
-		</View>
+		<LoadingComponent />
 	) : (
 		<PanGestureHandler onHandlerStateChange={onGestureEvent}>
 			<View
 				style={{
 					display: "flex",
 					paddingVertical: "5%",
-					maxHeight: "100%",
-					paddingTop: "20%",
 					height: windowHeight,
 					width: windowWidth,
 					justifyContent: "flex-start",
@@ -320,7 +186,12 @@ const TrackGallery = (): JSX.Element => {
 							<GenreDotSelector
 								tracks={navigatorTracks.slice(0, 5)}
 								displayedTrack={displayedTrack}
-								handleGenreDotSelect={handleGenreDotSelect}
+								handleGenreDotSelect={(index) =>
+									handleGenreDotSelect(
+										index,
+										setDisplayedTrack
+									)
+								}
 							/>
 							<View
 								style={{
@@ -379,7 +250,11 @@ const TrackGallery = (): JSX.Element => {
 							</View>
 						</View>
 					</View>
-					<View style={styles.trackInfoContainer}>
+					<View
+						style={[
+							styles.trackInfoContainer,
+							{ minHeight: windowHeight * 0.1 }
+						]}>
 						<Text
 							style={[
 								styles.trackName,
@@ -424,7 +299,7 @@ const TrackGallery = (): JSX.Element => {
 							containerStyle,
 							{
 								backgroundColor:
-									navigatorTracks[displayedTrack]?.bgColor
+									navigatorTracks?.[displayedTrack]?.bgColor
 							}
 						]}>
 						{isExpanded ? (
@@ -432,14 +307,28 @@ const TrackGallery = (): JSX.Element => {
 								style={{
 									zIndex: 300,
 									width: "100%",
-									height: "50%"
+
+									backgroundColor:
+										navigatorTracks?.[displayedTrack]
+											?.bgColor,
+									height: "100%",
+									paddingVertical: "5%"
 								}}>
 								<GenreListSelector
 									tracks={navigatorTracks}
 									displayedTrack={displayedTrack}
-									handleGenreListSelection={
-										handleGenreListSelection
-									}
+									onPress={(index: number) => {
+										handleGenreListSelection(
+											index,
+											setDisplayedTrack,
+											() =>
+												handleExpandGenreList(
+													isExpanded,
+													setIsExpanded,
+													setFlipChevrons
+												)
+										);
+									}}
 									genreNameAnimationStyle={
 										genreNameTextAnimationStyle
 									}
@@ -452,6 +341,7 @@ const TrackGallery = (): JSX.Element => {
 									}
 									drop_day={tracks[displayedTrack]?.drop_day}
 									handleDaySelection={handleDaySelection}
+									setIsExpanded={setIsExpanded}
 								/>
 							</View>
 						) : (
@@ -461,13 +351,19 @@ const TrackGallery = (): JSX.Element => {
 							style={[
 								styles.chevronContainer,
 								{
-									top: isExpanded ? "22%" : "1%",
+									top: isExpanded ? "5%" : "2%",
 									display: "flex",
-									justifyContent: "center"
+									zIndex: 500
 								}
 							]}>
 							<ChevronComponent
-								handleExpandGenreList={handleExpandGenreList}
+								onPress={() =>
+									handleExpandGenreList(
+										isExpanded,
+										setIsExpanded,
+										setFlipChevrons
+									)
+								}
 								topChevronStyle={topChevronStyle}
 								bottomChevronStyle={bottomChevronStyle}
 								flipChevrons={!!flipChevrons}
@@ -486,8 +382,6 @@ const styles = StyleSheet.create({
 	mainTrackContainer: {
 		display: "flex",
 		flexDirection: "column",
-
-		height: "100%",
 		paddingHorizontal: "5%"
 	},
 	modal: {
@@ -513,18 +407,17 @@ const styles = StyleSheet.create({
 	chevronContainer: {
 		justifyContent: "center",
 		alignItems: "flex-end",
+		height: "180%",
 		width: "100%"
 	},
 	trackInfoContainer: {
 		height: "auto",
-		minHeight: "12%",
 		justifyContent: "space-evenly",
 		alignSelf: "center",
 		width: "90%",
 		margin: "2%",
-		marginTop: "10%",
-		paddingVertical: "3%",
-		padding: "6%",
+		marginTop: "8%",
+		paddingVertical: "2%",
 		borderRadius: 7,
 		backgroundColor: "#00000025"
 	},
@@ -550,8 +443,8 @@ const styles = StyleSheet.create({
 	expandableContainer: {
 		position: "absolute",
 		bottom: 0,
+		maxHeight: "55%",
 		width: "110%",
-		marginBottom: "2.5%",
 		justifyContent: "center",
 		alignItems: "center"
 	}

@@ -2,14 +2,26 @@ import React from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import Animated from "react-native-reanimated";
 import { RFValue } from "react-native-responsive-fontsize";
-import { NavigatorTrack } from "./DailyTrackGallery";
+import { NavigatorTrack } from "../utils/types/Tracks";
+import { handleExpandGenreList } from "../utils/constants/Animations";
 
 interface GenreListSelectorProps {
 	tracks: NavigatorTrack[];
 	displayedTrack: number;
-	handleGenreListSelection: (index: number) => void;
+	onPress: (
+		index: number,
+		setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>,
+		handleExpandGenreList: (
+			isExpanded: boolean,
+			setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>,
+			setFlipChevrons: React.Dispatch<
+				React.SetStateAction<boolean | undefined>
+			>
+		) => void
+	) => void;
 	genreNameAnimationStyle: any;
 	dayListAnimationStyles: any;
+	setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 	accentColor: string;
 	drop_day?: string;
 	handleDaySelection: (day: string) => void;
@@ -28,7 +40,8 @@ const days = [
 const GenreListSelector = ({
 	tracks,
 	displayedTrack,
-	handleGenreListSelection,
+	onPress,
+	setIsExpanded,
 	genreNameAnimationStyle,
 	dayListAnimationStyles,
 	accentColor,
@@ -41,7 +54,8 @@ const GenreListSelector = ({
 				style={{
 					alignSelf: "flex-end",
 					alignContent: "center",
-					marginTop: "12.5%",
+
+					// marginTop: "5%"
 					paddingBottom: "2.5%"
 				}}>
 				{days.map((day, index) => (
@@ -79,7 +93,7 @@ const GenreListSelector = ({
 					</Animated.View>
 				))}
 			</View>
-			<View style={{ marginTop: "2.5%" }}>
+			<View style={{ paddingTop: "2.5%" }}>
 				{tracks.map((track, index) => (
 					<Animated.View
 						key={index}
@@ -90,7 +104,13 @@ const GenreListSelector = ({
 						<TouchableOpacity
 							style={styles.navGenreTitleButton}
 							activeOpacity={0.4}
-							onPress={() => handleGenreListSelection(index)}>
+							onPress={() =>
+								onPress(
+									index,
+									setIsExpanded,
+									handleExpandGenreList
+								)
+							}>
 							<Text
 								style={[
 									styles.genreText,
@@ -98,7 +118,17 @@ const GenreListSelector = ({
 										color:
 											index ===
 											tracks[displayedTrack].trackIndex
-												? track.accentColor
+												? accentColor
+												: "#000000",
+										textDecorationLine:
+											index ===
+											tracks[displayedTrack].trackIndex
+												? "underline"
+												: "none",
+										textDecorationColor:
+											index ===
+											tracks[displayedTrack].trackIndex
+												? accentColor
 												: "#000000"
 									}
 								]}>
@@ -123,13 +153,13 @@ const styles = StyleSheet.create({
 	},
 	navGenreNameContainer: {
 		height: "auto",
-		paddingBottom: RFValue(8, 580),
+		paddingBottom: RFValue(6, 580),
 		textAlign: "left",
 		alignItems: "flex-start"
 	},
 	dayNameContainer: {
 		height: "auto",
-		paddingBottom: RFValue(8, 580),
+		paddingBottom: RFValue(6, 580),
 		justifyContent: "center",
 		alignItems: "flex-end"
 	},

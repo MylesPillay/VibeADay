@@ -1,30 +1,27 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import DailyTrackGallery from "../../components/DailyTrackGallery";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function HomeScreen() {
+	const windowWidth = Dimensions.get("window").width;
+	const windowHeight = Dimensions.get("window").height;
 	return (
-		// <View style={styles.spacerWrapper}>
-		<GestureHandlerRootView>
-			<DailyTrackGallery />
-		</GestureHandlerRootView>
-		// </View>
+		<View
+			style={[
+				styles.spacerWrapper,
+				{ width: windowWidth, height: windowHeight }
+			]}>
+			<GestureHandlerRootView>
+				<DailyTrackGallery />
+			</GestureHandlerRootView>
+		</View>
 	);
 }
 
 const styles = StyleSheet.create({
 	spacerWrapper: {
 		display: "flex",
-		justifyContent: "center",
-		alignContent: "center",
-		alignItems: "center",
-		height: "100%",
-		width: "100%"
-	},
-	titleContainer: {
-		flexDirection: "row",
-		alignItems: "center",
-		gap: 2
+		alignContent: "center"
 	}
 });

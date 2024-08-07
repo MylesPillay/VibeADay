@@ -115,8 +115,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "space-evenly",
 		width: "90%",
-		marginVertical: "8%",
-		marginBottom: "4%",
+		marginVertical: "4%",
 		height: "auto",
 		padding: "5%",
 		paddingHorizontal: "1%",
@@ -133,8 +132,6 @@ const styles = StyleSheet.create({
 	bandcampIcon: {
 		width: 10,
 		height: 9,
-		// backgroundColor: "white",
-
 		transform: [{ skewX: "-20deg" }]
 	}
 });

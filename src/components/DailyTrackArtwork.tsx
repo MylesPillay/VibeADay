@@ -29,8 +29,8 @@ const DailyTrackArtwork = ({
 					style={[
 						styles.artwork,
 						{
-							height: windowHeight * 0.31,
-							width: windowHeight * 0.31
+							height: windowHeight * 0.3,
+							width: windowHeight * 0.3
 						}
 					]}
 				/>

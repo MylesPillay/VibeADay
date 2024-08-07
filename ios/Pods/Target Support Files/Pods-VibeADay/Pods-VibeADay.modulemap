@@ -1,6 +1,0 @@
-module Pods_VibeADay {
-  umbrella header "Pods-VibeADay-umbrella.h"
-
-  export *
-  module * { export * }
-}

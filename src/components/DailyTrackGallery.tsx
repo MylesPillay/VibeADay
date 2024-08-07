@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { createClient } from "@supabase/supabase-js";
 
-import { genreAccentColours, genreColors } from "../constants/Colors";
+import { genreAccentColors, genreColors } from "../utils/constants/Colors";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import Animated, {
 	useAnimatedStyle,
@@ -52,8 +52,8 @@ export interface Track {
 
 export interface NavigatorTrack {
 	genreName: string;
-	bgColour: string;
-	accentColour: string;
+	bgColor: string;
+	accentColor: string;
 	trackIndex: number;
 }
 const TrackGallery = (): JSX.Element => {
@@ -72,6 +72,7 @@ const TrackGallery = (): JSX.Element => {
 				process.env.SUPABASE_API_URL as string,
 				process.env.SUPABASE_API_SECRET_ACCESS_TOKEN as string
 			);
+			setLoading(true);
 			try {
 				let { data, error } = await supabase
 					.from("daily_tracks")
@@ -86,15 +87,16 @@ const TrackGallery = (): JSX.Element => {
 					setNavigatorTracks(
 						data.map((track, index) => ({
 							genreName: track.genre_title,
-							bgColour: getGenreColour(
+							bgColor: getGenreColor(
 								track.genre_colour as number
 							),
-							accentColour: getGenreAccentColour(
+							accentColor: getGenreAccentColor(
 								track.genre_colour as number
 							),
 							trackIndex: index
 						}))
 					);
+					setLoading(false);
 				}
 			} catch (error) {
 				setError("Failed to fetch tracks");
@@ -115,11 +117,11 @@ const TrackGallery = (): JSX.Element => {
 	const windowWidth = Dimensions.get("window").width;
 	const windowHeight = Dimensions.get("window").height;
 
-	function getGenreColour(colorId: number): string {
-		return genreColors[colorId] || "#000000";
+	function getGenreColor(colorId: number): string {
+		return genreColors[colorId] || "#FFFFFF";
 	}
-	function getGenreAccentColour(colorId: number): string {
-		return genreAccentColours[colorId] || "#000000";
+	function getGenreAccentColor(colorId: number): string {
+		return genreAccentColors[colorId] || "#000000";
 	}
 	const handleGenreListSelection = (selectedTrack: number) => {
 		setDisplayedTrack(selectedTrack);
@@ -167,7 +169,7 @@ const TrackGallery = (): JSX.Element => {
 	});
 
 	// BOTTOM NAV BAR CHEVRON CONTAINER ANIMATION AND HEIGHT STYLE VARIABLES
-	const containerHeight = useSharedValue(130);
+	const containerHeight = useSharedValue(30);
 	const containerStyle = useAnimatedStyle(() => {
 		return {
 			height: containerHeight.value,
@@ -200,7 +202,7 @@ const TrackGallery = (): JSX.Element => {
 		} else {
 			setIsExpanded(false);
 			setFlipChevrons(false);
-			containerHeight.value = withTiming(140, { duration: 10 });
+			containerHeight.value = withTiming(30, { duration: 10 });
 			setTimeout(() => {
 				topChevronPosition.value = withTiming(RFValue(3, 580), {
 					duration: 150
@@ -265,34 +267,47 @@ const TrackGallery = (): JSX.Element => {
 			pathname: "./genre-playlist",
 			params: {
 				genreName: navigatorTracks[displayedTrack]?.genreName,
-				bgColor: navigatorTracks[displayedTrack]?.bgColour,
-				accentColor: navigatorTracks[displayedTrack]?.accentColour
+				bgColor: navigatorTracks[displayedTrack]?.bgColor,
+				accentColor: navigatorTracks[displayedTrack]?.accentColor
 			}
 		});
 	};
 
-	console.log(trackLinks, "this is the track links");
-	if (loading) {
-		return <ActivityIndicator size='large' />;
-	}
+	// console.log(trackLinks, "this is the track links");
 
-	if (error) {
-		console.log(error, "this is the error message");
-	}
-	console.log(navigatorTracks, "this is the navigator tracks");
+	// if (error) {
+	//  console.log(error, "this is the error message");
+	// }
+	// console.log(navigatorTracks, "this is the navigator tracks");
 
-	return (
+	return loading && !tracks.length ? (
+		<View
+			style={{
+				display: "flex",
+				justifyContent: "center",
+				alignItems: "center",
+				alignContent: "center",
+				width: "100%",
+				height: "100%",
+				backgroundColor: genreColors[1]?.toString()
+			}}>
+			<ActivityIndicator
+				color={genreAccentColors[1]?.toString()}
+				size={"large"}
+			/>
+		</View>
+	) : (
 		<PanGestureHandler onHandlerStateChange={onGestureEvent}>
 			<View
 				style={{
 					display: "flex",
 					paddingVertical: "5%",
-
+					maxHeight: "100%",
 					paddingTop: "20%",
 					height: windowHeight,
 					width: windowWidth,
 					justifyContent: "flex-start",
-					backgroundColor: navigatorTracks[displayedTrack]?.bgColour
+					backgroundColor: navigatorTracks[displayedTrack]?.bgColor
 				}}>
 				<View style={styles.mainTrackContainer}>
 					<View
@@ -332,14 +347,16 @@ const TrackGallery = (): JSX.Element => {
 														isExpanded
 															? navigatorTracks[
 																	displayedTrack
-															  ]?.bgColour
+															  ]?.bgColor
 															: navigatorTracks[
 																	displayedTrack
-															  ]?.accentColour
+															  ]?.accentColor
 													}
 													style={{
 														transform: [
-															{ rotate: "90deg" }
+															{
+																rotate: "90deg"
+															}
 														]
 													}}
 													size={46}
@@ -364,7 +381,16 @@ const TrackGallery = (): JSX.Element => {
 					</View>
 					<View style={styles.trackInfoContainer}>
 						<Text
-							style={styles.trackName}
+							style={[
+								styles.trackName,
+								{
+									color:
+										tracks[displayedTrack]?.genre_colour ===
+										3
+											? "#000000"
+											: "#FFFFFF"
+								}
+							]}
 							adjustsFontSizeToFit
 							numberOfLines={1}>
 							{tracks[displayedTrack]?.song_title}
@@ -377,7 +403,7 @@ const TrackGallery = (): JSX.Element => {
 									styles.artistName,
 									{
 										color: navigatorTracks[displayedTrack]
-											?.accentColour
+											?.accentColor
 									}
 								]}>
 								{tracks[displayedTrack]?.song_artist}
@@ -387,9 +413,9 @@ const TrackGallery = (): JSX.Element => {
 
 					<LinksComponent
 						trackLinks={trackLinks}
-						bgColour={navigatorTracks[displayedTrack]?.bgColour}
-						accentColour={
-							navigatorTracks[displayedTrack]?.accentColour
+						bgColor={navigatorTracks[displayedTrack]?.bgColor}
+						accentColor={
+							navigatorTracks[displayedTrack]?.accentColor
 						}
 					/>
 					<Animated.View
@@ -398,11 +424,16 @@ const TrackGallery = (): JSX.Element => {
 							containerStyle,
 							{
 								backgroundColor:
-									navigatorTracks[displayedTrack]?.bgColour
+									navigatorTracks[displayedTrack]?.bgColor
 							}
 						]}>
 						{isExpanded ? (
-							<View style={{ zIndex: 300, width: "100%" }}>
+							<View
+								style={{
+									zIndex: 300,
+									width: "100%",
+									height: "50%"
+								}}>
 								<GenreListSelector
 									tracks={navigatorTracks}
 									displayedTrack={displayedTrack}
@@ -415,9 +446,9 @@ const TrackGallery = (): JSX.Element => {
 									dayListAnimationStyles={
 										dayListAnimationStyles
 									}
-									accentColour={
+									accentColor={
 										navigatorTracks[displayedTrack]
-											?.accentColour
+											?.accentColor
 									}
 									drop_day={tracks[displayedTrack]?.drop_day}
 									handleDaySelection={handleDaySelection}
@@ -430,7 +461,7 @@ const TrackGallery = (): JSX.Element => {
 							style={[
 								styles.chevronContainer,
 								{
-									bottom: isExpanded ? "1%" : "40%",
+									top: isExpanded ? "22%" : "1%",
 									display: "flex",
 									justifyContent: "center"
 								}
@@ -440,9 +471,8 @@ const TrackGallery = (): JSX.Element => {
 								topChevronStyle={topChevronStyle}
 								bottomChevronStyle={bottomChevronStyle}
 								flipChevrons={!!flipChevrons}
-								accentColour={
-									navigatorTracks[displayedTrack]
-										?.accentColour
+								accentColor={
+									navigatorTracks[displayedTrack]?.accentColor
 								}
 							/>
 						</View>
@@ -456,6 +486,7 @@ const styles = StyleSheet.create({
 	mainTrackContainer: {
 		display: "flex",
 		flexDirection: "column",
+
 		height: "100%",
 		paddingHorizontal: "5%"
 	},

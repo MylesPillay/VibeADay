@@ -13,12 +13,12 @@ export interface TrackLinksProps {
 
 const LinksComponent = ({
 	trackLinks,
-	bgColour,
-	accentColour
+	bgColor,
+	accentColor
 }: {
 	trackLinks: TrackLinksProps;
-	bgColour: string;
-	accentColour: string;
+	bgColor: string;
+	accentColor: string;
 }): JSX.Element => {
 	const handleLinkPress = (url: string) => {
 		Linking.openURL(url)
@@ -38,7 +38,7 @@ const LinksComponent = ({
 				<MaterialCommunityIcons
 					name='spotify'
 					size={32}
-					color={!trackLinks?.spotifyURL ? "#00000055" : accentColour}
+					color={!trackLinks?.spotifyURL ? "#00000055" : accentColor}
 				/>
 			</TouchableOpacity>
 			<TouchableOpacity
@@ -48,7 +48,7 @@ const LinksComponent = ({
 					name='soundcloud'
 					size={32}
 					color={
-						!trackLinks?.soundcloudURL ? "#00000055" : accentColour
+						!trackLinks?.soundcloudURL ? "#00000055" : accentColor
 					}
 				/>
 			</TouchableOpacity>
@@ -61,13 +61,13 @@ const LinksComponent = ({
 						{
 							backgroundColor: !trackLinks?.spotifyURL
 								? "#00000055"
-								: accentColour
+								: accentColor
 						}
 					]}>
 					<View
 						style={[
 							styles.bandcampIcon,
-							{ backgroundColor: bgColour }
+							{ backgroundColor: bgColor }
 						]}></View>
 				</View>
 			</TouchableOpacity>
@@ -78,7 +78,7 @@ const LinksComponent = ({
 					name='apple'
 					size={32}
 					color={
-						!trackLinks?.appleMusicURL ? "#00000055" : accentColour
+						!trackLinks?.appleMusicURL ? "#00000055" : accentColor
 					}
 				/>
 			</TouchableOpacity>
@@ -89,7 +89,7 @@ const LinksComponent = ({
 					name='instagram'
 					size={32}
 					color={
-						!trackLinks?.instagramURL ? "#00000055" : accentColour
+						!trackLinks?.instagramURL ? "#00000055" : accentColor
 					}
 				/>
 			</TouchableOpacity>
@@ -99,9 +99,7 @@ const LinksComponent = ({
 				<MaterialCommunityIcons
 					name='facebook'
 					size={32}
-					color={
-						!trackLinks?.facebookURL ? "#00000055" : accentColour
-					}
+					color={!trackLinks?.facebookURL ? "#00000055" : accentColor}
 				/>
 			</TouchableOpacity>
 		</View>

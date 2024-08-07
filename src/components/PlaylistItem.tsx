@@ -2,13 +2,17 @@ import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
-const PlaylistItem = ({ track, accentColour }: any) => {
+const PlaylistItem = ({ track, accentColor }: any) => {
 	return (
-		<View style={[styles.container]}>
+		<View
+			style={[
+				styles.container,
+				{ borderBlockColor: accentColor + "99" }
+			]}>
 			<Image source={{ uri: track.artwork }} style={styles.artwork} />
 			<View style={styles.infoContainer}>
 				<Text
-					style={[styles.trackName, { color: accentColour }]}
+					style={[styles.trackName, { color: accentColor }]}
 					numberOfLines={1}>
 					{track.song_title}
 				</Text>
@@ -24,13 +28,13 @@ const styles = StyleSheet.create({
 	container: {
 		display: "flex",
 		flexDirection: "row",
-		marginBottom: "6%",
+		marginBottom: "2%",
 		width: "90%",
 		justifyContent: "flex-start",
 		alignItems: "center",
 		alignSelf: "flex-start",
-		borderBottomColor: "#FFFFFF",
-		borderBottomWidth: 1
+		borderBottomWidth: 1,
+		paddingVertical: "2%"
 	},
 	artwork: {
 		width: 55,
@@ -45,6 +49,7 @@ const styles = StyleSheet.create({
 	trackName: {
 		fontSize: RFValue(15),
 		width: "100%",
+		marginBottom: "2%",
 		fontWeight: "bold"
 	},
 	artistName: {

@@ -2,7 +2,7 @@ import { Tabs } from "expo-router";
 import React from "react";
 import { Text } from "react-native";
 
-import { Colors } from "../../constants/Colors";
+import { Colors } from "../../utils/constants/Colors";
 import { useColorScheme } from "../../hooks/useColorScheme.web";
 import { TabBarIcon } from "../../components/navigation/TabBarIcon";
 

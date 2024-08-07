@@ -3,25 +3,19 @@ import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import GenrePlaylistComponent from "@/src/components/GenrePlaylistComponent";
 import { useGlobalSearchParams } from "expo-router";
-import { genreAccentColours, genreColors } from "@/src/constants/Colors";
 import { Track } from "@/src/components/DailyTrackGallery";
 import { createClient } from "@supabase/supabase-js";
 import { RFValue } from "react-native-responsive-fontsize";
+import { getGenreColor } from "@/src/utils/constants/Colors";
 
 export default function GenrePlaylistScreen() {
 	const { genreName, bgColor, accentColor } = useGlobalSearchParams();
-	function getGenreColour(colorId: number): string {
-		return genreColors[colorId] || "#ffffff";
-	}
-	function getGenreAccentColours(colorId: number): string {
-		return genreAccentColours[colorId] || "#000000";
-	}
+
 	const [tracks, setTracks] = useState<Track[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
-	const backgroundColor = getGenreColour(tracks?.[0]?.genre_colour);
-	const accentColour = getGenreAccentColours(tracks?.[0]?.genre_colour);
+	const backgroundColor = getGenreColor(tracks?.[0]?.genre_colour);
 
 	useEffect(() => {
 		const fetchTracks = async () => {
@@ -83,7 +77,7 @@ export default function GenrePlaylistScreen() {
 					tracks={tracks}
 					genreName={genreName as string}
 					backgroundColor={backgroundColor}
-					accentColour={accentColour}
+					accentColor={accentColor as string}
 				/>
 			</GestureHandlerRootView>
 		</View>

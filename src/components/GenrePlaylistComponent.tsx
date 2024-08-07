@@ -14,13 +14,13 @@ interface GenrePlaylistComponentProps {
 	tracks: Track[];
 	genreName: string;
 	backgroundColor: string;
-	accentColour: string;
+	accentColor: string;
 }
 const GenrePlaylistComponent = ({
 	tracks,
 	genreName,
 	backgroundColor,
-	accentColour
+	accentColor
 }: GenrePlaylistComponentProps): JSX.Element => {
 	console.log(tracks, "this is the tracks");
 	const goBack = () => {
@@ -50,7 +50,7 @@ const GenrePlaylistComponent = ({
 					style={styles.chevronIcon}>
 					<MaterialCommunityIcons
 						name={"chevron-up"}
-						color={accentColour}
+						color={accentColor}
 						style={{
 							transform: [{ rotate: "-90deg" }]
 						}}
@@ -61,7 +61,7 @@ const GenrePlaylistComponent = ({
 					<GenreTitleComponent
 						displayedTrack={0}
 						genreName={genreName as string}
-						accentColour={accentColour}
+						accentColor={accentColor}
 					/>
 				</View>
 			</View>
@@ -78,7 +78,7 @@ const GenrePlaylistComponent = ({
 					<PlaylistItem
 						key={index}
 						track={track}
-						accentColour={accentColour}
+						accentColor={accentColor}
 					/>
 				))}
 			</View>

@@ -9,7 +9,6 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
 import { useColorScheme } from "../hooks/useColorScheme.web";
-import GenrePlaylistScreen from "./(tabs)/genre-playlist";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -35,7 +34,6 @@ export default function RootLayout() {
 			value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
 			<Stack>
 				<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-				<Stack.Screen name='genre-playlist' />
 
 				<Stack.Screen name='+not-found' />
 			</Stack>

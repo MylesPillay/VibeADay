@@ -5,11 +5,11 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function HomeScreen() {
 	return (
-		<View style={styles.spacerWrapper}>
-			<GestureHandlerRootView style={{ flex: 1 }}>
-				<DailyTrackGallery />
-			</GestureHandlerRootView>
-		</View>
+		// <View style={styles.spacerWrapper}>
+		<GestureHandlerRootView>
+			<DailyTrackGallery />
+		</GestureHandlerRootView>
+		// </View>
 	);
 }
 

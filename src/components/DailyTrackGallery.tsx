@@ -11,7 +11,7 @@ import { createClient } from "@supabase/supabase-js";
 
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
-import { RFValue } from "react-native-responsive-fontsize";
+
 import GenreDotSelector from "./GenreDotSelector";
 import GenreTitleComponent from "./GenreTitle";
 import ChevronComponent from "./sticky-top-nav/ChevronComponent";
@@ -33,10 +33,7 @@ import {
 } from "../utils/constants/Animations";
 
 import { getGenreAccentColor, getGenreColor } from "../utils/constants/Colors";
-import {
-	handleGenreDotSelect,
-	handleGenreListSelection
-} from "../utils/helpers/Functions";
+import { handleGenreDotSelect } from "../utils/helpers/Functions";
 import { Typography } from "../utils/constants/Styles";
 
 const windowWidth = Dimensions.get("window").width;
@@ -51,6 +48,10 @@ const TrackGallery = (): JSX.Element => {
 	const [selectedDay, setSelectedDay] = useState<string>("Sunday");
 	const handleDaySelection = (day: string) => {
 		setSelectedDay(day);
+	};
+
+	const handleGenreListSelection = (selectedTrack: number) => {
+		setDisplayedTrack(selectedTrack);
 	};
 	useEffect(() => {
 		const fetchTracks = async () => {
@@ -324,17 +325,12 @@ const TrackGallery = (): JSX.Element => {
 								<GenreListSelector
 									tracks={navigatorTracks}
 									displayedTrack={displayedTrack}
-									onPress={(index: number) => {
-										handleGenreListSelection(
-											index,
-											setDisplayedTrack,
-											() =>
-												handleExpandGenreList(
-													isExpanded,
-													setIsExpanded,
-													setFlipChevrons
-												)
-										);
+									isExpanded={isExpanded}
+									setFlipChevrons={setFlipChevrons}
+									handleGenreListSelection={(
+										index: number
+									) => {
+										handleGenreListSelection(index);
 									}}
 									genreNameAnimationStyle={
 										genreNameTextAnimationStyle
@@ -360,7 +356,7 @@ const TrackGallery = (): JSX.Element => {
 								{
 									top: isExpanded ? "5%" : "2%",
 									display: "flex",
-									zIndex: 500
+									zIndex: 5
 								}
 							]}>
 							<ChevronComponent

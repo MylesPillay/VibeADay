@@ -9,23 +9,16 @@ import { Typography } from "../utils/constants/Styles";
 interface GenreListSelectorProps {
 	tracks: NavigatorTrack[];
 	displayedTrack: number;
-	onPress: (
-		index: number,
-		setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>,
-		handleExpandGenreList: (
-			isExpanded: boolean,
-			setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>,
-			setFlipChevrons: React.Dispatch<
-				React.SetStateAction<boolean | undefined>
-			>
-		) => void
-	) => void;
+	setFlipChevrons: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+	isExpanded: boolean;
+
 	genreNameAnimationStyle: any;
 	dayListAnimationStyles: any;
 	setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 	accentColor: string;
 	drop_day?: string;
-	handleDaySelection: (day: string) => void;
+	handleDaySelection: (selectedDay: string) => void;
+	handleGenreListSelection: (selectedGenre: number) => void;
 }
 
 const days = [
@@ -41,13 +34,17 @@ const days = [
 const GenreListSelector = ({
 	tracks,
 	displayedTrack,
-	onPress,
+	// setDisplayedTrack,
+	// onPress,
+	isExpanded,
 	setIsExpanded,
+	setFlipChevrons,
 	genreNameAnimationStyle,
 	dayListAnimationStyles,
 	accentColor,
 	drop_day,
-	handleDaySelection
+	handleDaySelection,
+	handleGenreListSelection
 }: GenreListSelectorProps): JSX.Element => {
 	return (
 		<View style={[styles.genreNavContainer]}>
@@ -56,7 +53,6 @@ const GenreListSelector = ({
 					alignSelf: "flex-end",
 					alignContent: "center",
 
-					// marginTop: "5%"
 					paddingBottom: "2.5%"
 				}}>
 				{days.map((day, index) => (
@@ -105,13 +101,18 @@ const GenreListSelector = ({
 						<TouchableOpacity
 							style={styles.navGenreTitleButton}
 							activeOpacity={0.4}
-							onPress={() =>
-								onPress(
-									index,
+							onPress={() => {
+								console.log(
+									"BUTTON PRESSED, this is the index",
+									index
+								);
+								handleGenreListSelection(index);
+								handleExpandGenreList(
+									isExpanded,
 									setIsExpanded,
-									handleExpandGenreList
-								)
-							}>
+									setFlipChevrons
+								);
+							}}>
 							<Text
 								style={[
 									Typography.h2Text,
@@ -155,7 +156,9 @@ const styles = StyleSheet.create({
 	},
 	navGenreNameContainer: {
 		height: "auto",
-		paddingBottom: "3%",
+		paddingBottom: RFValue(6, 580),
+		width: "auto",
+		maxWidth: "80%",
 		textAlign: "left",
 		alignItems: "flex-start"
 	},

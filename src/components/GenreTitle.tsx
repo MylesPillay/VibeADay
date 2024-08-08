@@ -1,6 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { RFValue } from "react-native-responsive-fontsize";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { NavigatorTrack } from "../utils/types/Tracks";
 import { Typography } from "../utils/constants/Styles";
 
@@ -10,6 +9,8 @@ interface GenreTitleProps {
 	genreName?: string;
 	accentColor?: string;
 }
+
+const windowWidth = Dimensions.get("window").width;
 
 const GenreTitleComponent = ({
 	tracks,
@@ -40,10 +41,10 @@ const GenreTitleComponent = ({
 const styles = StyleSheet.create({
 	titleContainer: {
 		textAlign: "center",
+		justifyContent: "center",
 		alignItems: "center",
 		alignContent: "center",
-		flex: 1
-		// marginHorizontal: RFValue(5, 580)
+		width: windowWidth * 0.77
 	}
 });
 

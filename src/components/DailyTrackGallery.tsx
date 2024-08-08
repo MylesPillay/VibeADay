@@ -8,10 +8,8 @@ import {
 	Text
 } from "react-native";
 import { createClient } from "@supabase/supabase-js";
-
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
-
 import GenreDotSelector from "./GenreDotSelector";
 import GenreTitleComponent from "./GenreTitle";
 import ChevronComponent from "./sticky-top-nav/ChevronComponent";
@@ -20,12 +18,10 @@ import LinksComponent from "./LinksComponent";
 import GenreListSelector from "./GenreListSelector";
 import DailyTrackArtwork from "./DailyTrackArtwork";
 import { useRouter } from "expo-router";
-import LoadingComponent from "./LoadingScreen";
 import { NavigatorTrack, Track } from "../utils/types/Tracks";
 
 import {
 	bottomChevronStyle,
-	containerStyle,
 	dayListAnimationStyles,
 	genreNameTextAnimationStyle,
 	handleExpandGenreList,
@@ -68,7 +64,6 @@ const TrackGallery = (): JSX.Element => {
 					.eq("drop_day", selectedDay)
 					.order("created_at", { ascending: false })
 					.limit(5);
-
 				if (error) throw error;
 				if (data) {
 					setTracks(data);
@@ -127,6 +122,7 @@ const TrackGallery = (): JSX.Element => {
 			setDisplayedTrack(displayedTrack + 1);
 		}
 	};
+
 	const onGestureEvent = (event: {
 		nativeEvent: { translationY: any; state: any };
 	}) => {
@@ -160,20 +156,16 @@ const TrackGallery = (): JSX.Element => {
 	};
 
 	// console.log(trackLinks, "this is the track links");
-
 	// if (error) {
 	//  console.log(error, "this is the error message");
 	// }
 	// console.log(navigatorTracks, "this is the navigator tracks");
 
-	return loading && !tracks.length ? (
-		<LoadingComponent />
-	) : (
+	return (
 		<PanGestureHandler onHandlerStateChange={onGestureEvent}>
 			<View
 				style={{
 					display: "flex",
-					paddingTop: windowHeight * 0.05,
 					height: windowHeight,
 					width: windowWidth,
 					justifyContent: "flex-start",
@@ -249,7 +241,6 @@ const TrackGallery = (): JSX.Element => {
 								<View
 									style={{
 										width: "100%"
-										// marginTop: "10%"
 									}}>
 									<DailyTrackArtwork
 										artwork={{
@@ -393,11 +384,6 @@ const styles = StyleSheet.create({
 		paddingHorizontal: "5%",
 		height: "100%"
 	},
-	modal: {
-		justifyContent: "center",
-		alignItems: "center",
-		alignContent: "center"
-	},
 	genreNavContainer: {
 		display: "flex",
 		height: "auto",
@@ -410,8 +396,6 @@ const styles = StyleSheet.create({
 		marginLeft: "-2%",
 		flexDirection: "row",
 		justifyContent: "space-between",
-
-		width: "93%",
 		alignItems: "center"
 	},
 

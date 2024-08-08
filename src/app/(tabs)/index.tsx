@@ -1,5 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Dimensions, FlatList, StyleSheet, View } from "react-native";
+import {
+	Dimensions,
+	FlatList,
+	StyleSheet,
+	TouchableOpacity,
+	View
+} from "react-native";
 import DailyTrackGallery from "../../components/DailyTrackGallery";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
@@ -9,11 +15,18 @@ import {
 import { NavigatorTrack, Track } from "../../utils/types/Tracks";
 import { useRouter } from "expo-router";
 import { createClient } from "@supabase/supabase-js";
+import LoadingComponent from "@/src/components/LoadingScreen";
+import GenreDotSelector from "@/src/components/GenreDotSelector";
+import GenreTitleComponent from "@/src/components/GenreTitle";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import Animated from "react-native-reanimated";
+import { getResponsiveFontSize } from "@/src/utils/helpers/Responsive";
+import { handleGenreDotSelect } from "@/src/utils/helpers/Functions";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export default function HomeScreen() {
-	const windowWidth = Dimensions.get("window").width;
-	const windowHeight = Dimensions.get("window").height;
-
 	const router = useRouter();
 	const [tracks, setTracks] = useState<Track[]>([]);
 	const [navigatorTracks, setNavigatorTracks] = useState<NavigatorTrack[]>(
@@ -94,11 +107,87 @@ export default function HomeScreen() {
 		<View
 			style={[
 				styles.spacerWrapper,
-				{ width: windowWidth, height: windowHeight }
+				{
+					width: windowWidth,
+					height: windowHeight,
+					backgroundColor: navigatorTracks[displayedTrack]?.bgColor
+				}
 			]}>
-			<GestureHandlerRootView style={{ flex: 1 }}>
-				<DailyTrackGallery />
-			</GestureHandlerRootView>
+			{loading && !tracks.length ? (
+				<LoadingComponent />
+			) : (
+				<GestureHandlerRootView style={{}}>
+					<View style={styles.genreNavContainer}>
+						<GenreDotSelector
+							tracks={navigatorTracks.slice(0, 5)}
+							displayedTrack={displayedTrack}
+							accentColor={
+								navigatorTracks[displayedTrack]?.accentColor
+							}
+							handleGenreDotSelect={(index) =>
+								handleGenreDotSelect(index, setDisplayedTrack)
+							}
+						/>
+						<View
+							style={{
+								flexDirection: "column",
+								height: "auto",
+								width: "auto",
+								justifyContent: "space-between",
+								alignContent: "center",
+								alignItems: "center"
+							}}>
+							<View style={styles.genreTitleContainer}>
+								<GenreTitleComponent
+									tracks={navigatorTracks}
+									displayedTrack={displayedTrack}
+								/>
+								{/* <View style={{ top: 3 }}> */}
+								<View>
+									<TouchableOpacity
+										activeOpacity={1}
+										onPress={navigateToGenrePlaylist}>
+										<Animated.View>
+											<MaterialCommunityIcons
+												name={"chevron-up"}
+												color={
+													isExpanded
+														? navigatorTracks[
+																displayedTrack
+														  ]?.bgColor
+														: navigatorTracks[
+																displayedTrack
+														  ]?.accentColor
+												}
+												style={{
+													transform: [
+														{
+															rotate: "90deg"
+														}
+													],
+													right: 4
+												}}
+												size={getResponsiveFontSize(76)}
+											/>
+										</Animated.View>
+									</TouchableOpacity>
+								</View>
+							</View>
+							{/* <View
+								style={{
+									width: "100%"
+								}}>
+								<DailyTrackArtwork
+									artwork={{
+										uri: tracks[displayedTrack]?.artwork
+									}}
+								/>
+							</View> */}
+						</View>
+					</View>
+					{/* <DailyTrackGallery /> */}
+				</GestureHandlerRootView>
+			)}
 		</View>
 	);
 }
@@ -107,6 +196,30 @@ const styles = StyleSheet.create({
 	spacerWrapper: {
 		display: "flex",
 		alignContent: "center",
-		paddingVertical: "5%"
+		paddingVertical: windowHeight * 0.07,
+		paddingHorizontal: windowWidth * 0.04,
+		width: windowWidth
+	},
+	genreNavContainer: {
+		display: "flex",
+		// flex: 1,
+		width: windowWidth * 0.9,
+		height: "auto",
+		flexDirection: "row",
+		justifyContent: "space-between"
+	},
+	genreTitleContainer: {
+		display: "flex",
+		// marginLeft: "-2%",
+		flexDirection: "row",
+		alignContent: "center",
+		alignItems: "center",
+		justifyContent: "space-between"
+	},
+
+	chevronContainer: {
+		justifyContent: "center" // alignItems: "flex-end",
+		// width: "100%"
+		// height: "auto"
 	}
 });

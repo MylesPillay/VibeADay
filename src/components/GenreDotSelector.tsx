@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 import Animated from "react-native-reanimated";
 import { NavigatorTrack } from "../utils/types/Tracks";
 
@@ -9,6 +9,8 @@ interface GenreDotSelectorProps {
 	handleGenreDotSelect: (index: number) => void;
 	accentColor: string;
 }
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const GenreDotSelector = ({
 	tracks,
@@ -17,7 +19,11 @@ const GenreDotSelector = ({
 	accentColor
 }: GenreDotSelectorProps): JSX.Element => {
 	return (
-		<View style={[styles.genreNavContainer]}>
+		<View
+			style={[
+				styles.genreNavContainer,
+				{ width: windowWidth * 0.07, height: windowHeight * 0.35 }
+			]}>
 			{tracks.map((track, index) => (
 				<Animated.View key={index} style={[styles.genreNavButton]}>
 					<TouchableOpacity
@@ -62,17 +68,16 @@ const GenreDotSelector = ({
 
 const styles = StyleSheet.create({
 	genreNavContainer: {
-		display: "flex",
+		// display: "flex",
 		flexDirection: "column",
 		justifyContent: "flex-start",
-		width: "7%",
-		paddingTop: "2%",
-		height: "50%",
+		paddingTop: windowHeight * 0.025,
+		maxWidth: windowWidth * 0.07,
 		alignItems: "center"
 	},
 	genreNavButton: {
 		display: "flex",
-		justifyContent: "center",
+		justifyContent: "flex-start",
 		alignItems: "center",
 		alignContent: "center",
 		width: 45,

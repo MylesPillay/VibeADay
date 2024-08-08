@@ -4,6 +4,7 @@ import Animated from "react-native-reanimated";
 import { RFValue } from "react-native-responsive-fontsize";
 import { NavigatorTrack } from "../utils/types/Tracks";
 import { handleExpandGenreList } from "../utils/constants/Animations";
+import { Typography } from "../utils/constants/Styles";
 
 interface GenreListSelectorProps {
 	tracks: NavigatorTrack[];
@@ -71,7 +72,7 @@ const GenreListSelector = ({
 							onPress={() => handleDaySelection(day.dayName)}>
 							<Text
 								style={[
-									styles.dayText,
+									Typography.h2Text,
 									{
 										color:
 											day.dayName === drop_day
@@ -113,7 +114,7 @@ const GenreListSelector = ({
 							}>
 							<Text
 								style={[
-									styles.genreText,
+									Typography.h2Text,
 									{
 										color:
 											index ===
@@ -129,7 +130,8 @@ const GenreListSelector = ({
 											index ===
 											tracks[displayedTrack].trackIndex
 												? accentColor
-												: "#000000"
+												: "#000000",
+										textAlignVertical: "center"
 									}
 								]}>
 								{track.genreName}
@@ -153,7 +155,7 @@ const styles = StyleSheet.create({
 	},
 	navGenreNameContainer: {
 		height: "auto",
-		paddingBottom: RFValue(6, 580),
+		paddingBottom: "3%",
 		textAlign: "left",
 		alignItems: "flex-start"
 	},
@@ -169,17 +171,6 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		alignContent: "center",
 		paddingLeft: 0
-	},
-	genreText: {
-		textAlignVertical: "center",
-		fontFamily: "sans-serif",
-		fontWeight: "600",
-		fontSize: 28
-	},
-	dayText: {
-		fontFamily: "sans-serif",
-		fontWeight: "600",
-		fontSize: 28
 	}
 });
 

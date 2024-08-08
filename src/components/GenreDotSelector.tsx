@@ -1,18 +1,20 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import Animated from "react-native-reanimated";
+import { NavigatorTrack } from "../utils/types/Tracks";
 
-import { NavigatorTrack } from "./DailyTrackGallery";
 interface GenreDotSelectorProps {
 	tracks: NavigatorTrack[];
 	displayedTrack: number;
 	handleGenreDotSelect: (index: number) => void;
+	accentColor: string;
 }
 
 const GenreDotSelector = ({
 	tracks,
 	displayedTrack,
-	handleGenreDotSelect
+	handleGenreDotSelect,
+	accentColor
 }: GenreDotSelectorProps): JSX.Element => {
 	return (
 		<View style={[styles.genreNavContainer]}>
@@ -39,14 +41,14 @@ const GenreDotSelector = ({
 												: 18 - (index + 2.2),
 										borderColor:
 											index === displayedTrack
-												? track.accentColour
+												? accentColor
 												: "none",
 										borderWidth:
 											index === displayedTrack ? 2.5 : 0,
 										backgroundColor:
 											displayedTrack === index
-												? "#00000010"
-												: "#000000"
+												? "#00000000"
+												: "#00000099"
 									}
 								]}
 							/>

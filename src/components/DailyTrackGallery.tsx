@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { createClient } from "@supabase/supabase-js";
 
-import { getGenreAccentColor, getGenreColor } from "../utils/constants/Colors";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -32,10 +31,13 @@ import {
 	handleExpandGenreList,
 	topChevronStyle
 } from "../utils/constants/Animations";
+
+import { getGenreAccentColor, getGenreColor } from "../utils/constants/Colors";
 import {
 	handleGenreDotSelect,
 	handleGenreListSelection
-} from "../utils/helpers/functions";
+} from "../utils/helpers/Functions";
+import { Typography } from "../utils/constants/Styles";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -186,6 +188,9 @@ const TrackGallery = (): JSX.Element => {
 							<GenreDotSelector
 								tracks={navigatorTracks.slice(0, 5)}
 								displayedTrack={displayedTrack}
+								accentColor={
+									navigatorTracks[displayedTrack]?.accentColor
+								}
 								handleGenreDotSelect={(index) =>
 									handleGenreDotSelect(
 										index,
@@ -257,13 +262,14 @@ const TrackGallery = (): JSX.Element => {
 						]}>
 						<Text
 							style={[
-								styles.trackName,
+								Typography.smallText,
 								{
 									color:
 										tracks[displayedTrack]?.genre_colour ===
 										3
 											? "#000000"
-											: "#FFFFFF"
+											: "#FFFFFF",
+									textAlign: "center"
 								}
 							]}
 							adjustsFontSizeToFit
@@ -275,10 +281,11 @@ const TrackGallery = (): JSX.Element => {
 								adjustsFontSizeToFit
 								numberOfLines={1}
 								style={[
-									styles.artistName,
+									Typography.smallText,
 									{
 										color: navigatorTracks[displayedTrack]
-											?.accentColor
+											?.accentColor,
+										textAlign: "center"
 									}
 								]}>
 								{tracks[displayedTrack]?.song_artist}
@@ -421,24 +428,12 @@ const styles = StyleSheet.create({
 		borderRadius: 7,
 		backgroundColor: "#00000025"
 	},
-	trackName: {
-		fontSize: RFValue(13, 580),
-		letterSpacing: -0.1,
-		fontWeight: "600",
-		textAlign: "center",
-		color: "#FFFFFF"
-	},
 	artistNameContainer: {
 		display: "flex",
 		flexDirection: "row",
 		flexWrap: "wrap",
 		alignItems: "center",
 		justifyContent: "center"
-	},
-	artistName: {
-		fontSize: RFValue(13, 580),
-		letterSpacing: -0.1,
-		fontWeight: "600"
 	},
 	expandableContainer: {
 		position: "absolute",

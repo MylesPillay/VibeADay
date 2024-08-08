@@ -1,7 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { NavigatorTrack } from "./DailyTrackGallery";
 import { RFValue } from "react-native-responsive-fontsize";
+import { NavigatorTrack } from "../utils/types/Tracks";
+import { Typography } from "../utils/constants/Styles";
 
 interface GenreTitleProps {
 	displayedTrack: number;
@@ -22,11 +23,12 @@ const GenreTitleComponent = ({
 				adjustsFontSizeToFit
 				numberOfLines={1}
 				style={[
-					styles.titleText,
+					Typography.h1Text,
 					{
 						color: accentColor
 							? accentColor
-							: tracks?.[displayedTrack]?.accentColor
+							: tracks?.[displayedTrack]?.accentColor,
+						textAlign: "center"
 					}
 				]}>
 				{genreName ? genreName : tracks?.[displayedTrack]?.genreName}
@@ -42,13 +44,6 @@ const styles = StyleSheet.create({
 		alignContent: "center",
 		flex: 1,
 		marginHorizontal: RFValue(5, 580)
-	},
-	titleText: {
-		fontWeight: "600",
-		fontFamily: "sans-serif",
-		letterSpacing: -0.5,
-		fontSize: 32,
-		textAlign: "center"
 	}
 });
 

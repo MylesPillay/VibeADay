@@ -1,12 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-	Dimensions,
-	FlatList,
-	StyleSheet,
-	TouchableOpacity,
-	View
-} from "react-native";
-import DailyTrackGallery from "../../components/DailyTrackGallery";
+import { Dimensions, FlatList, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
 	getGenreAccentColor,
@@ -16,12 +9,10 @@ import { NavigatorTrack, Track } from "../../utils/types/Tracks";
 import { useRouter } from "expo-router";
 import { createClient } from "@supabase/supabase-js";
 import LoadingComponent from "@/src/components/LoadingScreen";
-import GenreDotSelector from "@/src/components/GenreDotSelector";
-import GenreTitleComponent from "@/src/components/GenreTitle";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import Animated from "react-native-reanimated";
 import { getResponsiveFontSize } from "@/src/utils/helpers/Responsive";
 import { handleGenreDotSelect } from "@/src/utils/helpers/Functions";
+import TrackHeader from "@/src/components/tracks-screen/TracksHeader";
+import DailyTrackArtwork from "@/src/components/DailyTrackArtwork";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -117,75 +108,25 @@ export default function HomeScreen() {
 				<LoadingComponent />
 			) : (
 				<GestureHandlerRootView style={{}}>
-					<View style={styles.genreNavContainer}>
-						<GenreDotSelector
-							tracks={navigatorTracks.slice(0, 5)}
-							displayedTrack={displayedTrack}
-							accentColor={
-								navigatorTracks[displayedTrack]?.accentColor
-							}
-							handleGenreDotSelect={(index) =>
-								handleGenreDotSelect(index, setDisplayedTrack)
-							}
+					<TrackHeader
+						navigatorTracks={navigatorTracks}
+						displayedTrack={displayedTrack}
+						setDisplayedTrack={setDisplayedTrack}
+						isExpanded={isExpanded}
+						handleGenreDotSelect={handleGenreDotSelect}
+						navigateToGenrePlaylist={navigateToGenrePlaylist}
+					/>
+					<View
+						style={{
+							width: windowWidth * 0.81,
+							marginLeft: windowWidth * 0.06
+						}}>
+						<DailyTrackArtwork
+							artwork={{
+								uri: tracks[displayedTrack]?.artwork
+							}}
 						/>
-						<View
-							style={{
-								flexDirection: "column",
-								height: "auto",
-								width: "auto",
-								justifyContent: "space-between",
-								alignContent: "center",
-								alignItems: "center"
-							}}>
-							<View style={styles.genreTitleContainer}>
-								<GenreTitleComponent
-									tracks={navigatorTracks}
-									displayedTrack={displayedTrack}
-								/>
-								{/* <View style={{ top: 3 }}> */}
-								<View>
-									<TouchableOpacity
-										activeOpacity={1}
-										onPress={navigateToGenrePlaylist}>
-										<Animated.View>
-											<MaterialCommunityIcons
-												name={"chevron-up"}
-												color={
-													isExpanded
-														? navigatorTracks[
-																displayedTrack
-														  ]?.bgColor
-														: navigatorTracks[
-																displayedTrack
-														  ]?.accentColor
-												}
-												style={{
-													transform: [
-														{
-															rotate: "90deg"
-														}
-													],
-													right: 4
-												}}
-												size={getResponsiveFontSize(76)}
-											/>
-										</Animated.View>
-									</TouchableOpacity>
-								</View>
-							</View>
-							{/* <View
-								style={{
-									width: "100%"
-								}}>
-								<DailyTrackArtwork
-									artwork={{
-										uri: tracks[displayedTrack]?.artwork
-									}}
-								/>
-							</View> */}
-						</View>
 					</View>
-					{/* <DailyTrackGallery /> */}
 				</GestureHandlerRootView>
 			)}
 		</View>
@@ -202,9 +143,10 @@ const styles = StyleSheet.create({
 	},
 	genreNavContainer: {
 		display: "flex",
-		// flex: 1,
+		backgroundColor: "#00000025",
 		width: windowWidth * 0.9,
 		height: "auto",
+		maxHeight: windowHeight * 0.08,
 		flexDirection: "row",
 		justifyContent: "space-between"
 	},

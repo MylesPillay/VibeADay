@@ -6,6 +6,7 @@ import {
 	ImageSourcePropType,
 	Dimensions
 } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
 
 interface DailyTrackArtworkProps {
 	artwork: ImageSourcePropType;
@@ -21,8 +22,8 @@ const DailyTrackArtwork = ({
 		<View style={[styles.cardContainer]}>
 			<View
 				style={[
-					styles.artworkContainer,
-					{ marginRight: windowWidth * 0.12 }
+					styles.artworkContainer
+					// { marginRight: windowWidth * 0.12 }
 				]}>
 				<Image
 					source={artwork}
@@ -30,7 +31,8 @@ const DailyTrackArtwork = ({
 						styles.artwork,
 						{
 							height: windowHeight * 0.3,
-							width: windowHeight * 0.3
+							width: windowHeight * 0.3,
+							bordercolour: "#00000099"
 						}
 					]}
 				/>
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
 	},
 	artwork: {
 		borderRadius: 7,
-		borderWidth: 2
+		borderWidth: RFValue(2)
 	}
 });
 

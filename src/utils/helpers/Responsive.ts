@@ -20,7 +20,7 @@ const getResponsiveFontSize = (size: number) => {
 		SCREEN_WIDTH,
 		"this is the screen width"
 	);
-	const ratio = screenSurfaceArea / baseScreenSurfaceArea;
+	const ratio = baseScreenHeight / SCREEN_HEIGHT;
 	const newSize = size * ratio;
 	return Math.round(newSize);
 };

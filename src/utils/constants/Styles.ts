@@ -3,10 +3,10 @@ import { StyleSheet } from "react-native";
 import { getResponsiveFontSize } from "../helpers/Responsive";
 
 const fontSizes = {
-	h1: getResponsiveFontSize(29),
-	h2: getResponsiveFontSize(26),
-	medium: getResponsiveFontSize(16),
-	small: getResponsiveFontSize(13)
+	h1: getResponsiveFontSize(45),
+	h2: getResponsiveFontSize(41),
+	medium: getResponsiveFontSize(29),
+	small: getResponsiveFontSize(26)
 };
 
 const Typography = StyleSheet.create({

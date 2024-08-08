@@ -14,6 +14,16 @@ import TrackHeader from "@/src/components/tracks-screen/TracksHeader";
 import DailyTrackArtwork from "@/src/components/tracks-screen/DailyTrackArtwork";
 import TracksNameAndArtist from "@/src/components/tracks-screen/TracksNameAndArtist";
 import LinksComponent from "@/src/components/LinksComponent";
+import Animated from "react-native-reanimated";
+import {
+	bottomChevronStyle,
+	dayListAnimationStyles,
+	genreNameTextAnimationStyle,
+	handleExpandGenreList,
+	topChevronStyle
+} from "@/src/utils/constants/Animations";
+import ChevronComponent from "@/src/components/sticky-top-nav/ChevronComponent";
+import GenreListSelector from "@/src/components/GenreListSelector";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -151,6 +161,86 @@ export default function HomeScreen() {
 							/>
 						</View>
 					</GestureHandlerRootView>
+
+					<Animated.View
+						style={[
+							styles.collapsibleContainer,
+							{
+								height: windowHeight * 0.1,
+								width: windowWidth * 0.97
+							},
+							// containerStyle,
+							{
+								backgroundColor:
+									navigatorTracks?.[displayedTrack]?.bgColor
+							}
+						]}>
+						{isExpanded ? (
+							<View
+								style={{
+									zIndex: 300
+
+									// height: windowHeight * 0.75
+									// backgroundColor:
+									// 	navigatorTracks?.[displayedTrack]
+									// 		?.bgColor,
+									// paddingVertical: "5%"
+								}}>
+								<GenreListSelector
+									tracks={navigatorTracks}
+									displayedTrack={displayedTrack}
+									isExpanded={isExpanded}
+									setFlipChevrons={setFlipChevrons}
+									handleGenreListSelection={(
+										index: number
+									) => {
+										handleGenreListSelection(index);
+									}}
+									genreNameAnimationStyle={
+										genreNameTextAnimationStyle
+									}
+									dayListAnimationStyles={
+										dayListAnimationStyles
+									}
+									accentColor={
+										navigatorTracks[displayedTrack]
+											?.accentColor
+									}
+									drop_day={tracks[displayedTrack]?.drop_day}
+									handleDaySelection={handleDaySelection}
+									setIsExpanded={setIsExpanded}
+								/>
+							</View>
+						) : (
+							<></>
+						)}
+						<View
+							style={[
+								styles.collapsibleChevron,
+								{
+									display: "flex",
+									zIndex: 5
+									// backgroundColor: "#000000",
+									// height: windowHeight * 0.05
+								}
+							]}>
+							<ChevronComponent
+								onPress={() =>
+									handleExpandGenreList(
+										isExpanded,
+										setIsExpanded,
+										setFlipChevrons
+									)
+								}
+								topChevronStyle={topChevronStyle}
+								bottomChevronStyle={bottomChevronStyle}
+								flipChevrons={!!flipChevrons}
+								accentColor={
+									navigatorTracks[displayedTrack]?.accentColor
+								}
+							/>
+						</View>
+					</Animated.View>
 				</View>
 			)}
 		</View>
@@ -212,5 +302,20 @@ const styles = StyleSheet.create({
 	},
 	chevronContainer: {
 		justifyContent: "center"
+	},
+	collapsibleChevron: {
+		// alignItems: "flex-end",
+		// width: "100%"
+		// height: "auto"s
+	},
+	collapsibleContainer: {
+		position: "absolute",
+		bottom: 0,
+		maxHeight: "100%",
+		// marginBottom: "20%",
+		// paddingHorizontal: windowWidth * 0.025,
+		justifyContent: "center",
+		alignSelf: "center",
+		alignItems: "flex-end"
 	}
 });

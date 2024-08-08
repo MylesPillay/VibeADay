@@ -30,8 +30,8 @@ const ChevronComponent = ({
 						color={accentColor}
 						size={
 							flipChevrons
-								? getResponsiveFontSize(76)
-								: getResponsiveFontSize(75)
+								? getResponsiveFontSize(71)
+								: getResponsiveFontSize(70)
 						}
 					/>
 				</Animated.View>
@@ -41,8 +41,8 @@ const ChevronComponent = ({
 						color={accentColor}
 						size={
 							flipChevrons
-								? getResponsiveFontSize(76)
-								: getResponsiveFontSize(75)
+								? getResponsiveFontSize(71)
+								: getResponsiveFontSize(70)
 						}
 					/>
 				</Animated.View>

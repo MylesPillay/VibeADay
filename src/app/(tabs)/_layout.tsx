@@ -23,7 +23,6 @@ export default function TabLayout() {
 				tabBarInactiveBackgroundColor: "#000000",
 				headerShown: false,
 				tabBarStyle: {
-					// paddingVertical: windowHeight * 0.03,
 					height: windowHeight * 0.1,
 					backgroundColor:
 						Colors[colorScheme === "dark" ? "dark" : "light"].tint

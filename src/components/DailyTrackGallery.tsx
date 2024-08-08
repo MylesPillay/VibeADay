@@ -399,11 +399,6 @@ const styles = StyleSheet.create({
 		alignItems: "center"
 	},
 
-	chevronContainer: {
-		justifyContent: "center", // alignItems: "flex-end",
-		width: "100%"
-		// height: "auto"
-	},
 	trackInfoContainer: {
 		height: "auto",
 		justifyContent: "space-evenly",
@@ -423,13 +418,16 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center"
 	},
+	chevronContainer: {
+		justifyContent: "center", // alignItems: "flex-end",
+		width: "100%"
+		// height: "auto"
+	},
 	expandableContainer: {
 		position: "absolute",
 		bottom: 0,
 		maxHeight: "100%",
-		// height: "80%",
 		marginBottom: "20%",
-
 		justifyContent: "flex-end",
 		alignItems: "center"
 	}

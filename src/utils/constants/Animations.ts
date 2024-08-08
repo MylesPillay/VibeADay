@@ -45,7 +45,7 @@ export const dayListAnimationStyles = useAnimatedStyle(() => {
 });
 
 // BOTTOM NAV BAR CHEVRON CONTAINER ANIMATION AND HEIGHT STYLE VARIABLES
-export const containerHeight = useSharedValue(40);
+export const containerHeight = useSharedValue(0);
 
 export const containerStyle = useAnimatedStyle(() => {
 	return {

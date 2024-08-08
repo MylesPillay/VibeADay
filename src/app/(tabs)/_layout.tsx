@@ -1,10 +1,13 @@
 import { Tabs } from "expo-router";
 import React from "react";
-import { Text } from "react-native";
+import { Dimensions, Text } from "react-native";
 
 import { Colors } from "../../utils/constants/Colors";
 import { useColorScheme } from "../../hooks/useColorScheme.web";
 import { TabBarIcon } from "../../components/navigation/TabBarIcon";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export default function TabLayout() {
 	const colorScheme = useColorScheme();
@@ -12,15 +15,18 @@ export default function TabLayout() {
 	return (
 		<Tabs
 			screenOptions={{
-				tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+				tabBarActiveTintColor:
+					Colors[colorScheme === "dark" ? "dark" : "light"].tint,
+
 				tabBarInactiveTintColor: "#FFFFFF75",
 				tabBarActiveBackgroundColor: "#000000",
 				tabBarInactiveBackgroundColor: "#000000",
 				headerShown: false,
 				tabBarStyle: {
-					paddingVertical: "2%",
-					height: "13%",
-					backgroundColor: Colors[colorScheme ?? "light"].tint
+					// paddingVertical: windowHeight * 0.03,
+					height: windowHeight * 0.1,
+					backgroundColor:
+						Colors[colorScheme === "dark" ? "dark" : "light"].tint
 				}
 			}}>
 			<Tabs.Screen

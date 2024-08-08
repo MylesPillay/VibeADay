@@ -115,39 +115,43 @@ export default function HomeScreen() {
 			{loading && !tracks.length ? (
 				<LoadingComponent />
 			) : (
-				<GestureHandlerRootView style={{}}>
-					<TrackHeader
-						navigatorTracks={navigatorTracks}
-						displayedTrack={displayedTrack}
-						setDisplayedTrack={setDisplayedTrack}
-						isExpanded={isExpanded}
-						handleGenreDotSelect={handleGenreDotSelect}
-						navigateToGenrePlaylist={navigateToGenrePlaylist}
-					/>
-					<View style={styles.trackArtworkContainer}>
-						<DailyTrackArtwork
-							artwork={{
-								uri: tracks[displayedTrack]?.artwork
-							}}
-						/>
-					</View>
-					<View style={styles.trackNameAndArtistContainer}>
-						<TracksNameAndArtist
-							tracks={tracks}
-							displayedTrack={displayedTrack}
+				<View style={styles.screenContainer}>
+					<GestureHandlerRootView style={{ backgroundColor: "pink" }}>
+						<TrackHeader
 							navigatorTracks={navigatorTracks}
+							displayedTrack={displayedTrack}
+							setDisplayedTrack={setDisplayedTrack}
+							isExpanded={isExpanded}
+							handleGenreDotSelect={handleGenreDotSelect}
+							navigateToGenrePlaylist={navigateToGenrePlaylist}
 						/>
-					</View>
-					<View style={styles.trackLinksContainer}>
-						<LinksComponent
-							trackLinks={trackLinks}
-							bgColor={navigatorTracks[displayedTrack]?.bgColor}
-							accentColor={
-								navigatorTracks[displayedTrack]?.accentColor
-							}
-						/>
-					</View>
-				</GestureHandlerRootView>
+						<View style={styles.trackArtworkContainer}>
+							<DailyTrackArtwork
+								artwork={{
+									uri: tracks[displayedTrack]?.artwork
+								}}
+							/>
+						</View>
+						<View style={styles.trackNameAndArtistContainer}>
+							<TracksNameAndArtist
+								tracks={tracks}
+								displayedTrack={displayedTrack}
+								navigatorTracks={navigatorTracks}
+							/>
+						</View>
+						<View style={styles.trackLinksContainer}>
+							<LinksComponent
+								trackLinks={trackLinks}
+								bgColor={
+									navigatorTracks[displayedTrack]?.bgColor
+								}
+								accentColor={
+									navigatorTracks[displayedTrack]?.accentColor
+								}
+							/>
+						</View>
+					</GestureHandlerRootView>
+				</View>
 			)}
 		</View>
 	);
@@ -161,6 +165,11 @@ const styles = StyleSheet.create({
 		paddingHorizontal: windowWidth * 0.04,
 		width: windowWidth,
 		height: windowHeight
+	},
+	screenContainer: {
+		height: "96%",
+		width: "100%",
+		backgroundColor: "yellow"
 	},
 	genreNavContainer: {
 		display: "flex",
@@ -196,16 +205,12 @@ const styles = StyleSheet.create({
 	},
 	trackLinksContainer: {
 		alignSelf: "center",
-		// marginTop: windowHeight * 0.025,
-		// marginBottom: windowHeight * 0.025,
 		width: windowWidth * 0.85,
 		height: windowHeight * 0.1,
 		maxHeight: windowHeight * 0.15,
 		minWidth: windowWidth * 0.85
 	},
 	chevronContainer: {
-		justifyContent: "center" // alignItems: "flex-end",
-		// width: "100%"
-		// height: "auto"
+		justifyContent: "center"
 	}
 });

@@ -23,8 +23,8 @@ const ChevronComponent = ({
 	return (
 		<View
 			style={[
-				styles.chevronIconsContainer,
-				{ maxHeight: windowHeight * 0.08 }
+				styles.chevronIconsContainer
+				// { maxHeight: windowHeight * 0.08 }
 			]}>
 			<TouchableOpacity activeOpacity={1} onPress={onPress}>
 				<Animated.View style={topChevronStyle}>
@@ -49,7 +49,8 @@ const ChevronComponent = ({
 const styles = StyleSheet.create({
 	chevronIconsContainer: {
 		display: "flex",
-		flexDirection: "column"
+		flexDirection: "column",
+		alignItems: "flex-end"
 	}
 });
 

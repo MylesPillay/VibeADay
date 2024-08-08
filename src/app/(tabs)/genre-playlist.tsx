@@ -3,10 +3,11 @@ import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import GenrePlaylistComponent from "@/src/components/GenrePlaylistComponent";
 import { useGlobalSearchParams } from "expo-router";
-import { Track } from "@/src/components/DailyTrackGallery";
+
 import { createClient } from "@supabase/supabase-js";
-import { RFValue } from "react-native-responsive-fontsize";
+
 import { getGenreColor } from "@/src/utils/constants/Colors";
+import { Track } from "@/src/utils/types/Tracks";
 
 export default function GenrePlaylistScreen() {
 	const { genreName, bgColor, accentColor } = useGlobalSearchParams();
@@ -71,7 +72,11 @@ export default function GenrePlaylistScreen() {
 		);
 	}
 	return (
-		<View style={styles.spacerWrapper}>
+		<View
+			style={[
+				styles.spacerWrapper,
+				{ backgroundColor: backgroundColor }
+			]}>
 			<GestureHandlerRootView style={{ flex: 1 }}>
 				<GenrePlaylistComponent
 					tracks={tracks}
@@ -90,6 +95,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignContent: "center",
 		alignItems: "center",
+		paddingVertical: "10.5%",
 		height: "100%",
 		width: "100%"
 	},

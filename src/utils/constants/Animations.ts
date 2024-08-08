@@ -10,7 +10,7 @@ import { getResponsiveFontSize } from "../helpers/Responsive";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export const topChevronPosition = useSharedValue(getResponsiveFontSize(5));
+export const topChevronPosition = useSharedValue(getResponsiveFontSize(7));
 export const topChevronStyle = useAnimatedStyle(() => {
 	return {
 		top: topChevronPosition.value
@@ -18,7 +18,7 @@ export const topChevronStyle = useAnimatedStyle(() => {
 });
 
 // BOTTOM CHEVRON ANIMATION STYLE VARIABLES
-export const bottomChevronPosition = useSharedValue(3);
+export const bottomChevronPosition = useSharedValue(5);
 export const bottomChevronStyle = useAnimatedStyle(() => {
 	return {
 		bottom: bottomChevronPosition.value
@@ -45,7 +45,7 @@ export const dayListAnimationStyles = useAnimatedStyle(() => {
 });
 
 // BOTTOM NAV BAR CHEVRON CONTAINER ANIMATION AND HEIGHT STYLE VARIABLES
-export const containerHeight = useSharedValue(6);
+export const containerHeight = useSharedValue(40);
 
 export const containerStyle = useAnimatedStyle(() => {
 	return {
@@ -63,13 +63,16 @@ export const handleExpandGenreList = (
 		setIsExpanded(true);
 		setFlipChevrons(true);
 		setTimeout(() => {
-			topChevronPosition.value = withTiming(getResponsiveFontSize(15), {
+			topChevronPosition.value = withTiming(getResponsiveFontSize(18), {
 				duration: 100
 			});
-			bottomChevronPosition.value = withTiming(getResponsiveFontSize(8), {
-				duration: 150
-			});
-		}, 150);
+			bottomChevronPosition.value = withTiming(
+				getResponsiveFontSize(17),
+				{
+					duration: 150
+				}
+			);
+		}, 180);
 		containerHeight.value = withTiming(windowHeight * 0.45, {
 			duration: 200
 		});
@@ -87,7 +90,7 @@ export const handleExpandGenreList = (
 		setFlipChevrons(false);
 		containerHeight.value = withTiming(22, { duration: 10 });
 		setTimeout(() => {
-			topChevronPosition.value = withTiming(getResponsiveFontSize(3), {
+			topChevronPosition.value = withTiming(getResponsiveFontSize(7), {
 				duration: 150
 			});
 			bottomChevronPosition.value = withTiming(getResponsiveFontSize(5), {

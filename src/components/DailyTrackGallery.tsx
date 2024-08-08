@@ -172,7 +172,7 @@ const TrackGallery = (): JSX.Element => {
 			<View
 				style={{
 					display: "flex",
-					paddingVertical: "5%",
+					paddingTop: windowHeight * 0.05,
 					height: windowHeight,
 					width: windowWidth,
 					justifyContent: "flex-start",
@@ -183,6 +183,7 @@ const TrackGallery = (): JSX.Element => {
 						style={{
 							flexDirection: "row",
 							width: "100%",
+							height: windowHeight * 0.39,
 							justifyContent: "space-between"
 						}}>
 						<View style={[styles.genreNavContainer]}>
@@ -244,8 +245,8 @@ const TrackGallery = (): JSX.Element => {
 								</View>
 								<View
 									style={{
-										width: "100%",
-										marginTop: "10%"
+										width: "100%"
+										// marginTop: "10%"
 									}}>
 									<DailyTrackArtwork
 										artwork={{
@@ -304,10 +305,11 @@ const TrackGallery = (): JSX.Element => {
 					<Animated.View
 						style={[
 							styles.expandableContainer,
-							containerStyle,
+							// containerStyle,
 							{
 								backgroundColor:
-									navigatorTracks?.[displayedTrack]?.bgColor
+									navigatorTracks?.[displayedTrack]?.bgColor,
+								width: windowWidth
 							}
 						]}>
 						{isExpanded ? (
@@ -315,11 +317,10 @@ const TrackGallery = (): JSX.Element => {
 								style={{
 									zIndex: 300,
 									width: "100%",
-
+									height: windowHeight * 0.75,
 									backgroundColor:
 										navigatorTracks?.[displayedTrack]
 											?.bgColor,
-									height: "100%",
 									paddingVertical: "5%"
 								}}>
 								<GenreListSelector
@@ -354,9 +355,10 @@ const TrackGallery = (): JSX.Element => {
 							style={[
 								styles.chevronContainer,
 								{
-									top: isExpanded ? "5%" : "2%",
 									display: "flex",
-									zIndex: 5
+									zIndex: 5,
+									// backgroundColor: "#000000",
+									height: windowHeight * 0.05
 								}
 							]}>
 							<ChevronComponent
@@ -385,7 +387,8 @@ const styles = StyleSheet.create({
 	mainTrackContainer: {
 		display: "flex",
 		flexDirection: "column",
-		paddingHorizontal: "5%"
+		paddingHorizontal: "5%",
+		height: "100%"
 	},
 	modal: {
 		justifyContent: "center",
@@ -394,6 +397,7 @@ const styles = StyleSheet.create({
 	},
 	genreNavContainer: {
 		display: "flex",
+		height: "auto",
 		flexDirection: "row",
 		justifyContent: "space-between",
 		width: "99%"
@@ -403,15 +407,15 @@ const styles = StyleSheet.create({
 		marginLeft: "-2%",
 		flexDirection: "row",
 		justifyContent: "space-between",
+
 		width: "93%",
 		alignItems: "center"
 	},
 
 	chevronContainer: {
-		justifyContent: "center",
-		alignItems: "flex-end",
-		height: "180%",
+		justifyContent: "center", // alignItems: "flex-end",
 		width: "100%"
+		// height: "auto"
 	},
 	trackInfoContainer: {
 		height: "auto",
@@ -421,6 +425,7 @@ const styles = StyleSheet.create({
 		margin: "2%",
 		marginTop: "8%",
 		paddingVertical: "2%",
+		paddingHorizontal: "4%",
 		borderRadius: 7,
 		backgroundColor: "#00000025"
 	},
@@ -434,9 +439,11 @@ const styles = StyleSheet.create({
 	expandableContainer: {
 		position: "absolute",
 		bottom: 0,
-		maxHeight: "55%",
-		width: "110%",
-		justifyContent: "center",
+		maxHeight: "100%",
+		// height: "80%",
+		marginBottom: "20%",
+
+		justifyContent: "flex-end",
 		alignItems: "center"
 	}
 });

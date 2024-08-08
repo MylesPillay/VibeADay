@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		alignItems: "center",
 		alignContent: "center",
-		flex: 1,
-		marginHorizontal: RFValue(5, 580)
+		flex: 1
+		// marginHorizontal: RFValue(5, 580)
 	}
 });
 

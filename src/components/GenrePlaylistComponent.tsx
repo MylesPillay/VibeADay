@@ -1,11 +1,12 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { Track } from "./DailyTrackGallery";
+
 import PlaylistItem from "./PlaylistItem";
 import { router } from "expo-router";
 import GenreTitleComponent from "./GenreTitle";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { Track } from "../utils/types/Tracks";
 export type GenrePlaylistParams = {
 	genreName: string;
 };
@@ -35,7 +36,7 @@ const GenrePlaylistComponent = ({
 				flex: 1,
 				justifyContent: "flex-start",
 				alignItems: "center",
-				paddingTop: "21%",
+
 				paddingLeft: "2%",
 				width: "91%",
 				height: "100%",
@@ -57,7 +58,7 @@ const GenrePlaylistComponent = ({
 						size={46}
 					/>
 				</TouchableOpacity>
-				<View style={{ width: "86%" }}>
+				<View style={{ width: "85%" }}>
 					<GenreTitleComponent
 						displayedTrack={0}
 						genreName={genreName as string}
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "flex-start",
 		width: "100%",
-		paddingHorizontal: "2.75%",
+		paddingHorizontal: "3%",
 		alignItems: "center",
 		alignContent: "center",
 		alignSelf: "flex-start",

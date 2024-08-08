@@ -6,17 +6,17 @@ import {
 	ImageSourcePropType,
 	Dimensions
 } from "react-native";
-import { RFValue } from "react-native-responsive-fontsize";
+import { getResponsiveFontSize } from "../../utils/helpers/Responsive";
 
 interface DailyTrackArtworkProps {
 	artwork: ImageSourcePropType;
 }
 
+const windowHeight = Dimensions.get("window").height;
 const DailyTrackArtwork = ({
 	artwork
 }: DailyTrackArtworkProps): JSX.Element => {
-	const windowHeight = Dimensions.get("window").height;
-	const windowWidth = Dimensions.get("window").width;
+	const artworkWidth = windowHeight * 0.3;
 
 	return (
 		<View style={[styles.cardContainer]}>
@@ -30,9 +30,9 @@ const DailyTrackArtwork = ({
 					style={[
 						styles.artwork,
 						{
-							height: windowHeight * 0.3,
-							width: windowHeight * 0.3,
-							bordercolour: "#00000099"
+							height: artworkWidth,
+							width: artworkWidth,
+							borderColor: "#FFFFFF20"
 						}
 					]}
 				/>
@@ -43,15 +43,14 @@ const DailyTrackArtwork = ({
 
 const styles = StyleSheet.create({
 	cardContainer: {
-		alignItems: "center",
-		paddingVertical: 0
+		alignItems: "center"
 	},
 	artworkContainer: {
 		alignItems: "flex-start"
 	},
 	artwork: {
-		borderRadius: 7,
-		borderWidth: RFValue(2)
+		borderRadius: getResponsiveFontSize(12),
+		borderWidth: getResponsiveFontSize(5)
 	}
 });
 

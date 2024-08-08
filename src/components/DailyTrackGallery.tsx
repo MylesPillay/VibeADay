@@ -16,7 +16,7 @@ import ChevronComponent from "./sticky-top-nav/ChevronComponent";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import LinksComponent from "./LinksComponent";
 import GenreListSelector from "./GenreListSelector";
-import DailyTrackArtwork from "./DailyTrackArtwork";
+import DailyTrackArtwork from "./tracks-screen/DailyTrackArtwork";
 import { useRouter } from "expo-router";
 import { NavigatorTrack, Track } from "../utils/types/Tracks";
 

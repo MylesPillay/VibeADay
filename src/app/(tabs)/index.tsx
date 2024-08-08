@@ -9,10 +9,11 @@ import { NavigatorTrack, Track } from "../../utils/types/Tracks";
 import { useRouter } from "expo-router";
 import { createClient } from "@supabase/supabase-js";
 import LoadingComponent from "@/src/components/LoadingScreen";
-import { getResponsiveFontSize } from "@/src/utils/helpers/Responsive";
 import { handleGenreDotSelect } from "@/src/utils/helpers/Functions";
 import TrackHeader from "@/src/components/tracks-screen/TracksHeader";
-import DailyTrackArtwork from "@/src/components/DailyTrackArtwork";
+import DailyTrackArtwork from "@/src/components/tracks-screen/DailyTrackArtwork";
+import TracksNameAndArtist from "@/src/components/tracks-screen/TracksNameAndArtist";
+import LinksComponent from "@/src/components/LinksComponent";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -84,6 +85,15 @@ export default function HomeScreen() {
 		undefined
 	);
 
+	const trackLinks = {
+		spotifyURL: tracks[displayedTrack]?.spotify_url,
+		soundcloudURL: tracks[displayedTrack]?.soundcloud_url,
+		bandcampURL: tracks[displayedTrack]?.bandcamp_url,
+		appleMusicURL: tracks[displayedTrack]?.apple_music_url,
+		facebookURL: tracks[displayedTrack]?.facebook_url,
+		instagramURL: tracks[displayedTrack]?.instagram_url
+	};
+
 	const navigateToGenrePlaylist = () => {
 		router.push({
 			pathname: "./genre-playlist",
@@ -99,8 +109,6 @@ export default function HomeScreen() {
 			style={[
 				styles.spacerWrapper,
 				{
-					width: windowWidth,
-					height: windowHeight,
 					backgroundColor: navigatorTracks[displayedTrack]?.bgColor
 				}
 			]}>
@@ -116,15 +124,27 @@ export default function HomeScreen() {
 						handleGenreDotSelect={handleGenreDotSelect}
 						navigateToGenrePlaylist={navigateToGenrePlaylist}
 					/>
-					<View
-						style={{
-							width: windowWidth * 0.81,
-							marginLeft: windowWidth * 0.06
-						}}>
+					<View style={styles.trackArtworkContainer}>
 						<DailyTrackArtwork
 							artwork={{
 								uri: tracks[displayedTrack]?.artwork
 							}}
+						/>
+					</View>
+					<View style={styles.trackNameAndArtistContainer}>
+						<TracksNameAndArtist
+							tracks={tracks}
+							displayedTrack={displayedTrack}
+							navigatorTracks={navigatorTracks}
+						/>
+					</View>
+					<View style={styles.trackLinksContainer}>
+						<LinksComponent
+							trackLinks={trackLinks}
+							bgColor={navigatorTracks[displayedTrack]?.bgColor}
+							accentColor={
+								navigatorTracks[displayedTrack]?.accentColor
+							}
 						/>
 					</View>
 				</GestureHandlerRootView>
@@ -139,7 +159,8 @@ const styles = StyleSheet.create({
 		alignContent: "center",
 		paddingVertical: windowHeight * 0.07,
 		paddingHorizontal: windowWidth * 0.04,
-		width: windowWidth
+		width: windowWidth,
+		height: windowHeight
 	},
 	genreNavContainer: {
 		display: "flex",
@@ -158,7 +179,30 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "space-between"
 	},
-
+	trackArtworkContainer: {
+		width: windowWidth * 0.81,
+		marginLeft: windowWidth * 0.06,
+		marginVertical: windowHeight * 0.02,
+		marginBottom: windowHeight * 0.025
+	},
+	trackNameAndArtistContainer: {
+		alignSelf: "center",
+		marginTop: windowHeight * 0.025,
+		marginBottom: windowHeight * 0.025,
+		width: windowWidth * 0.85,
+		height: windowHeight * 0.1,
+		maxHeight: windowHeight * 0.15,
+		minWidth: windowWidth * 0.85
+	},
+	trackLinksContainer: {
+		alignSelf: "center",
+		// marginTop: windowHeight * 0.025,
+		// marginBottom: windowHeight * 0.025,
+		width: windowWidth * 0.85,
+		height: windowHeight * 0.1,
+		maxHeight: windowHeight * 0.15,
+		minWidth: windowWidth * 0.85
+	},
 	chevronContainer: {
 		justifyContent: "center" // alignItems: "flex-end",
 		// width: "100%"

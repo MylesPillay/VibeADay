@@ -8,7 +8,7 @@ const windowHeight = Dimensions.get("window").height;
 const smallScreenFontSizes = {
 	h1: RFValue(30, windowHeight),
 	h2: RFValue(26, windowHeight),
-	medium: RFValue(14, windowHeight),
+	medium: RFValue(16, windowHeight),
 	small: RFValue(9, windowHeight)
 };
 

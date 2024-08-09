@@ -11,6 +11,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { NavigatorTrack } from "../utils/types/Tracks";
 import { handleExpandGenreList } from "../utils/constants/Animations";
 import { Typography } from "../utils/constants/Styles";
+import { getResponsiveFontSize } from "../utils/helpers/Responsive";
 
 interface GenreListSelectorProps {
 	tracks: NavigatorTrack[];
@@ -59,15 +60,14 @@ const GenreListSelector = ({
 			style={[
 				styles.genreNavContainer,
 				{
-					height: "auto",
-					maxHeight: windowHeight * 0.4
+					// maxHeight: windowHeight * 0.4,
+					paddingVertical: getResponsiveFontSize(20, windowHeight)
 				}
 			]}>
 			<View
 				style={{
 					alignSelf: "flex-end",
-					alignContent: "center",
-					paddingBottom: windowHeight * 0.075
+					alignContent: "center"
 				}}>
 				{days.map((day, index) => (
 					<Animated.View
@@ -106,7 +106,11 @@ const GenreListSelector = ({
 			</View>
 			<View
 				style={{
-					paddingTop: "2.5%",
+					paddingTop:
+						windowHeight <= 900
+							? windowHeight * 0.05
+							: windowHeight * 0.15,
+					bottom: 0,
 					justifyContent: "center"
 				}}>
 				{tracks.map((track, index) => (

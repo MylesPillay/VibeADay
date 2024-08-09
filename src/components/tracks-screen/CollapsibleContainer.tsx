@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		bottom: 0,
 		maxHeight: "100%",
+		paddingBottom: windowHeight * 0.075,
 		backgroundColor: "purple",
 		justifyContent: "space-between",
 		alignSelf: "center"

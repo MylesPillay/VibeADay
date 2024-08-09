@@ -14,18 +14,12 @@ import TrackHeader from "@/src/components/tracks-screen/TracksHeader";
 import DailyTrackArtwork from "@/src/components/tracks-screen/DailyTrackArtwork";
 import TracksNameAndArtist from "@/src/components/tracks-screen/TracksNameAndArtist";
 import LinksComponent from "@/src/components/LinksComponent";
-import Animated from "react-native-reanimated";
 import {
 	bottomChevronStyle,
-	containerStyle,
 	dayListAnimationStyles,
 	genreNameTextAnimationStyle,
-	handleExpandGenreList,
 	topChevronStyle
 } from "@/src/utils/constants/Animations";
-import ChevronComponent from "@/src/components/sticky-top-nav/ChevronComponent";
-import GenreListSelector from "@/src/components/GenreListSelector";
-import { Collapsible } from "@/src/components/Collapsible";
 import CollapsibleContainer from "@/src/components/tracks-screen/CollapsibleContainer";
 
 const windowWidth = Dimensions.get("window").width;
@@ -92,8 +86,6 @@ export default function HomeScreen() {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [displayedTrack, setDisplayedTrack] = React.useState<number>(0);
-	const flatListRef = useRef<FlatList<Track> | null>(null);
-
 	const [flipChevrons, setFlipChevrons] = useState<boolean | undefined>(
 		undefined
 	);

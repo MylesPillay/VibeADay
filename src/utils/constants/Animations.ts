@@ -78,9 +78,12 @@ export const handleExpandGenreList = (
 				}
 			);
 		}, 180);
-		containerHeight.value = withTiming(windowHeight, {
-			duration: 200
-		});
+		containerHeight.value = withTiming(
+			windowHeight < 1000 ? windowHeight : windowHeight * 0.8,
+			{
+				duration: 200
+			}
+		);
 		nameOpacityValue.value = withTiming(1, {
 			duration: 250
 		});

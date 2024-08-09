@@ -18,7 +18,7 @@ const TracksNameAndArtist = ({
 		<View style={[styles.trackInfoContainer]}>
 			<Text
 				style={[
-					Typography.smallText,
+					Typography.mediumText,
 					{
 						color:
 							tracks[displayedTrack]?.genre_colour === 3
@@ -36,7 +36,7 @@ const TracksNameAndArtist = ({
 					adjustsFontSizeToFit
 					numberOfLines={1}
 					style={[
-						Typography.smallText,
+						Typography.mediumText,
 						{
 							color: navigatorTracks[displayedTrack]?.accentColor,
 							textAlign: "center"

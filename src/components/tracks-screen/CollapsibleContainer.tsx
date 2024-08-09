@@ -11,7 +11,7 @@ import ChevronComponent from "../sticky-top-nav/ChevronComponent";
 interface CollapsibleContainerProps {
 	isExpanded: boolean;
 	setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
-	flipChevrons: boolean;
+	flipChevrons: boolean | undefined;
 	setFlipChevrons: React.Dispatch<React.SetStateAction<boolean | undefined>>;
 	handleGenreListSelection: (index: number) => void;
 	navigatorTracks: NavigatorTrack[];
@@ -121,3 +121,5 @@ const styles = StyleSheet.create({
 		alignSelf: "center"
 	}
 });
+
+export default CollapsibleContainer;

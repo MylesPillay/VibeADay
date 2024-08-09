@@ -202,23 +202,6 @@ const styles = StyleSheet.create({
 	screenContainer: {
 		height: "96%",
 		width: "100%"
-		// backgroundColor: "yellow"
-	},
-	genreNavContainer: {
-		display: "flex",
-		backgroundColor: "#00000025",
-		width: windowWidth * 0.9,
-		height: "auto",
-		maxHeight: windowHeight * 0.08,
-		flexDirection: "row",
-		justifyContent: "space-between"
-	},
-	genreTitleContainer: {
-		display: "flex",
-		flexDirection: "row",
-		alignContent: "center",
-		alignItems: "center",
-		justifyContent: "space-between"
 	},
 	trackArtworkContainer: {
 		width: windowWidth * 0.81,
@@ -241,24 +224,5 @@ const styles = StyleSheet.create({
 		height: windowHeight * 0.1,
 		maxHeight: windowHeight * 0.15,
 		minWidth: windowWidth * 0.85
-	},
-	chevronContainer: {
-		justifyContent: "center"
-	},
-	collapsibleChevron: {
-		// alignItems: "flex-end",
-		// width: "100%"
-		// height: "auto"s
-	},
-	collapsibleContainer: {
-		position: "absolute",
-		bottom: 0,
-		maxHeight: "100%",
-		backgroundColor: "purple",
-		// marginBottom: "20%",
-		// paddingHorizontal: windowWidth * 0.025,
-		justifyContent: "space-between",
-		alignSelf: "center"
-		// alignItems: ""
 	}
 });

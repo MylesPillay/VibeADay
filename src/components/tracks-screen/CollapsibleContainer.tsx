@@ -48,74 +48,14 @@ const CollapsibleContainer = ({
 }: CollapsibleContainerProps): JSX.Element => {
 	const animatedContentStyle = useAnimatedStyle(() => {
 		return {
-			height: withTiming(isExpanded ? windowHeight * 0.7 : 0, {
-				duration: 300
+			height: withTiming(isExpanded ? windowHeight * 0.75 : 0, {
+				duration: 250
 			})
 			// opacity: withTiming(isExpanded ? 1 : 0, { duration: 300 })
 		};
 	});
 
 	return (
-		// 	<Animated.View
-		// 		style={[
-		// 			styles.collapsibleContainer,
-		// 			{
-		// 				height: windowHeight * 0.1,
-		// 				width: windowWidth * 0.97
-		// 			},
-		// 			containerStyle,
-		// 			{
-		// 				backgroundColor: navigatorTracks?.[displayedTrack]?.bgColor
-		// 			}
-		// 		]}>
-		// 		{isExpanded ? (
-		// 			<View
-		// 				style={{
-		// 					zIndex: 300,
-
-		// 					backgroundColor:
-		// 						navigatorTracks?.[displayedTrack]?.bgColor
-		// 					// paddingVertical: windowHeight * 0.05
-		// 				}}>
-		// 				<GenreListSelector
-		// 					tracks={navigatorTracks}
-		// 					displayedTrack={displayedTrack}
-		// 					isExpanded={isExpanded}
-		// 					setFlipChevrons={setFlipChevrons}
-		// 					handleGenreListSelection={(index: number) => {
-		// 						handleGenreListSelection(index);
-		// 					}}
-		// 					genreNameAnimationStyle={genreNameTextAnimationStyle}
-		// 					dayListAnimationStyles={dayListAnimationStyles}
-		// 					accentColor={
-		// 						navigatorTracks[displayedTrack]?.accentColor
-		// 					}
-		// 					drop_day={tracks[displayedTrack]?.drop_day}
-		// 					handleDaySelection={handleDaySelection}
-		// 					setIsExpanded={setIsExpanded}
-		// 				/>
-		// 			</View>
-		// 		) : (
-		// 			<></>
-		// 		)}
-
-		// 		<View style={styles.collapsibleChevron}>
-		// 			<ChevronComponent
-		// 				onPress={() =>
-		// 					handleExpandGenreList(
-		// 						isExpanded,
-		// 						setIsExpanded,
-		// 						setFlipChevrons
-		// 					)
-		// 				}
-		// 				topChevronStyle={topChevronStyle}
-		// 				bottomChevronStyle={bottomChevronStyle}
-		// 				flipChevrons={!!flipChevrons}
-		// 				accentColor={navigatorTracks[displayedTrack]?.accentColor}
-		// 			/>
-		// 		</View>
-		// 	</Animated.View>
-		// );
 		<View style={styles.container}>
 			<Animated.View
 				style={[
@@ -173,7 +113,7 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		bottom: 0,
 		maxHeight: "100%",
-		paddingBottom: windowHeight * 0.075,
+		// paddingBottom: windowHeight * 0.075,
 		backgroundColor: "purple",
 		justifyContent: "space-between",
 		alignSelf: "center"
@@ -181,7 +121,9 @@ const styles = StyleSheet.create({
 	container: {
 		position: "absolute",
 		bottom: 0,
-		width: windowWidth,
+		width: "100%",
+		height: "auto",
+		paddingBottom: windowHeight * 0.05,
 		backgroundColor: "transparent"
 	},
 	animatedContent: {
@@ -192,7 +134,7 @@ const styles = StyleSheet.create({
 		height: windowHeight * 0.1,
 		width: "100%",
 		justifyContent: "center",
-		alignItems: "center"
+		alignItems: "flex-end"
 	},
 	background: {
 		...StyleSheet.absoluteFillObject

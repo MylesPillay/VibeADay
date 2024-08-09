@@ -2,6 +2,7 @@ import React from "react";
 import { View, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 import Animated from "react-native-reanimated";
 import { NavigatorTrack } from "../utils/types/Tracks";
+import { RFValue } from "react-native-responsive-fontsize";
 
 interface GenreDotSelectorProps {
 	tracks: NavigatorTrack[];
@@ -22,45 +23,44 @@ const GenreDotSelector = ({
 		<View
 			style={[
 				styles.genreNavContainer,
-				{ width: windowWidth * 0.07, height: windowHeight * 0.35 }
+				{ width: "auto", height: windowHeight * 0.35 }
 			]}>
 			{tracks.map((track, index) => (
-				<Animated.View key={index} style={[styles.genreNavButton]}>
-					<TouchableOpacity
-						key={index}
-						disabled={index === displayedTrack}
-						onPress={() => {
-							handleGenreDotSelect(index);
-						}}>
-						<View style={[styles.genreNavButton]}>
-							<View
-								style={[
-									styles.genreDot,
-									{
-										height:
-											index === 0
-												? 16.5
-												: 17.5 - (index + 2.2),
-										width:
-											index === 0
-												? 16.5
-												: 18 - (index + 2.2),
-										borderColor:
-											index === displayedTrack
-												? accentColor
-												: "none",
-										borderWidth:
-											index === displayedTrack ? 2.5 : 0,
-										backgroundColor:
-											displayedTrack === index
-												? "#00000000"
-												: "#00000099"
-									}
-								]}
-							/>
-						</View>
-					</TouchableOpacity>
-				</Animated.View>
+				<TouchableOpacity
+					style={{
+						padding: RFValue(4)
+					}}
+					key={index}
+					disabled={index === displayedTrack}
+					onPress={() => {
+						handleGenreDotSelect(index);
+					}}>
+					<View style={[styles.genreNavButton]}>
+						<View
+							style={[
+								styles.genreDot,
+								{
+									height:
+										index === 0
+											? 16.5
+											: 17.5 - (index + 2.2),
+									width:
+										index === 0 ? 16.5 : 18 - (index + 2.2),
+									borderColor:
+										index === displayedTrack
+											? accentColor
+											: "none",
+									borderWidth:
+										index === displayedTrack ? 2.5 : 0,
+									backgroundColor:
+										displayedTrack === index
+											? "#00000000"
+											: "#00000099"
+								}
+							]}
+						/>
+					</View>
+				</TouchableOpacity>
 			))}
 		</View>
 	);
@@ -71,13 +71,14 @@ const styles = StyleSheet.create({
 		// display: "flex",
 		flexDirection: "column",
 		justifyContent: "flex-start",
-		paddingTop: windowHeight * 0.025,
+		// paddingTop: windowHeight * 0.025,
 		maxWidth: windowWidth * 0.07,
 		alignItems: "center"
 	},
 	genreNavButton: {
 		display: "flex",
-		justifyContent: "flex-start",
+		marginVertical: RFValue(2),
+		justifyContent: "center",
 		alignItems: "center",
 		alignContent: "center",
 		width: 45,

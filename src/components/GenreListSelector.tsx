@@ -73,11 +73,20 @@ const GenreListSelector = ({
 					<Animated.View
 						key={index}
 						style={[
-							styles.dayNameContainer,
+							// styles.dayNameContainer,
 							dayListAnimationStyles
 						]}>
 						<TouchableOpacity
 							activeOpacity={0.2}
+							style={[
+								styles.dayNameContainer,
+								{
+									paddingBottom:
+										index == 4 ? RFValue(4) : RFValue(3),
+									paddingTop:
+										index == 0 ? RFValue(4) : RFValue(3)
+								}
+							]}
 							disabled={drop_day === day.dayName}
 							onPress={() => handleDaySelection(day.dayName)}>
 							<Text
@@ -116,12 +125,17 @@ const GenreListSelector = ({
 				{tracks.map((track, index) => (
 					<Animated.View
 						key={index}
-						style={[
-							styles.navGenreNameContainer,
-							genreNameAnimationStyle
-						]}>
+						style={[genreNameAnimationStyle]}>
 						<TouchableOpacity
-							style={styles.navGenreTitleButton}
+							style={[
+								styles.navGenreNameContainer,
+								{
+									paddingTop:
+										index == 0 ? RFValue(4) : RFValue(3),
+									paddingBottom:
+										index == 4 ? RFValue(4) : RFValue(3)
+								}
+							]}
 							activeOpacity={0.4}
 							onPress={() => {
 								handleGenreListSelection(index);
@@ -169,29 +183,31 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		width: "100%",
 		justifyContent: "space-between"
-		// paddingVertical: "5%"
+		// marginVertical: "2.5%"
 	},
 	navGenreNameContainer: {
 		height: "auto",
-		paddingBottom: RFValue(6),
+		// paddingBottom: RFValue(6.5),
+		paddingLeft: 0,
 		width: "auto",
 		maxWidth: "80%",
 		textAlign: "left",
+		alignContent: "center",
 		alignItems: "flex-start"
 	},
 	dayNameContainer: {
 		height: "auto",
-		paddingBottom: RFValue(6),
+		// paddingBottom: RFValue(6.5),
 		justifyContent: "center",
 		alignItems: "flex-end"
-	},
-	navGenreTitleButton: {
-		display: "flex",
-		justifyContent: "center",
-		alignItems: "center",
-		alignContent: "center",
-		paddingLeft: 0
 	}
+	// navGenreTitleButton: {
+	// 	display: "flex",
+	// 	justifyContent: "center",
+	// 	alignItems: "center",
+	// 	alignContent: "center",
+	// 	paddingLeft: 0
+	// }
 });
 
 export default GenreListSelector;

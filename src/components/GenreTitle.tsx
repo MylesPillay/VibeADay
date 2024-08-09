@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
 import { NavigatorTrack } from "../utils/types/Tracks";
 import { Typography } from "../utils/constants/Styles";
 
@@ -44,7 +45,12 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		alignContent: "center",
+		// minWidth: "86%",
+		// maxWidth: "90%",
 		width: windowWidth * 0.77
+
+		// flex: 1
+		// marginHorizontal: RFValue(5, 580)
 	}
 });
 

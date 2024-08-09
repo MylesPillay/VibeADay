@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
 		height: windowHeight
 	},
 	screenContainer: {
-		height: "96%",
+		height: "100%",
 		width: "100%"
 	},
 	trackArtworkContainer: {

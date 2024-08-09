@@ -6,7 +6,7 @@ import {
 	ImageSourcePropType,
 	Dimensions
 } from "react-native";
-import { RFValue } from "../../utils/helpers/Responsive";
+import { RFValue } from "react-native-responsive-fontsize";
 
 interface DailyTrackArtworkProps {
 	artwork: ImageSourcePropType;

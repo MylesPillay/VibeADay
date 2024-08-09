@@ -6,7 +6,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Animated from "react-native-reanimated";
 
-import { RFValue } from "@/src/utils/helpers/Responsive";
 import { smallScreenChevronSizes } from "@/src/utils/constants/Styles";
 
 const windowWidth = Dimensions.get("window").width;

@@ -56,7 +56,13 @@ const GenreListSelector = ({
 }: GenreListSelectorProps): JSX.Element => {
 	return (
 		<View
-			style={[styles.genreNavContainer, { height: windowHeight * 0.25 }]}>
+			style={[
+				styles.genreNavContainer,
+				{
+					height: "auto",
+					maxHeight: windowHeight * 0.4
+				}
+			]}>
 			<View
 				style={{
 					alignSelf: "flex-end",
@@ -158,12 +164,12 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "column",
 		width: "100%",
-		justifyContent: "space-between",
-		paddingVertical: "5%"
+		justifyContent: "space-between"
+		// paddingVertical: "5%"
 	},
 	navGenreNameContainer: {
 		height: "auto",
-		paddingBottom: RFValue(6, 580),
+		paddingBottom: RFValue(6),
 		width: "auto",
 		maxWidth: "80%",
 		textAlign: "left",
@@ -171,7 +177,7 @@ const styles = StyleSheet.create({
 	},
 	dayNameContainer: {
 		height: "auto",
-		paddingBottom: RFValue(6, 580),
+		paddingBottom: RFValue(6),
 		justifyContent: "center",
 		alignItems: "flex-end"
 	},

@@ -1,7 +1,7 @@
 import { Typography } from "@/src/utils/constants/Styles";
-import { RFValue } from "@/src/utils/helpers/Responsive";
 import { NavigatorTrack, Track } from "@/src/utils/types/Tracks";
 import { StyleSheet, Text, View } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
 
 interface TracksNameAndArtistProps {
 	tracks: Track[];

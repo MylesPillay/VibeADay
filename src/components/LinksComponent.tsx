@@ -1,7 +1,14 @@
 import React from "react";
-import { View, TouchableOpacity, StyleSheet, Linking } from "react-native";
+import {
+	View,
+	TouchableOpacity,
+	StyleSheet,
+	Linking,
+	Dimensions
+} from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { RFValue } from "../utils/helpers/Responsive";
+import { getResponsiveLinksComponentIconSizes } from "../utils/helpers/Responsive";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export interface TrackLinksProps {
 	spotifyURL?: string;
@@ -11,7 +18,7 @@ export interface TrackLinksProps {
 	facebookURL?: string;
 	instagramURL?: string;
 }
-
+const windowWidth = Dimensions.get("window").width;
 const LinksComponent = ({
 	trackLinks,
 	bgColor,
@@ -38,7 +45,7 @@ const LinksComponent = ({
 				onPress={() => handleLinkPress(trackLinks?.spotifyURL ?? "")}>
 				<MaterialCommunityIcons
 					name='spotify'
-					size={RFValue(45)}
+					size={getResponsiveLinksComponentIconSizes(windowWidth)}
 					color={!trackLinks?.spotifyURL ? "#00000055" : accentColor}
 				/>
 			</TouchableOpacity>
@@ -47,7 +54,7 @@ const LinksComponent = ({
 				onPress={() => handleLinkPress(trackLinks.soundcloudURL ?? "")}>
 				<MaterialCommunityIcons
 					name='soundcloud'
-					size={RFValue(50)}
+					size={getResponsiveLinksComponentIconSizes(windowWidth)}
 					color={
 						!trackLinks?.soundcloudURL ? "#00000055" : accentColor
 					}
@@ -77,7 +84,7 @@ const LinksComponent = ({
 				onPress={() => handleLinkPress(trackLinks.appleMusicURL ?? "")}>
 				<MaterialCommunityIcons
 					name='apple'
-					size={RFValue(50)}
+					size={getResponsiveLinksComponentIconSizes(windowWidth)}
 					color={
 						!trackLinks?.appleMusicURL ? "#00000055" : accentColor
 					}
@@ -88,7 +95,7 @@ const LinksComponent = ({
 				onPress={() => handleLinkPress(trackLinks.instagramURL ?? "")}>
 				<MaterialCommunityIcons
 					name='instagram'
-					size={RFValue(45)}
+					size={getResponsiveLinksComponentIconSizes(windowWidth)}
 					color={
 						!trackLinks?.instagramURL ? "#00000055" : accentColor
 					}
@@ -99,7 +106,7 @@ const LinksComponent = ({
 				onPress={() => handleLinkPress(trackLinks.facebookURL ?? "")}>
 				<MaterialCommunityIcons
 					name='facebook'
-					size={RFValue(51)}
+					size={getResponsiveLinksComponentIconSizes(windowWidth)}
 					color={!trackLinks?.facebookURL ? "#00000055" : accentColor}
 				/>
 			</TouchableOpacity>
@@ -112,9 +119,9 @@ const styles = StyleSheet.create({
 		height: "100%",
 		width: "100%",
 		alignSelf: "center",
-		padding: RFValue(3),
-		paddingHorizontal: RFValue(1),
-		borderRadius: RFValue(12),
+		padding: "3%",
+		paddingHorizontal: "1%",
+		borderRadius: 12,
 		backgroundColor: "#00000025",
 		flexDirection: "row",
 		flexWrap: "wrap",
@@ -123,15 +130,19 @@ const styles = StyleSheet.create({
 		justifyContent: "space-evenly"
 	},
 	bandcampIconContainer: {
-		width: RFValue(38),
-		height: RFValue(38),
+		width: getResponsiveLinksComponentIconSizes(windowWidth, true),
+		height: getResponsiveLinksComponentIconSizes(windowWidth, true),
 		borderRadius: 16,
 		justifyContent: "center",
 		alignItems: "center"
 	},
 	bandcampIcon: {
-		width: RFValue(16),
-		height: RFValue(16),
+		width:
+			getResponsiveLinksComponentIconSizes(windowWidth, true) -
+			RFValue(14.5),
+		height:
+			getResponsiveLinksComponentIconSizes(windowWidth, true) -
+			RFValue(14.5),
 		transform: [{ skewX: "-20deg" }]
 	}
 });

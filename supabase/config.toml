@@ -105,7 +105,7 @@ max_frequency = "1s"
 # Use a production-ready SMTP server
 # [auth.email.smtp]
 # host = "smtp.sendgrid.net"
-# port = 587
+# port = RFValue7
 # user = "apikey"
 # pass = "env(SENDGRID_API_KEY)"
 # admin_email = "admin@email.com"

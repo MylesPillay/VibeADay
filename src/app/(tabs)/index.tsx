@@ -183,8 +183,8 @@ export default function HomeScreen() {
 
 									backgroundColor:
 										navigatorTracks?.[displayedTrack]
-											?.bgColor,
-									paddingVertical: "5%"
+											?.bgColor
+									// paddingVertical: windowHeight * 0.05
 								}}>
 								<GenreListSelector
 									tracks={navigatorTracks}

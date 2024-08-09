@@ -5,12 +5,14 @@ import {
 	useSharedValue,
 	withTiming
 } from "react-native-reanimated";
-import { RFValue } from "../helpers/Responsive";
+import { getResponsiveFontSize } from "../helpers/Responsive";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export const topChevronPosition = useSharedValue(RFValue(7));
+export const topChevronPosition = useSharedValue(
+	getResponsiveFontSize(7, windowHeight)
+);
 export const topChevronStyle = useAnimatedStyle(() => {
 	return {
 		top: topChevronPosition.value
@@ -63,12 +65,18 @@ export const handleExpandGenreList = (
 		setIsExpanded(true);
 		setFlipChevrons(true);
 		setTimeout(() => {
-			topChevronPosition.value = withTiming(RFValue(18), {
-				duration: 100
-			});
-			bottomChevronPosition.value = withTiming(RFValue(17), {
-				duration: 150
-			});
+			topChevronPosition.value = withTiming(
+				getResponsiveFontSize(18, windowHeight),
+				{
+					duration: 100
+				}
+			);
+			bottomChevronPosition.value = withTiming(
+				getResponsiveFontSize(17, windowHeight),
+				{
+					duration: 150
+				}
+			);
 		}, 180);
 		containerHeight.value = withTiming(windowHeight, {
 			duration: 200
@@ -89,12 +97,18 @@ export const handleExpandGenreList = (
 			duration: 10
 		});
 		setTimeout(() => {
-			topChevronPosition.value = withTiming(RFValue(7), {
-				duration: 150
-			});
-			bottomChevronPosition.value = withTiming(RFValue(5), {
-				duration: 150
-			});
+			topChevronPosition.value = withTiming(
+				getResponsiveFontSize(7, windowHeight),
+				{
+					duration: 150
+				}
+			);
+			bottomChevronPosition.value = withTiming(
+				getResponsiveFontSize(5, windowHeight),
+				{
+					duration: 150
+				}
+			);
 		}, 11);
 
 		translationXValue.value = withTiming(-200, {

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet, Linking } from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { getResponsiveFontSize } from "../utils/helpers/Responsive";
+import { RFValue } from "../utils/helpers/Responsive";
 
 export interface TrackLinksProps {
 	spotifyURL?: string;
@@ -38,7 +38,7 @@ const LinksComponent = ({
 				onPress={() => handleLinkPress(trackLinks?.spotifyURL ?? "")}>
 				<MaterialCommunityIcons
 					name='spotify'
-					size={getResponsiveFontSize(45)}
+					size={RFValue(45)}
 					color={!trackLinks?.spotifyURL ? "#00000055" : accentColor}
 				/>
 			</TouchableOpacity>
@@ -47,7 +47,7 @@ const LinksComponent = ({
 				onPress={() => handleLinkPress(trackLinks.soundcloudURL ?? "")}>
 				<MaterialCommunityIcons
 					name='soundcloud'
-					size={getResponsiveFontSize(50)}
+					size={RFValue(50)}
 					color={
 						!trackLinks?.soundcloudURL ? "#00000055" : accentColor
 					}
@@ -77,7 +77,7 @@ const LinksComponent = ({
 				onPress={() => handleLinkPress(trackLinks.appleMusicURL ?? "")}>
 				<MaterialCommunityIcons
 					name='apple'
-					size={getResponsiveFontSize(50)}
+					size={RFValue(50)}
 					color={
 						!trackLinks?.appleMusicURL ? "#00000055" : accentColor
 					}
@@ -88,7 +88,7 @@ const LinksComponent = ({
 				onPress={() => handleLinkPress(trackLinks.instagramURL ?? "")}>
 				<MaterialCommunityIcons
 					name='instagram'
-					size={getResponsiveFontSize(45)}
+					size={RFValue(45)}
 					color={
 						!trackLinks?.instagramURL ? "#00000055" : accentColor
 					}
@@ -99,7 +99,7 @@ const LinksComponent = ({
 				onPress={() => handleLinkPress(trackLinks.facebookURL ?? "")}>
 				<MaterialCommunityIcons
 					name='facebook'
-					size={getResponsiveFontSize(51)}
+					size={RFValue(51)}
 					color={!trackLinks?.facebookURL ? "#00000055" : accentColor}
 				/>
 			</TouchableOpacity>
@@ -112,9 +112,9 @@ const styles = StyleSheet.create({
 		height: "100%",
 		width: "100%",
 		alignSelf: "center",
-		padding: getResponsiveFontSize(3),
-		paddingHorizontal: getResponsiveFontSize(1),
-		borderRadius: getResponsiveFontSize(12),
+		padding: RFValue(3),
+		paddingHorizontal: RFValue(1),
+		borderRadius: RFValue(12),
 		backgroundColor: "#00000025",
 		flexDirection: "row",
 		flexWrap: "wrap",
@@ -123,15 +123,15 @@ const styles = StyleSheet.create({
 		justifyContent: "space-evenly"
 	},
 	bandcampIconContainer: {
-		width: getResponsiveFontSize(38),
-		height: getResponsiveFontSize(38),
+		width: RFValue(38),
+		height: RFValue(38),
 		borderRadius: 16,
 		justifyContent: "center",
 		alignItems: "center"
 	},
 	bandcampIcon: {
-		width: getResponsiveFontSize(16),
-		height: getResponsiveFontSize(16),
+		width: RFValue(16),
+		height: RFValue(16),
 		transform: [{ skewX: "-20deg" }]
 	}
 });

@@ -6,7 +6,7 @@ import {
 	ImageSourcePropType,
 	Dimensions
 } from "react-native";
-import { getResponsiveFontSize } from "../../utils/helpers/Responsive";
+import { RFValue } from "../../utils/helpers/Responsive";
 
 interface DailyTrackArtworkProps {
 	artwork: ImageSourcePropType;
@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
 		alignItems: "flex-start"
 	},
 	artwork: {
-		borderRadius: getResponsiveFontSize(12),
-		borderWidth: getResponsiveFontSize(5)
+		borderRadius: RFValue(12),
+		borderWidth: RFValue(5)
 	}
 });
 

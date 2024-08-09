@@ -32,7 +32,7 @@ import {
 import { getGenreAccentColor, getGenreColor } from "../utils/constants/Colors";
 import { handleGenreDotSelect } from "../utils/helpers/Functions";
 import { Typography } from "../utils/constants/Styles";
-import { getResponsiveFontSize } from "../utils/helpers/Responsive";
+import { RFValue } from "../utils/helpers/Responsive";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -231,9 +231,7 @@ const TrackGallery = (): JSX.Element => {
 															}
 														]
 													}}
-													size={getResponsiveFontSize(
-														76
-													)}
+													size={RFValue(76)}
 												/>
 											</Animated.View>
 										</TouchableOpacity>

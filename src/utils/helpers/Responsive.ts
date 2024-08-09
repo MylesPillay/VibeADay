@@ -13,7 +13,7 @@ const baseScreenSurfaceArea = baseScreenWidth * baseScreenHeight;
 // 	SCREEN_WIDTH,
 // 	"this is the screen width"
 // );
-const getResponsiveFontSize = (size: number) => {
+const RFValue = (size: number) => {
 	console.log(
 		SCREEN_HEIGHT,
 		"this is the screen height",
@@ -25,4 +25,4 @@ const getResponsiveFontSize = (size: number) => {
 	return Math.round(newSize);
 };
 
-export { getResponsiveFontSize };
+export { RFValue };

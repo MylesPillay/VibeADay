@@ -1,5 +1,5 @@
 import { Typography } from "@/src/utils/constants/Styles";
-import { getResponsiveFontSize } from "@/src/utils/helpers/Responsive";
+import { RFValue } from "@/src/utils/helpers/Responsive";
 import { NavigatorTrack, Track } from "@/src/utils/types/Tracks";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -55,9 +55,9 @@ const styles = StyleSheet.create({
 		width: "100%",
 		justifyContent: "space-evenly",
 		alignSelf: "center",
-		paddingVertical: getResponsiveFontSize(2),
-		paddingHorizontal: getResponsiveFontSize(3),
-		borderRadius: getResponsiveFontSize(12),
+		paddingVertical: RFValue(2),
+		paddingHorizontal: RFValue(3),
+		borderRadius: RFValue(12),
 		backgroundColor: "#00000025"
 	},
 	artistNameContainer: {

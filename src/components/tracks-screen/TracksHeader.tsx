@@ -6,11 +6,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Animated from "react-native-reanimated";
 
-import { getResponsiveFontSize } from "@/src/utils/helpers/Responsive";
-import {
-	largeScreenChevronSizes,
-	smallScreenChevronSizes
-} from "@/src/utils/constants/Styles";
+import { RFValue } from "@/src/utils/helpers/Responsive";
+import { smallScreenChevronSizes } from "@/src/utils/constants/Styles";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -82,11 +79,7 @@ const TrackHeader = ({
 										],
 										right: 4
 									}}
-									size={
-										windowHeight > 700
-											? largeScreenChevronSizes.headerChevron
-											: smallScreenChevronSizes.headerChevron
-									}
+									size={smallScreenChevronSizes.headerChevron}
 								/>
 							</Animated.View>
 						</TouchableOpacity>

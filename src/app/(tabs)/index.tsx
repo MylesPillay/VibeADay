@@ -17,6 +17,7 @@ import LinksComponent from "@/src/components/LinksComponent";
 import Animated from "react-native-reanimated";
 import {
 	bottomChevronStyle,
+	containerStyle,
 	dayListAnimationStyles,
 	genreNameTextAnimationStyle,
 	handleExpandGenreList,
@@ -126,7 +127,7 @@ export default function HomeScreen() {
 				<LoadingComponent />
 			) : (
 				<View style={styles.screenContainer}>
-					<GestureHandlerRootView style={{ backgroundColor: "pink" }}>
+					<GestureHandlerRootView style={{}}>
 						<TrackHeader
 							navigatorTracks={navigatorTracks}
 							displayedTrack={displayedTrack}
@@ -169,7 +170,7 @@ export default function HomeScreen() {
 								height: windowHeight * 0.1,
 								width: windowWidth * 0.97
 							},
-							// containerStyle,
+							containerStyle,
 							{
 								backgroundColor:
 									navigatorTracks?.[displayedTrack]?.bgColor
@@ -178,13 +179,12 @@ export default function HomeScreen() {
 						{isExpanded ? (
 							<View
 								style={{
-									zIndex: 300
+									zIndex: 300,
 
-									// height: windowHeight * 0.75
-									// backgroundColor:
-									// 	navigatorTracks?.[displayedTrack]
-									// 		?.bgColor,
-									// paddingVertical: "5%"
+									backgroundColor:
+										navigatorTracks?.[displayedTrack]
+											?.bgColor,
+									paddingVertical: "5%"
 								}}>
 								<GenreListSelector
 									tracks={navigatorTracks}
@@ -258,8 +258,8 @@ const styles = StyleSheet.create({
 	},
 	screenContainer: {
 		height: "96%",
-		width: "100%",
-		backgroundColor: "yellow"
+		width: "100%"
+		// backgroundColor: "yellow"
 	},
 	genreNavContainer: {
 		display: "flex",
@@ -312,10 +312,11 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		bottom: 0,
 		maxHeight: "100%",
+		backgroundColor: "purple",
 		// marginBottom: "20%",
 		// paddingHorizontal: windowWidth * 0.025,
-		justifyContent: "center",
-		alignSelf: "center",
-		alignItems: "flex-end"
+		justifyContent: "space-between",
+		alignSelf: "center"
+		// alignItems: ""
 	}
 });

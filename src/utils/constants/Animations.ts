@@ -45,7 +45,7 @@ export const dayListAnimationStyles = useAnimatedStyle(() => {
 });
 
 // BOTTOM NAV BAR CHEVRON CONTAINER ANIMATION AND HEIGHT STYLE VARIABLES
-export const containerHeight = useSharedValue(0);
+export const containerHeight = useSharedValue(windowHeight * 0.1);
 
 export const containerStyle = useAnimatedStyle(() => {
 	return {
@@ -73,7 +73,7 @@ export const handleExpandGenreList = (
 				}
 			);
 		}, 180);
-		containerHeight.value = withTiming(windowHeight * 0.45, {
+		containerHeight.value = withTiming(windowHeight, {
 			duration: 200
 		});
 		nameOpacityValue.value = withTiming(1, {
@@ -88,7 +88,9 @@ export const handleExpandGenreList = (
 	} else {
 		setIsExpanded(false);
 		setFlipChevrons(false);
-		containerHeight.value = withTiming(22, { duration: 10 });
+		containerHeight.value = withTiming(windowHeight * 0.1, {
+			duration: 10
+		});
 		setTimeout(() => {
 			topChevronPosition.value = withTiming(getResponsiveFontSize(7), {
 				duration: 150

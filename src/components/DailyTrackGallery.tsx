@@ -22,6 +22,7 @@ import { NavigatorTrack, Track } from "../utils/types/Tracks";
 
 import {
 	bottomChevronStyle,
+	containerStyle,
 	dayListAnimationStyles,
 	genreNameTextAnimationStyle,
 	handleExpandGenreList,
@@ -299,7 +300,7 @@ const TrackGallery = (): JSX.Element => {
 					<Animated.View
 						style={[
 							styles.expandableContainer,
-							// containerStyle,
+							containerStyle,
 							{
 								backgroundColor:
 									navigatorTracks?.[displayedTrack]?.bgColor,
@@ -311,7 +312,6 @@ const TrackGallery = (): JSX.Element => {
 								style={{
 									zIndex: 300,
 									width: "100%",
-									height: windowHeight * 0.75,
 									backgroundColor:
 										navigatorTracks?.[displayedTrack]
 											?.bgColor,

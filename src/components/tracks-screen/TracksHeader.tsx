@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
 	},
 	genreNavContainer: {
 		display: "flex",
-		backgroundColor: "#00000025",
 		width: windowWidth * 0.9,
 		height: "auto",
 		maxHeight: windowHeight * 0.08,

@@ -44,8 +44,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		alignContent: "center",
-		width: windowWidth * 0.77,
-		backgroundColor: "#00000025"
+		width: windowWidth * 0.77
 	}
 });
 

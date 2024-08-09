@@ -1,5 +1,11 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import {
+	View,
+	StyleSheet,
+	TouchableOpacity,
+	Text,
+	Dimensions
+} from "react-native";
 import Animated from "react-native-reanimated";
 import { RFValue } from "react-native-responsive-fontsize";
 import { NavigatorTrack } from "../utils/types/Tracks";
@@ -31,6 +37,8 @@ const days = [
 	{ dayName: "Sunday" }
 ];
 
+const windowHeight = Dimensions.get("window").height;
+
 const GenreListSelector = ({
 	tracks,
 	displayedTrack,
@@ -47,13 +55,13 @@ const GenreListSelector = ({
 	handleGenreListSelection
 }: GenreListSelectorProps): JSX.Element => {
 	return (
-		<View style={[styles.genreNavContainer]}>
+		<View
+			style={[styles.genreNavContainer, { height: windowHeight * 0.25 }]}>
 			<View
 				style={{
 					alignSelf: "flex-end",
 					alignContent: "center",
-
-					paddingBottom: "2.5%"
+					paddingBottom: windowHeight * 0.075
 				}}>
 				{days.map((day, index) => (
 					<Animated.View
@@ -90,7 +98,11 @@ const GenreListSelector = ({
 					</Animated.View>
 				))}
 			</View>
-			<View style={{ paddingTop: "2.5%" }}>
+			<View
+				style={{
+					paddingTop: "2.5%",
+					justifyContent: "center"
+				}}>
 				{tracks.map((track, index) => (
 					<Animated.View
 						key={index}
@@ -102,10 +114,6 @@ const GenreListSelector = ({
 							style={styles.navGenreTitleButton}
 							activeOpacity={0.4}
 							onPress={() => {
-								console.log(
-									"BUTTON PRESSED, this is the index",
-									index
-								);
 								handleGenreListSelection(index);
 								handleExpandGenreList(
 									isExpanded,
@@ -150,7 +158,6 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "column",
 		width: "100%",
-		height: "70%",
 		justifyContent: "space-between",
 		paddingVertical: "5%"
 	},

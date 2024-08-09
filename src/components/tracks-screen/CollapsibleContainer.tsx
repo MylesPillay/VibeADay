@@ -4,7 +4,11 @@ import {
 } from "@/src/utils/constants/Animations";
 import { NavigatorTrack, Track } from "@/src/utils/types/Tracks";
 import { Dimensions, StyleSheet, View } from "react-native";
-import Animated from "react-native-reanimated";
+import Animated, {
+	interpolateColor,
+	useAnimatedStyle,
+	withTiming
+} from "react-native-reanimated";
 import GenreListSelector from "../GenreListSelector";
 import ChevronComponent from "../sticky-top-nav/ChevronComponent";
 
@@ -42,50 +46,103 @@ const CollapsibleContainer = ({
 	topChevronStyle,
 	bottomChevronStyle
 }: CollapsibleContainerProps): JSX.Element => {
-	return (
-		<Animated.View
-			style={[
-				styles.collapsibleContainer,
-				{
-					height: windowHeight * 0.1,
-					width: windowWidth * 0.97
-				},
-				containerStyle,
-				{
-					backgroundColor: navigatorTracks?.[displayedTrack]?.bgColor
-				}
-			]}>
-			{isExpanded ? (
-				<View
-					style={{
-						zIndex: 300,
+	const animatedContentStyle = useAnimatedStyle(() => {
+		return {
+			height: withTiming(isExpanded ? windowHeight * 0.7 : 0, {
+				duration: 300
+			})
+			// opacity: withTiming(isExpanded ? 1 : 0, { duration: 300 })
+		};
+	});
 
+	return (
+		// 	<Animated.View
+		// 		style={[
+		// 			styles.collapsibleContainer,
+		// 			{
+		// 				height: windowHeight * 0.1,
+		// 				width: windowWidth * 0.97
+		// 			},
+		// 			containerStyle,
+		// 			{
+		// 				backgroundColor: navigatorTracks?.[displayedTrack]?.bgColor
+		// 			}
+		// 		]}>
+		// 		{isExpanded ? (
+		// 			<View
+		// 				style={{
+		// 					zIndex: 300,
+
+		// 					backgroundColor:
+		// 						navigatorTracks?.[displayedTrack]?.bgColor
+		// 					// paddingVertical: windowHeight * 0.05
+		// 				}}>
+		// 				<GenreListSelector
+		// 					tracks={navigatorTracks}
+		// 					displayedTrack={displayedTrack}
+		// 					isExpanded={isExpanded}
+		// 					setFlipChevrons={setFlipChevrons}
+		// 					handleGenreListSelection={(index: number) => {
+		// 						handleGenreListSelection(index);
+		// 					}}
+		// 					genreNameAnimationStyle={genreNameTextAnimationStyle}
+		// 					dayListAnimationStyles={dayListAnimationStyles}
+		// 					accentColor={
+		// 						navigatorTracks[displayedTrack]?.accentColor
+		// 					}
+		// 					drop_day={tracks[displayedTrack]?.drop_day}
+		// 					handleDaySelection={handleDaySelection}
+		// 					setIsExpanded={setIsExpanded}
+		// 				/>
+		// 			</View>
+		// 		) : (
+		// 			<></>
+		// 		)}
+
+		// 		<View style={styles.collapsibleChevron}>
+		// 			<ChevronComponent
+		// 				onPress={() =>
+		// 					handleExpandGenreList(
+		// 						isExpanded,
+		// 						setIsExpanded,
+		// 						setFlipChevrons
+		// 					)
+		// 				}
+		// 				topChevronStyle={topChevronStyle}
+		// 				bottomChevronStyle={bottomChevronStyle}
+		// 				flipChevrons={!!flipChevrons}
+		// 				accentColor={navigatorTracks[displayedTrack]?.accentColor}
+		// 			/>
+		// 		</View>
+		// 	</Animated.View>
+		// );
+		<View style={styles.container}>
+			<Animated.View
+				style={[
+					styles.background,
+					{
 						backgroundColor:
 							navigatorTracks?.[displayedTrack]?.bgColor
-						// paddingVertical: windowHeight * 0.05
-					}}>
-					<GenreListSelector
-						tracks={navigatorTracks}
-						displayedTrack={displayedTrack}
-						isExpanded={isExpanded}
-						setFlipChevrons={setFlipChevrons}
-						handleGenreListSelection={(index: number) => {
-							handleGenreListSelection(index);
-						}}
-						genreNameAnimationStyle={genreNameTextAnimationStyle}
-						dayListAnimationStyles={dayListAnimationStyles}
-						accentColor={
-							navigatorTracks[displayedTrack]?.accentColor
-						}
-						drop_day={tracks[displayedTrack]?.drop_day}
-						handleDaySelection={handleDaySelection}
-						setIsExpanded={setIsExpanded}
-					/>
-				</View>
-			) : (
-				<></>
-			)}
-			<View style={styles.collapsibleChevron}>
+					}
+				]}
+			/>
+			<Animated.View
+				style={[styles.animatedContent, animatedContentStyle]}>
+				<GenreListSelector
+					tracks={navigatorTracks}
+					displayedTrack={displayedTrack}
+					isExpanded={isExpanded}
+					setFlipChevrons={setFlipChevrons}
+					handleGenreListSelection={handleGenreListSelection}
+					genreNameAnimationStyle={genreNameTextAnimationStyle}
+					dayListAnimationStyles={dayListAnimationStyles}
+					accentColor={navigatorTracks[displayedTrack]?.accentColor}
+					drop_day={tracks[displayedTrack]?.drop_day}
+					handleDaySelection={handleDaySelection}
+					setIsExpanded={setIsExpanded}
+				/>
+			</Animated.View>
+			<View style={styles.chevronContainer}>
 				<ChevronComponent
 					onPress={() =>
 						handleExpandGenreList(
@@ -100,14 +157,14 @@ const CollapsibleContainer = ({
 					accentColor={navigatorTracks[displayedTrack]?.accentColor}
 				/>
 			</View>
-		</Animated.View>
+		</View>
 	);
 };
 
 const styles = StyleSheet.create({
-	chevronContainer: {
-		justifyContent: "center"
-	},
+	// chevronContainer: {
+	// 	justifyContent: "center"
+	// },
 	collapsibleChevron: {
 		display: "flex",
 		zIndex: 5
@@ -120,6 +177,25 @@ const styles = StyleSheet.create({
 		backgroundColor: "purple",
 		justifyContent: "space-between",
 		alignSelf: "center"
+	},
+	container: {
+		position: "absolute",
+		bottom: 0,
+		width: windowWidth,
+		backgroundColor: "transparent"
+	},
+	animatedContent: {
+		width: "100%",
+		overflow: "hidden"
+	},
+	chevronContainer: {
+		height: windowHeight * 0.1,
+		width: "100%",
+		justifyContent: "center",
+		alignItems: "center"
+	},
+	background: {
+		...StyleSheet.absoluteFillObject
 	}
 });
 

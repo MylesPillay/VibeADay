@@ -20,7 +20,9 @@ export const topChevronStyle = useAnimatedStyle(() => {
 });
 
 // BOTTOM CHEVRON ANIMATION STYLE VARIABLES
-export const bottomChevronPosition = useSharedValue(5);
+export const bottomChevronPosition = useSharedValue(
+	getResponsiveFontSize(7, windowHeight)
+);
 export const bottomChevronStyle = useAnimatedStyle(() => {
 	return {
 		bottom: bottomChevronPosition.value
@@ -29,7 +31,7 @@ export const bottomChevronStyle = useAnimatedStyle(() => {
 
 // ANIMATION TEXT SLIDE IN AND OPACITY FADE IN  STYLE VARIABLES
 export const translationXValue = useSharedValue(-200);
-export const translationXValueDays = useSharedValue(0);
+export const translationXValueDays = useSharedValue(200);
 
 export const nameOpacityValue = useSharedValue(1);
 
@@ -48,11 +50,12 @@ export const dayListAnimationStyles = useAnimatedStyle(() => {
 
 // BOTTOM NAV BAR CHEVRON CONTAINER ANIMATION AND HEIGHT STYLE VARIABLES
 export const containerHeight = useSharedValue(windowHeight * 0.1);
-
+// export const containerOpacity = useSharedValue(1);
 export const containerStyle = useAnimatedStyle(() => {
 	return {
 		height: containerHeight.value,
 		zIndex: 250
+		// opacity: containerOpacity.value
 	};
 });
 
@@ -81,44 +84,56 @@ export const handleExpandGenreList = (
 		containerHeight.value = withTiming(
 			windowHeight < 1000 ? windowHeight : windowHeight * 0.8,
 			{
-				duration: 200
+				duration: 100
 			}
 		);
+		// containerOpacity.value = withTiming(1, {
+		// 	duration: 250
+		// });
+
 		nameOpacityValue.value = withTiming(1, {
 			duration: 250
 		});
-		translationXValue.value = withTiming(15, {
-			duration: 450
-		});
-		translationXValueDays.value = withTiming(-20, {
-			duration: 450
-		});
-	} else {
-		setIsExpanded(false);
-		setFlipChevrons(false);
-		containerHeight.value = withTiming(windowHeight * 0.1, {
-			duration: 10
-		});
 		setTimeout(() => {
-			topChevronPosition.value = withTiming(
-				getResponsiveFontSize(7, windowHeight),
-				{
-					duration: 150
-				}
-			);
-			bottomChevronPosition.value = withTiming(
-				getResponsiveFontSize(5, windowHeight),
-				{
-					duration: 150
-				}
-			);
-		}, 11);
+			translationXValue.value = withTiming(15, {
+				duration: 350
+			});
+		}, 110);
+		setTimeout(() => {
+			translationXValueDays.value = withTiming(-20, {
+				duration: 350
+			});
+		}, 100);
+	} else {
+		setFlipChevrons(false);
+
+		topChevronPosition.value = withTiming(
+			getResponsiveFontSize(7, windowHeight),
+			{
+				duration: 150
+			}
+		);
+		bottomChevronPosition.value = withTiming(
+			getResponsiveFontSize(5, windowHeight),
+			{
+				duration: 150
+			}
+		);
+		setTimeout(() => {
+			containerHeight.value = withTiming(windowHeight * 0.1, {
+				duration: 10
+			});
+			// containerOpacity.value = withTiming(1, {
+			// 	duration: 300
+			// });
+			setIsExpanded(false);
+		}, 350);
 
 		translationXValue.value = withTiming(-200, {
-			duration: 150
+			duration: 350
 		});
 		translationXValueDays.value = withTiming(200, {
-			duration: 150
+			duration: 350
 		});
 	}
 };
